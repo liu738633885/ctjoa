@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:paddingBottom="18dp"
+    >
+
+
+    <ImageView
+        android:id="@+id/imv"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginLeft="12dp"
+        android:layout_marginTop="16dp"
+        android:background="@color/loading"
+        />
+
+    <Button
+        android:id="@+id/btn"
+        android:layout_width="50dp"
+        android:layout_height="25dp"
+        android:layout_alignParentRight="true"
+        android:layout_marginLeft="13dp"
+        android:layout_marginRight="12dp"
+        android:layout_marginTop="24dp"
+        android:background="@drawable/shape_button_bg_stroke_blue"
+        android:text="关注"
+        android:textColor="@color/super_blue2"
+        android:textSize="11sp"/>
+
+    <TextView
+        android:id="@+id/tv1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="13dp"
+        android:layout_marginTop="20dp"
+        android:layout_toLeftOf="@id/btn"
+        android:layout_toRightOf="@id/imv"
+        android:text="莆田市众望企业家供应平台"
+        android:textColor="@color/super_blue2"
+        android:textSize="15sp"/>
+
+    <TextView
+        android:id="@+id/tv2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv1"
+        android:layout_marginLeft="13dp"
+        android:layout_marginTop="5dp"
+        android:layout_toLeftOf="@id/btn"
+        android:layout_toRightOf="@id/imv"
+        android:text="福建  莆田  文化\体育中心 文化艺术业中心,不错的好地方"
+        android:textColor="@color/gray01"
+        android:textSize="13sp"/>
+
+    <TextView
+        android:id="@+id/tv3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv2"
+        android:layout_marginLeft="13dp"
+        android:layout_marginRight="22dp"
+        android:layout_marginTop="10dp"
+        android:layout_toRightOf="@id/imv"
+        android:ellipsize="end"
+        android:maxLines="2"
+        android:text="@string/middle_text"
+        android:textColor="@color/black"
+        android:textSize="14sp"/>
+
+
+</RelativeLayout>

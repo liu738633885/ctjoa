@@ -1,0 +1,6 @@
+<resources>
+    <string name="app_name">LewisLibrary</string>
+    <string name="no_results">没有搜索到匹配的内容</string>
+    <string name="long_text">这是一段长文字这是dasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdas一段长文字这是一段长文字这是一段长文字这是一段长文字这是一段长文字这是一段长文字这是一段长文字这是一段长文字这是一段长文字这是一段长文字这是一段长文字这是一段长文字这是一段长文字这是一段长文字这是一段长文字这是一段长文字这是一段长文字这是一段长文字这是一段长文字这是一段长文字这是一段长文字这是一段长文字这是一段长文字</string>
+    <string name="no_permission">没有权限</string>
+</resources>

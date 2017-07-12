@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
+    android:orientation="vertical"
+    tools:context=".work.approval.ApprovalListActivity">
+
+    <com.ctj.oa.widgets.TitleBar
+        android:id="@+id/titleBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:center_text="我的审批"
+        />
+
+    <include layout="@layout/search_bar_lewis_bg_white"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <Button
+            android:id="@+id/btn_choose_1"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_weight="1"
+            android:background="@drawable/ripple_bg"
+            android:drawablePadding="-60dp"
+            android:drawableRight="@drawable/ic_down2_gray"
+            android:paddingRight="60dp"
+            android:text="全部"
+            android:textColor="@color/black"
+            android:textSize="15sp"/>
+
+        <Button
+            android:id="@+id/btn_choose_2"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_weight="1"
+            android:background="@drawable/ripple_bg"
+            android:drawablePadding="-60dp"
+            android:drawableRight="@drawable/ic_down2_gray"
+            android:paddingRight="60dp"
+            android:text="类型"
+            android:textColor="@color/black"
+            android:textSize="15sp"/>
+    </LinearLayout>
+
+    <com.lewis.widgets.LewisSwipeRefreshLayout
+        android:id="@+id/swl"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingTop="5dp">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+    </com.lewis.widgets.LewisSwipeRefreshLayout>
+
+</LinearLayout>

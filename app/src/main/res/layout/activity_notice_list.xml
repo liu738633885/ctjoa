@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
+    android:orientation="vertical"
+    tools:context="com.ctj.oa.work.notice.NoticeListActivity">
+
+    <com.ctj.oa.widgets.TitleBar
+        android:id="@+id/titleBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:center_text="公告"
+        />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="42dp"
+        android:background="@color/white"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btn_choose_1"
+            android:layout_width="wrap_content"
+            android:minWidth="60dp"
+            android:layout_height="35dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/shape_button_bg_stroke_gray"
+            android:drawableRight="@drawable/ic_down2_blue"
+            android:paddingRight="15dp"
+            android:paddingLeft="15dp"
+            android:text="栏目"
+            android:textColor="@color/super_blue"
+            android:textSize="13sp"/>
+        <!--  android:drawablePadding="-12dp"-->
+
+
+        <EditText
+            android:id="@+id/edt"
+            android:layout_width="match_parent"
+            android:layout_height="35dp"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/shape_button_bg_stroke_gray"
+            android:drawableLeft="@drawable/ic_search"
+            android:drawablePadding="5dp"
+            android:hint="输入搜索关键字"
+            android:imeOptions="actionSearch"
+            android:inputType="text"
+            android:lines="1"
+            android:padding="10dp"
+            android:textColorHint="@color/gray02"
+            android:textSize="12sp"/>
+    </LinearLayout>
+
+    <com.lewis.widgets.LewisSwipeRefreshLayout
+        android:id="@+id/swl"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingTop="0dp">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+    </com.lewis.widgets.LewisSwipeRefreshLayout>
+
+</LinearLayout>

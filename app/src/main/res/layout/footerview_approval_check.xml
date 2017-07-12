@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<EditText
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/edt"
+    android:layout_width="match_parent"
+    android:layout_height="150dp"
+    android:layout_marginTop="15dp"
+    android:background="@color/white"
+    android:gravity="left|top"
+    android:hint="填写意见说明(非必须)"
+    android:padding="15dp"
+    android:textColor="@color/black"
+    android:textColorHint="@color/gray02"
+    android:textSize="13sp"/>

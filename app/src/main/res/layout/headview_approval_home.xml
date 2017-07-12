@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="155dp"
+    android:background="#484e5d"
+    android:orientation="horizontal">
+
+    <RelativeLayout
+        android:id="@+id/rl_apply"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1">
+
+        <ImageView
+            android:layout_width="58dp"
+            android:layout_height="58dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="32dp"
+            android:src="@mipmap/work_quanburizhi"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="38dp"
+            android:text="我的申请"
+            android:textColor="@color/white"
+            android:textSize="14sp"/>
+
+        <TextView
+            android:id="@+id/count1"
+            android:layout_width="wrap_content"
+            android:layout_height="19dp"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="29dp"
+            android:layout_marginTop="29dp"
+            android:background="@drawable/shape_badge_red"
+            android:gravity="center"
+            android:minWidth="19dp"
+            android:paddingLeft="3dp"
+            android:paddingRight="3dp"
+            android:textColor="@android:color/white"
+            android:textSize="12sp"
+            android:visibility="invisible"/>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rl_approval"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1">
+
+        <ImageView
+            android:layout_width="58dp"
+            android:layout_height="58dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="32dp"
+            android:src="@mipmap/work_woderizhi"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="38dp"
+            android:text="我的审批"
+            android:textColor="@color/white"
+            android:textSize="14sp"/>
+
+        <TextView
+            android:id="@+id/count2"
+            android:layout_width="wrap_content"
+            android:layout_height="19dp"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="29dp"
+            android:layout_marginTop="29dp"
+            android:background="@drawable/shape_badge_red"
+            android:gravity="center"
+            android:minWidth="19dp"
+            android:paddingLeft="3dp"
+            android:paddingRight="3dp"
+            android:textColor="@android:color/white"
+            android:textSize="12sp"
+            android:visibility="invisible"/>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rl_cc_approval"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1">
+
+        <ImageView
+            android:layout_width="58dp"
+            android:layout_height="58dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="32dp"
+            android:src="@mipmap/work_gongxianggeiwo"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="38dp"
+            android:text="抄送给我"
+            android:textColor="@color/white"
+            android:textSize="14sp"/>
+    </RelativeLayout>
+</LinearLayout>

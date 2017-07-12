@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <declare-styleable name="MyRadioButton">
+        <attr name="mydrawableSize" format="dimension"/>
+        <attr name="mydrawableTop" format="reference"/>
+        <attr name="mydrawableLeft" format="reference"/>
+        <attr name="mydrawableRight" format="reference"/>
+        <attr name="mydrawableBottom" format="reference"/>
+    </declare-styleable>
+
+    <declare-styleable name="IndexableStickyListView">
+        <attr name="indexBar_selected_textColor" format="color"/>
+        <attr name="indexBar_textColor" format="color"/>
+        <attr name="indexBar_textSize" format="dimension"/>
+        <attr name="indexListView_type_overlay" format="enum">
+            <enum name="center" value="1"/>
+            <enum name="right" value="2"/>
+        </attr>
+        <attr name="indexListView_rightOverlayColor" format="color"/>
+    </declare-styleable>
+
+    <declare-styleable name="TagCloudView">
+        <attr name="tcvBackground" format="reference"/>
+        <attr name="tcvTextColor" format="color"/>
+        <attr name="tcvBorder" format="dimension"/>
+        <attr name="tcvTextSize" format="integer"/>
+        <attr name="tcvBorderItem" format="dimension"/>
+        <attr name="tcvItemBorderVertical" format="dimension"/>
+        <attr name="tcvItemBorderHorizontal" format="dimension"/>
+
+        <attr name="tcvSingleLine" format="boolean"/>
+        <attr name="tcvShowEndText" format="boolean"/>
+        <attr name="tcvShowRightImg" format="boolean"/>
+        <attr name="tcvEndText" format="string"/>
+        <attr name="tcvRightResId" format="reference"/>
+        <attr name="tcvCanTagClick" format="boolean"/>
+
+        <attr name="tcvTagResId" format="reference"/>
+    </declare-styleable>
+
+    <declare-styleable name="RatingBar" tools:ignore="ResourceName">
+        <attr name="starImageSize" format="dimension"/>
+        <attr name="starImageWidth" format="dimension"/>
+        <attr name="starImageHeight" format="dimension"/>
+        <attr name="starImagePadding" format="dimension"/>
+        <attr name="starCount" format="integer"/>
+        <attr name="starNum" format="integer"/>
+        <attr name="starEmpty" format="reference"/>
+        <attr name="starFill" format="reference"/>
+        <attr name="starHalf" format="reference"/>
+        <attr name="clickable" format="boolean"/>
+        <attr name="halfstart" format="boolean"/>
+    </declare-styleable>
+
+    <declare-styleable name="MultiLineRadioGroup">
+        <attr name="child_margin_horizontal" format="dimension" />
+        <attr name="child_margin_vertical" format="dimension" />
+        <attr name="child_layout" format="integer" />
+        <attr name="child_count" format="integer" />
+        <attr name="child_values" format="integer" />
+        <attr name="single_choice" format="boolean" />
+        <attr name="gravity" format="integer" />
+    </declare-styleable>
+</resources>

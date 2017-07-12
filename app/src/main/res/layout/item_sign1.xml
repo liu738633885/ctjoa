@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="90dp"
+                android:background="@drawable/ripple_bg"
+    >
+
+    <ImageView
+        android:id="@+id/imv"
+        android:layout_width="41dp"
+        android:layout_height="41dp"
+        android:layout_marginBottom="2dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="12dp"
+        android:layout_marginTop="15dp"
+        android:src="@mipmap/ic_launcher_round2"/>
+
+    <View
+        android:id="@+id/line"
+        android:visibility="invisible"
+        android:layout_width="1dp"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="25dp"
+        android:layout_marginTop="58dp"
+        android:background="@color/line1"/>
+
+    <ImageView
+        android:id="@+id/imv2"
+        android:layout_width="17dp"
+        android:layout_height="17dp"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_margin="15dp"
+        android:src="@drawable/ic_right"
+        android:visibility="invisible"/>
+
+    <TextView
+        android:id="@+id/tv1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:layout_toLeftOf="@id/imv2"
+        android:layout_toRightOf="@id/imv"
+        android:textColor="@color/black"
+        android:textSize="15sp"/>
+
+    <TextView
+        android:id="@+id/tv2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv1"
+        android:layout_marginTop="5dp"
+        android:layout_toLeftOf="@id/imv2"
+        android:layout_toRightOf="@id/imv"
+        android:text="默认班次: "
+        android:textColor="@color/black"
+        android:textSize="15sp"/>
+
+    <TextView
+        android:id="@+id/tv3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv2"
+        android:layout_marginTop="5dp"
+        android:layout_toLeftOf="@id/imv2"
+        android:layout_toRightOf="@id/imv"
+        android:text="根据考勤规则,你可以使用手机签到"
+        android:textColor="@color/gray01"
+        android:textSize="14sp"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginLeft="50dp"
+        android:layout_marginRight="10dp"
+        android:background="@color/line1"/>
+
+</RelativeLayout>

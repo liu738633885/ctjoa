@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <com.jude.rollviewpager.RollPagerView
+            android:id="@+id/roll_view_pager"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:background="@color/super_blue"
+            android:minHeight="200dp"
+            app:rollviewpager_hint_paddingBottom="10dp"
+            app:rollviewpager_play_delay="3000"/>
+
+        <com.jude.rollviewpager.RollPagerView
+            android:id="@+id/roll_view_pager2"
+            android:layout_width="match_parent"
+            android:layout_height="115dp"
+            android:layout_marginBottom="17dp"
+            android:background="@color/white"
+            app:rollviewpager_hint_paddingBottom="10dp"
+            />
+
+        <RadioGroup
+            android:layout_width="match_parent"
+            android:layout_height="42dp"
+            android:layout_marginBottom="1dp"
+            android:background="@color/white"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:checked="true"
+                android:id="@+id/btn1"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:background="@drawable/ripple_bg_nomask"
+                android:button="@null"
+                android:gravity="center_vertical"
+                android:paddingLeft="25dp"
+                android:paddingRight="17dp"
+                android:text="最新"
+                android:textColor="@drawable/selector_cb_text_color"
+                android:textSize="15sp"/>
+
+            <RadioButton
+                android:id="@+id/btn2"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:background="@drawable/ripple_bg_nomask"
+                android:button="@null"
+                android:gravity="center_vertical"
+                android:paddingLeft="17dp"
+                android:paddingRight="25dp"
+                android:text="精选"
+                android:textColor="@drawable/selector_cb_text_color"
+                android:textSize="15sp"/>
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_weight="1"/>
+
+            <CheckBox
+                android:id="@+id/btn3"
+                android:layout_width="50dp"
+                android:layout_height="match_parent"
+                android:background="@drawable/ripple_bg_nomask"
+                android:button="@null"
+                android:checked="true"
+                android:drawableLeft="@drawable/selector_ic_menu"
+                android:paddingLeft="10dp"
+                android:scaleType="centerInside"/>
+        </RadioGroup>
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="13dp"
+        android:text="企业圈"
+        android:textColor="@color/white"
+        android:textSize="@dimen/top_bar_title_size"
+        />
+
+    <ImageButton
+        android:id="@+id/btn_add"
+        android:layout_width="42dp"
+        android:layout_height="42dp"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:background="@null"
+        android:padding="13dp"
+        android:scaleType="centerInside"
+        android:src="@drawable/ic_add"/>
+
+</RelativeLayout>

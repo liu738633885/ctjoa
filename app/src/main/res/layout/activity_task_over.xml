@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.ctj.oa.work.task.TaskOverActivity">
+
+    <com.ctj.oa.widgets.TitleBar
+        android:id="@+id/titleBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:center_text="完成任务"
+        app:right_text="提交"/>
+
+    <EditText
+        android:id="@id/edt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:gravity="left|top"
+        android:hint="请输入任务总结"
+        android:minHeight="250dp"
+        android:padding="15dp"
+        android:textColor="@color/black"
+        android:textColorHint="@color/gray03"
+        android:textSize="15sp"/>
+</LinearLayout>

@@ -1,0 +1,42 @@
+<resources>
+    <color name="color_dialog_gray">#ededf3</color>
+    <color name="color_dialog_content">#2bb7aa</color>
+    <color name="color_dialog_title">#303030</color>
+    <color name="color_dialog_content_prompt">#343434</color>
+
+    <color name="color_type_info">#79b3e4</color>
+    <color name="color_type_help">#e8bd4b</color>
+    <color name="color_type_wrong">#ed7861</color>
+    <color name="color_type_warning">#e8bd4b</color>
+    <color name="color_type_success">#90b06e</color>
+
+    <!--ainana-->
+    <color name="super_green_light">#a82bb9aa</color>
+    <color name="super_green">#2bb9aa</color>
+    <color name="super_green_dark">#239f92</color>
+    <!--loading颜色-->
+    <color name="loading">#e2e2e2</color>
+
+    <color name="wave_back">#b87fb8ff</color>
+    <color name="wave_above">#3c347fde</color>
+    <color name="wave_below">#282061b3</color>
+
+    <color name="black">#000000</color>
+    <color name="white">#ffffff</color>
+    <!--oa-->
+    <color name="line1">#eee</color>
+    <color name="super_blue">#3685e8</color>
+    <color name="super_blue2">#2068c2</color>
+    <color name="super_blue_dark">#424962</color>
+    <color name="super_red">#eb3e3b</color>
+    <color name="super_yellow">#ffe205</color>
+    <color name="super_orange">#fd703e</color>
+    <color name="bg_gray">#f4f4f4</color>
+    <!--副标题-->
+    <color name="gray01">#7f7f7f</color>
+    <!--小标题-->
+    <color name="gray02">#bfbfbf</color>
+    <!--底部未选中-->
+    <color name="gray03">#a9a9a9</color>
+
+</resources>

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical">
+
+    <com.hyphenate.chatuidemo.widget.ContactItemView
+        android:id="@+id/org_item"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:contactItemImage="@mipmap/contacts_tongshi"
+        app:contactItemName="同事"/>
+
+    <com.hyphenate.chatuidemo.widget.ContactItemView
+        android:id="@+id/robot_item"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:contactItemImage="@mipmap/contacts_hezuo"
+        app:contactItemName="合作伙伴"/>
+
+    <com.hyphenate.chatuidemo.widget.ContactItemView
+        android:id="@+id/application_item"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:contactItemImage="@mipmap/contacts_friend"
+        app:contactItemName="我的好友"/>
+
+    <com.hyphenate.chatuidemo.widget.ContactItemView
+        android:id="@+id/group_item"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:contactItemImage="@mipmap/contacts_group"
+        app:contactItemName="群组"/>
+
+    <com.hyphenate.chatuidemo.widget.ContactItemView
+        android:visibility="gone"
+        android:id="@+id/chat_room_item"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:contactItemImage="@mipmap/contacts_custom_group"
+        app:contactItemName="自定义组"/>
+
+</LinearLayout>
