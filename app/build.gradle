@@ -7,8 +7,8 @@ android {
         applicationId "com.ctj.oa"
         minSdkVersion 15
         targetSdkVersion 25
-        versionCode 17070602
-        versionName "1.1.8"
+        versionCode 17071401
+        versionName "1.1.9"
         multiDexEnabled true
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
@@ -36,6 +36,7 @@ android {
             zipAlignEnabled true
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
         }
     }
     sourceSets {

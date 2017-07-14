@@ -52,6 +52,7 @@ public class ChooseDeptUserActivity extends BaseActivity {
         rv = (RecyclerView) findViewById(R.id.rv);
         rv.setLayoutManager(new LinearLayoutManager(this));
         rv.setAdapter(adapter);
+        adapter.bindToRecyclerView(rv);
         adapter.setEmptyView(R.layout.empty_view);
         getDeptUser();
     }
