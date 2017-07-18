@@ -32,7 +32,16 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.ctj.oa.Constants;
 import com.ctj.oa.R;
+import com.ctj.oa.mine.UserProfileActivity;
+import com.ctj.oa.model.UserInfo;
+import com.ctj.oa.model.netmodel.NetBaseBean;
+import com.ctj.oa.net.CallServer;
+import com.ctj.oa.net.HttpListenerCallback;
+import com.ctj.oa.net.NetBaseRequest;
+import com.ctj.oa.net.RequsetFactory;
+import com.ctj.oa.utils.imageloader.ImageLoader;
 import com.hyphenate.chat.EMClient;
 import com.hyphenate.chat.EMConversation;
 import com.hyphenate.chat.EMConversation.EMConversationType;
@@ -47,9 +56,12 @@ import com.hyphenate.easeui.widget.EaseExpandGridView;
 import com.hyphenate.easeui.widget.EaseSwitchButton;
 import com.hyphenate.exceptions.HyphenateException;
 import com.hyphenate.util.EMLog;
+import com.lewis.utils.T;
+import com.orhanobut.logger.Logger;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 
 public class GroupDetailsActivity extends BaseActivity implements OnClickListener {
@@ -69,6 +81,7 @@ public class GroupDetailsActivity extends BaseActivity implements OnClickListene
 	private GridAdapter membersAdapter;
 	private OwnerAdminAdapter ownerAdminAdapter;
 	private ProgressDialog progressDialog;
+	private HashMap<String, UserInfo> map;
 
 	public static GroupDetailsActivity instance;
 
@@ -94,6 +107,7 @@ public class GroupDetailsActivity extends BaseActivity implements OnClickListene
 	    
         groupId = getIntent().getStringExtra("groupId");
         group = EMClient.getInstance().groupManager().getGroup(groupId);
+		Logger.d("groupId:" + groupId);
 
         // we are not supposed to show the group if we don't find the group
         if(group == null){
@@ -162,6 +176,7 @@ public class GroupDetailsActivity extends BaseActivity implements OnClickListene
         searchLayout.setOnClickListener(this);
 		blockOfflineLayout.setOnClickListener(this);
 	}
+
 
 
 
@@ -823,20 +838,30 @@ public class GroupDetailsActivity extends BaseActivity implements OnClickListene
 			final String username = getItem(position);
 			convertView.setVisibility(View.VISIBLE);
 			button.setVisibility(View.VISIBLE);
-			EaseUserUtils.setUserNick(username, holder.textView);
-			EaseUserUtils.setUserAvatar(getContext(), username, holder.imageView);
+			//EaseUserUtils.setUserNick(username, holder.textView);
+			//EaseUserUtils.setUserAvatar(getContext(), username, holder.imageView);
+			if (map != null && map.containsKey(username)) {
+				if (!TextUtils.isEmpty(map.get(username).getNickname())) {
+					holder.textView.setText(map.get(username).getNickname());
+				} else {
+					holder.textView.setText(username);
+				}
+				ImageLoader.loadHeadImage(GroupDetailsActivity.this, map.get(username).getPortrait(), holder.imageView, -1);
+			} else {
+				holder.textView.setText(username);
+			}
 
 			LinearLayout id_background = (LinearLayout) convertView.findViewById(R.id.l_bg_id);
 			id_background.setBackgroundColor(convertView.getResources().getColor(
 					position == 0 ? R.color.holo_red_light: R.color.holo_orange_light));
-			button.setOnClickListener(new OnClickListener() {
+			button.setOnLongClickListener(new View.OnLongClickListener() {
 				@Override
-				public void onClick(View v) {
+				public boolean onLongClick(View v) {
 					if (!isCurrentOwner(group)) {
-						return;
+						return true;
 					}
 					if (username.equals(group.getOwner())) {
-						return;
+						return true;
 					}
 					operationUserId = username;
 					Dialog dialog = createMemberMenuDialog();
@@ -857,6 +882,13 @@ public class GroupDetailsActivity extends BaseActivity implements OnClickListene
 					} catch (Exception e) {
 						e.printStackTrace();
 					}
+					return true;
+				}
+			});
+			button.setOnClickListener(new OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					UserProfileActivity.goToFinish(GroupDetailsActivity.this, username);
 				}
 			});
 			return convertView;
@@ -922,9 +954,19 @@ public class GroupDetailsActivity extends BaseActivity implements OnClickListene
 			} else {
 				// members
 				final String username = getItem(position);
-				EaseUserUtils.setUserNick(username, holder.textView);
-				EaseUserUtils.setUserAvatar(getContext(), username, holder.imageView);
-
+				/*EaseUserUtils.setUserNick(username, holder.textView);
+				EaseUserUtils.setUserAvatar(getContext(), username, holder.imageView);*/
+				if (map != null && map.containsKey(username)) {
+					if (!TextUtils.isEmpty(map.get(username).getNickname())) {
+						holder.textView.setText(map.get(username).getNickname());
+					} else {
+						holder.textView.setText(username);
+					}
+					ImageLoader.loadHeadImage(GroupDetailsActivity.this, map.get(username).getPortrait(), holder.imageView, -1);
+				} else {
+					holder.textView.setText(username);
+				}
+				/*=====*/
 				LinearLayout id_background = (LinearLayout) convertView.findViewById(R.id.l_bg_id);
 				if (isInMuteList(username)) {
 					id_background.setBackgroundColor(convertView.getResources().getColor(R.color.gray_normal));
@@ -933,12 +975,18 @@ public class GroupDetailsActivity extends BaseActivity implements OnClickListene
 				} else {
 					id_background.setBackgroundColor(convertView.getResources().getColor(R.color.holo_blue_bright));
 				}
-
 				button.setOnClickListener(new OnClickListener() {
 					@Override
 					public void onClick(View v) {
+						UserProfileActivity.goToFinish(GroupDetailsActivity.this, username);
+					}
+				});
+
+				button.setOnLongClickListener(new View.OnLongClickListener() {
+					@Override
+					public boolean onLongClick(View v) {
 						if (!isCurrentOwner(group) && !isCurrentAdmin(group)) {
-							return;
+							return true;
 						}
 						operationUserId = username;
 						Dialog dialog = createMemberMenuDialog();
@@ -990,6 +1038,7 @@ public class GroupDetailsActivity extends BaseActivity implements OnClickListene
 						} catch (Exception e) {
 							e.printStackTrace();
 						}
+						return true;
 					}
 				});
 			}
@@ -1004,6 +1053,38 @@ public class GroupDetailsActivity extends BaseActivity implements OnClickListene
 	}
 
 	protected void updateGroup() {
+		NetBaseRequest request = RequsetFactory.creatBaseRequest(Constants.GET_GROUP_USER);
+		request.add("group_id", groupId);
+		CallServer.getRequestInstance().add(this, 0x01, request, new HttpListenerCallback() {
+			@Override
+			public void onSucceed(int what, NetBaseBean netBaseBean) {
+				if (netBaseBean.isSuccess()) {
+					List<UserInfo> userInfos = netBaseBean.parseList(UserInfo.class);
+					if (userInfos != null && userInfos.size() > 0) {
+						map = new HashMap<String, UserInfo>();
+						for (UserInfo userInfo : userInfos) {
+							/*EaseUser easeUser = new EaseUser(userInfo.getId() + "");
+							easeUser.setAvatar(userInfo.getPortrait());
+							easeUser.setNickname(userInfo.getNickname());
+							DemoHelper.getInstance().saveContact(easeUser);*/
+							map.put(userInfo.getId() + "", userInfo);
+						}
+					}
+					updateGroupold();
+				} else {
+					T.showShort(GroupDetailsActivity.this, netBaseBean.getMessage());
+					updateGroupold();
+				}
+			}
+
+			@Override
+			public void onFailed(int what, String url, Object tag, Exception exception, int responseCode, long networkMillis) {
+				updateGroupold();
+			}
+		}, true, true);
+	}
+
+	protected void updateGroupold() {
 		new Thread(new Runnable() {
 			public void run() {
 				try {

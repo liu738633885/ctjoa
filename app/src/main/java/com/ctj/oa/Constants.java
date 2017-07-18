@@ -68,6 +68,7 @@ public class Constants {
     public static final String EDIT_PASSWORD = _USER + "editPassword";
     public static final String USER_FEEDBACK = _USER + "user_feedback";
     public static final String GET_FIELD_INFO = _USER + "getFieldInfo";
+    public static final String GET_GROUP_USER = _USER + "get_group_user";
     /**
      * ====Attend========
      */
