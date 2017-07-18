@@ -137,9 +137,15 @@ public class WebViewActivity extends BaseActivity implements View.OnClickListene
         webSetting.setDomStorageEnabled(true);
         webSetting.setAllowFileAccess(true);
         webSetting.setAppCacheEnabled(true);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            webSetting.setMixedContentMode(WebSettings.MIXED_CONTENT_ALWAYS_ALLOW);
+        try {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                webSetting.setMixedContentMode(WebSettings.MIXED_CONTENT_ALWAYS_ALLOW);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
+
+
     }
 
     public boolean onKeyDown(int keyCode, KeyEvent event) {

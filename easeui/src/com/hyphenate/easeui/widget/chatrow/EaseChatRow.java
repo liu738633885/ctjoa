@@ -21,9 +21,7 @@ import com.hyphenate.easeui.adapter.EaseMessageAdapter;
 import com.hyphenate.easeui.utils.EaseUserUtils;
 import com.hyphenate.easeui.widget.EaseChatMessageList;
 import com.hyphenate.easeui.widget.EaseChatMessageList.MessageListItemClickListener;
-import com.hyphenate.util.DateUtils;
-
-import java.util.Date;
+import com.lewis.utils.DateUtils;
 
 public abstract class EaseChatRow extends LinearLayout {
     protected static final String TAG = EaseChatRow.class.getSimpleName();
@@ -101,7 +99,8 @@ public abstract class EaseChatRow extends LinearLayout {
         TextView timestamp = (TextView) findViewById(R.id.timestamp);
         if (timestamp != null) {
             if (position == 0) {
-                timestamp.setText(DateUtils.getTimestampString(new Date(message.getMsgTime())));
+                //timestamp.setText(DateUtils.getTimestampString(new Date(message.getMsgTime())));
+                timestamp.setText(DateUtils.translateDate3(message.getMsgTime()));
                 timestamp.setVisibility(View.VISIBLE);
             } else {
             	// show time stamp if interval with last message is > 30 seconds
@@ -109,7 +108,8 @@ public abstract class EaseChatRow extends LinearLayout {
                 if (prevMessage != null && DateUtils.isCloseEnough(message.getMsgTime(), prevMessage.getMsgTime())) {
                     timestamp.setVisibility(View.GONE);
                 } else {
-                    timestamp.setText(DateUtils.getTimestampString(new Date(message.getMsgTime())));
+                    //timestamp.setText(DateUtils.getTimestampString(new Date(message.getMsgTime())));
+                    timestamp.setText(DateUtils.translateDate3(message.getMsgTime()));
                     timestamp.setVisibility(View.VISIBLE);
                 }
             }

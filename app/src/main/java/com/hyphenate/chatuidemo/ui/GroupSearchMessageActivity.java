@@ -26,9 +26,8 @@ import com.hyphenate.chat.EMConversation.EMSearchDirection;
 import com.hyphenate.chat.EMMessage;
 import com.hyphenate.chat.EMTextMessageBody;
 import com.hyphenate.easeui.utils.EaseUserUtils;
-import com.hyphenate.util.DateUtils;
+import com.lewis.utils.DateUtils;
 
-import java.util.Date;
 import java.util.List;
 
 public class GroupSearchMessageActivity extends BaseActivity implements OnClickListener {
@@ -178,7 +177,8 @@ public class GroupSearchMessageActivity extends BaseActivity implements OnClickL
             EMMessage message = getItem(position);
             EaseUserUtils.setUserNick(message.getFrom(), holder.name);
             EaseUserUtils.setUserAvatar(getContext(), message.getFrom(), holder.avatar);
-            holder.time.setText(DateUtils.getTimestampString(new Date(message.getMsgTime())));
+            //holder.time.setText(DateUtils.getTimestampString(new Date(message.getMsgTime())));
+            holder.time.setText(DateUtils.translateDate3(message.getMsgTime()));
             holder.message.setText(((EMTextMessageBody)message.getBody()).getMessage());
             
             

@@ -2,6 +2,8 @@ package com.lewis.utils;
 
 import android.text.TextUtils;
 
+import com.orhanobut.logger.Logger;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -226,17 +228,18 @@ public class DateUtils {
      * @return
      */
     public static String translateDate2(long time, long curTime) {
-        long oneDay = 24 * 60 * 60;
+        Logger.d(time + "===" + curTime);
+        long oneDay = 24 * 60 * 60 * 1000;
         Calendar today = Calendar.getInstance();    //今天
-        today.setTimeInMillis(curTime * 1000);
+        today.setTimeInMillis(curTime);
         today.set(Calendar.HOUR_OF_DAY, 0);
         today.set(Calendar.MINUTE, 0);
         today.set(Calendar.SECOND, 0);
-        long todayStartTime = today.getTimeInMillis() / 1000;
+        long todayStartTime = today.getTimeInMillis();
         if (time >= todayStartTime) {
-            long d = curTime - time;
-            if (d <= 60) {
-                return "1分钟前";
+            long d = curTime / 1000 - time / 1000;
+            if (d <= 30) {
+                return "刚刚";
             } else if (d <= 60 * 60) {
                 long m = d / 60;
                 if (m <= 0) {
@@ -245,7 +248,7 @@ public class DateUtils {
                 return m + "分钟前";
             } else {
                 SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm");
-                Date date = new Date(time * 1000);
+                Date date = new Date(time);
                 String dateStr = dateFormat.format(date);
                 if (!TextUtils.isEmpty(dateStr) && dateStr.contains(" 0")) {
                     dateStr = dateStr.replace(" 0", " ");
@@ -255,7 +258,7 @@ public class DateUtils {
         } else {
             if (time < todayStartTime && time > todayStartTime - oneDay) {
                 SimpleDateFormat dateFormat = new SimpleDateFormat("昨天 HH:mm");
-                Date date = new Date(time * 1000);
+                Date date = new Date(time);
                 String dateStr = dateFormat.format(date);
                 if (!TextUtils.isEmpty(dateStr) && dateStr.contains(" 0")) {
 
@@ -264,15 +267,15 @@ public class DateUtils {
                 return dateStr;
             } else if (time < todayStartTime - oneDay && time > todayStartTime - 2 * oneDay) {
                 SimpleDateFormat dateFormat = new SimpleDateFormat("前天 HH:mm");
-                Date date = new Date(time * 1000);
+                Date date = new Date(time);
                 String dateStr = dateFormat.format(date);
                 if (!TextUtils.isEmpty(dateStr) && dateStr.contains(" 0")) {
                     dateStr = dateStr.replace(" 0", " ");
                 }
                 return dateStr;
             } else {
-                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-                Date date = new Date(time * 1000);
+                SimpleDateFormat dateFormat = new SimpleDateFormat("MM月dd日 HH:mm");
+                Date date = new Date(time);
                 String dateStr = dateFormat.format(date);
                 if (!TextUtils.isEmpty(dateStr) && dateStr.contains(" 0")) {
                     dateStr = dateStr.replace(" 0", " ");
@@ -283,6 +286,18 @@ public class DateUtils {
     }
 
     public static String translateDate3(String time) {
-        return translateDate2(Long.parseLong(time), System.currentTimeMillis() / 1000);
+        return translateDate2(Long.parseLong(time), System.currentTimeMillis());
+    }
+
+    public static String translateDate3(Long time) {
+        return translateDate2(time, System.currentTimeMillis());
+    }
+    public static boolean isCloseEnough(long var0, long var2) {
+        long var4 = var0 - var2;
+        if(var4 < 0L) {
+            var4 = -var4;
+        }
+
+        return var4 < 30000L;
     }
 }
