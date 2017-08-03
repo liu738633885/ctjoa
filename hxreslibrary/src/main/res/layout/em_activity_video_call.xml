@@ -10,7 +10,6 @@
         android:id="@+id/opposite_surface"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
-
     <RelativeLayout
         android:id="@+id/ll_btns"
         android:layout_width="match_parent"
@@ -74,7 +73,8 @@
             android:visibility="gone"
             />
         
-        <Button 
+        <Button
+            android:visibility="gone"
             android:id="@+id/btn_switch_camera"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -82,6 +82,7 @@
             android:layout_below="@id/btn_record_video"
             />
         <Button
+            android:visibility="gone"
             android:id="@+id/btn_capture_image"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -89,6 +90,7 @@
             android:layout_below="@id/btn_switch_camera"
             />
         <SeekBar
+            android:visibility="gone"
             android:id="@+id/seekbar_y_detal"
             android:layout_width="200dp"
             android:layout_height="wrap_content"
@@ -107,14 +109,15 @@
         
         <TextView 
             android:id="@+id/tv_call_monitor"
+            android:visibility="gone"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_above="@+id/local_surface"
             android:layout_alignParentRight="true"
             android:textColor="#afff"
             android:textSize="12sp"
             android:layout_marginBottom="6dp"
             />
+        <!--  android:layout_above="@+id/local_surface"-->
         <com.hyphenate.media.EMLocalSurfaceView
             android:id="@+id/local_surface"
             android:layout_width="100dp"
@@ -242,6 +245,7 @@
             </LinearLayout>
         </LinearLayout>
     </RelativeLayout>
+
     
     <TextView
         android:id="@+id/tv_network_status"

@@ -43,6 +43,7 @@ import com.hyphenate.chat.EMCallManager.EMVideoCallHelper;
 import com.hyphenate.chat.EMCallStateChangeListener;
 import com.hyphenate.chat.EMClient;
 import com.hyphenate.chatuidemo.DemoHelper;
+import com.hyphenate.easeui.utils.EaseUserUtils;
 import com.hyphenate.exceptions.HyphenateException;
 import com.hyphenate.media.EMLocalSurfaceView;
 import com.hyphenate.media.EMOppositeSurfaceView;
@@ -168,7 +169,7 @@ public class VideoCallActivity extends CallActivity implements OnClickListener {
         isInComingCall = getIntent().getBooleanExtra("isComingCall", false);
         username = getIntent().getStringExtra("username");
 
-        nickTextView.setText(username);
+        nickTextView.setText(EaseUserUtils.getUserInfo(username).getNickname());
 
         // local surfaceview
         localSurface = (EMLocalSurfaceView) findViewById(R.id.local_surface);

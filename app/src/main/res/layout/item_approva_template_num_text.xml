@@ -5,9 +5,6 @@
               android:layout_marginBottom="1dp"
               android:background="@color/white"
               android:orientation="vertical"
-              android:paddingBottom="20dp"
-              android:paddingLeft="16dp"
-              android:paddingRight="16dp"
               android:paddingTop="20dp"
     >
 
@@ -16,14 +13,19 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="数字文本"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
         android:textColor="@color/gray01"
         android:textSize="15sp"/>
 
     <EditText
+        android:paddingBottom="20dp"
+        android:paddingLeft="16dp"
         android:id="@+id/edt"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:paddingRight="16dp"
+        android:paddingTop="20dp"
         android:background="@null"
         android:ellipsize="end"
         android:imeOptions="actionDone"

@@ -238,6 +238,7 @@ public class TitleBar extends FrameLayout {
             right_imv.setVisibility(View.INVISIBLE);
         }
         right_tv.setVisibility(View.VISIBLE);
+        right.setVisibility(View.VISIBLE);
     }
 
     private void setDefaultLeft() {

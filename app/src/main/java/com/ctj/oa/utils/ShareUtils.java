@@ -9,13 +9,13 @@ import android.text.TextUtils;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
+import com.ctj.oa.R;
 import com.tencent.mm.opensdk.modelmsg.SendMessageToWX;
 import com.tencent.mm.opensdk.modelmsg.WXMediaMessage;
 import com.tencent.mm.opensdk.modelmsg.WXWebpageObject;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 
-import static com.xiaomi.push.thrift.a.R;
 
 
 /**
@@ -31,7 +31,7 @@ public class ShareUtils {
     public static final int SHARE_TO_FAVORITE = SendMessageToWX.Req.WXSceneFavorite;
 
     public static void ShareWX(Context context, String shareUrl, String title, String description, Bitmap bitmap, int shareStyle) {
-      /*  IWXAPI msgApi = WXAPIFactory.createWXAPI(context, "wx5bb1152c4f7a21d4");
+        IWXAPI msgApi = WXAPIFactory.createWXAPI(context, "wx2be5d3f05af61ca3");
         //初始化一个WXWebpageObject对象，填写Url
         WXWebpageObject webPage = new WXWebpageObject();
         webPage.webpageUrl = shareUrl;
@@ -46,26 +46,26 @@ public class ShareUtils {
         req.transaction = "webPage" + System.currentTimeMillis();
         req.message = msg;
         req.scene = shareStyle;
-        msgApi.sendReq(req);*/
+        msgApi.sendReq(req);
     }
 
     public static void ShareWX(final Context context, final String shareUrl, final String title, final String description, String imgurl, final int shareStyle) {
-        /*if (TextUtils.isEmpty(imgurl)) {
-            ShareWX(context, shareUrl, title, description, BitmapFactory.decodeResource(context.getResources(), R.mipmap.app_icon), shareStyle);
+        if (TextUtils.isEmpty(imgurl)) {
+            ShareWX(context, shareUrl, title, description, BitmapFactory.decodeResource(context.getResources(), R.mipmap.ic_launcher_round2), shareStyle);
             return;
         }
         Glide.with(context).load(imgurl).asBitmap().into(new SimpleTarget<Bitmap>(200, 200) {
             @Override
             public void onLoadFailed(Exception e, Drawable errorDrawable) {
                 super.onLoadFailed(e, errorDrawable);
-                ShareWX(context, shareUrl, title, description, BitmapFactory.decodeResource(context.getResources(), R.mipmap.app_icon), shareStyle);
+                ShareWX(context, shareUrl, title, description, BitmapFactory.decodeResource(context.getResources(), R.mipmap.ic_launcher_round2), shareStyle);
             }
 
             @Override
             public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
                 ShareWX(context, shareUrl, title, description, resource, shareStyle);
             }
-        });*/
+        });
     }
 
 }

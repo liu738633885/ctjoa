@@ -29,6 +29,7 @@ import com.ctj.oa.net.HttpListenerCallback;
 import com.ctj.oa.net.NetBaseRequest;
 import com.ctj.oa.net.RequsetFactory;
 import com.ctj.oa.utils.GoToUtils;
+import com.ctj.oa.utils.manager.UserManager;
 import com.hyphenate.chat.EMClient;
 import com.hyphenate.chat.EMCmdMessageBody;
 import com.hyphenate.chat.EMGroup;
@@ -38,6 +39,7 @@ import com.hyphenate.chatuidemo.Constant;
 import com.hyphenate.chatuidemo.DemoHelper;
 import com.hyphenate.chatuidemo.domain.EmojiconExampleGroupData;
 import com.hyphenate.chatuidemo.domain.RobotUser;
+import com.hyphenate.chatuidemo.widget.ChatRowLocation;
 import com.hyphenate.chatuidemo.widget.ChatRowVoiceCall;
 import com.hyphenate.easeui.EaseConstant;
 import com.hyphenate.easeui.domain.EaseUser;
@@ -113,7 +115,7 @@ public class ChatFragment extends EaseChatFragment implements EaseChatFragmentHe
             @Override
             public void onFailed(int what, String url, Object tag, Exception exception, int responseCode, long networkMillis) {
             }
-        }, true, true);
+        }, true, false);
     }
 
     @Override
@@ -168,8 +170,8 @@ public class ChatFragment extends EaseChatFragment implements EaseChatFragmentHe
         //use the menu in base class
         super.registerExtendMenuItem();
         //extend menu items
-        inputMenu.registerExtendMenuItem(R.string.attach_video, R.drawable.em_chat_video_selector, ITEM_VIDEO, extendMenuItemClickListener);
-        inputMenu.registerExtendMenuItem(R.string.attach_file, R.drawable.em_chat_file_selector, ITEM_FILE, extendMenuItemClickListener);
+        //inputMenu.registerExtendMenuItem(R.string.attach_video, R.drawable.em_chat_video_selector, ITEM_VIDEO, extendMenuItemClickListener);
+        //inputMenu.registerExtendMenuItem(R.string.attach_file, R.drawable.em_chat_file_selector, ITEM_FILE, extendMenuItemClickListener);
         if (chatType == Constant.CHATTYPE_SINGLE) {
             inputMenu.registerExtendMenuItem(R.string.attach_voice_call, R.drawable.em_chat_voice_call_selector, ITEM_VOICE_CALL, extendMenuItemClickListener);
             inputMenu.registerExtendMenuItem(R.string.attach_video_call, R.drawable.em_chat_video_call_selector, ITEM_VIDEO_CALL, extendMenuItemClickListener);
@@ -252,6 +254,9 @@ public class ChatFragment extends EaseChatFragment implements EaseChatFragmentHe
             //set message extension
             message.setAttribute("em_robot_message", isRobot);
         }
+        // 通过扩展属性，将userPic和userName发送出去。
+        message.setAttribute("userAvatar", UserManager.getPortrait());
+        message.setAttribute("userNick", UserManager.getNickname());
     }
 
     @Override
@@ -456,11 +461,19 @@ public class ChatFragment extends EaseChatFragment implements EaseChatFragmentHe
                     return new ChatRowRedPacketAck(getActivity(), message, position, adapter);
                 }*/
                 //end of red packet code
+            } else if (message.getType() == EMMessage.Type.LOCATION) {
+                return new ChatRowLocation(getActivity(), message, position, adapter);
             }
             return null;
         }
 
     }
+
+    @Override
+    public void gotoMap() {
+        startActivityForResult(new Intent(getActivity(), EaseMapActivity.class), REQUEST_CODE_MAP);
+    }
+
 
     @Override
     public void onDestroy() {

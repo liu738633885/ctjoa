@@ -87,7 +87,7 @@ public class ImageLoader {
     }
 
     public static void loadSplashImage(Context context, String url, ImageView imv) {
-        Glide.with(context).load(url).placeholder(R.mipmap.splash).diskCacheStrategy(DiskCacheStrategy.NONE).centerCrop().into(imv);
+        Glide.with(context).load(url).placeholder(R.mipmap.splash).diskCacheStrategy(DiskCacheStrategy.NONE).into(imv);
     }
 
 

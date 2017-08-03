@@ -103,7 +103,7 @@
                 android:layout_alignParentRight="true"
                 android:layout_marginRight="10dp"
                 android:layout_marginTop="3dp"
-                android:background="@drawable/ic_round_red"
+                android:background="@drawable/shape_badge_red"
                 android:visibility="invisible"/>
         </RelativeLayout>
 
@@ -123,7 +123,7 @@
                 android:paddingBottom="5dp"
                 android:paddingTop="6dp"
                 android:scaleType="matrix"
-                android:text="工作"
+                android:text="协仝"
                 android:textColor="@color/em_main_botton_text_color"
                 android:textSize="10sp"/>
         </RelativeLayout>

@@ -37,6 +37,7 @@ import com.ctj.oa.R;
 import com.hyphenate.chat.EMCallStateChangeListener;
 import com.hyphenate.chat.EMClient;
 import com.hyphenate.chatuidemo.DemoHelper;
+import com.hyphenate.easeui.utils.EaseUserUtils;
 import com.hyphenate.exceptions.HyphenateException;
 import com.hyphenate.util.EMLog;
 
@@ -52,7 +53,7 @@ public class VoiceCallActivity extends CallActivity implements OnClickListener {
 	private Button refuseBtn;
 	private Button answerBtn;
 	private ImageView muteImage;
-	private ImageView handsFreeImage;
+    private ImageView handsFreeImage, swing_card;
 
 	private boolean isMuteState;
 	private boolean isHandsfreeState;
@@ -82,8 +83,9 @@ public class VoiceCallActivity extends CallActivity implements OnClickListener {
 		answerBtn = (Button) findViewById(R.id.btn_answer_call);
 		hangupBtn = (Button) findViewById(R.id.btn_hangup_call);
 		muteImage = (ImageView) findViewById(R.id.iv_mute);
-		handsFreeImage = (ImageView) findViewById(R.id.iv_handsfree);
-		callStateTextView = (TextView) findViewById(R.id.tv_call_state);
+        swing_card = (ImageView) findViewById(R.id.swing_card);
+        handsFreeImage = (ImageView) findViewById(R.id.iv_handsfree);
+        callStateTextView = (TextView) findViewById(R.id.tv_call_state);
         TextView nickTextView = (TextView) findViewById(R.id.tv_nick);
         TextView durationTextView = (TextView) findViewById(R.id.tv_calling_duration);
 		chronometer = (Chronometer) findViewById(R.id.chronometer);
@@ -105,10 +107,11 @@ public class VoiceCallActivity extends CallActivity implements OnClickListener {
 
 		username = getIntent().getStringExtra("username");
 		isInComingCall = getIntent().getBooleanExtra("isComingCall", false);
-		nickTextView.setText(username);
-		if (!isInComingCall) {// outgoing call
-			soundPool = new SoundPool(1, AudioManager.STREAM_RING, 0);
-			outgoing = soundPool.load(this, R.raw.em_outgoing, 1);
+        nickTextView.setText(EaseUserUtils.getUserInfo(username).getNickname());
+        EaseUserUtils.setUserAvatar(this, username, swing_card);
+        if (!isInComingCall) {// outgoing call
+            soundPool = new SoundPool(1, AudioManager.STREAM_RING, 0);
+            outgoing = soundPool.load(this, R.raw.em_outgoing, 1);
 
 			comingBtnContainer.setVisibility(View.INVISIBLE);
 			hangupBtn.setVisibility(View.VISIBLE);

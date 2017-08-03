@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">OA系统</string>
+    <string name="app_name">仝君协仝</string>
     <string name="long_text">这是一段长文字这是dasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdas一段长文字这是一段长文字这是一段长文字这是一段长文字这是一段长文字这是一段长文字这是一段长文字这是一段长文字这是一段长文字这是一段长文字这是一段长文字这是一段长文字这是一段长文字这是一段长文字这是一段长文字这是一段长文字这是一段长文字这是一段长文字这是一段长文字这是一段长文字这是一段长文字这是一段长文字这是一段长文字</string>
     <string name="middle_text">百度百科是一部内容开放、自由的网络百科全书,旨在创造一个涵盖所有领域知识,服务所有互联网用户的中文知识性百科全书。在这里你可以参与词条编辑,分享贡献你的知识。</string>
     <string name="no_permission">没有权限</string>
@@ -19,4 +19,11 @@
     <string name="error_unknow">未知错误。</string>
     <string name="error_response_code">服务器响应码%1$d</string>
     <string name="error_response_code_dex">服务器响应码%1$d，如果你们服务器在这种情况下也返回数据你可以处理。</string>
+    <!--weixin-->
+    <string name="errcode_success">发送成功</string>
+    <string name="errcode_cancel">发送取消</string>
+    <string name="errcode_deny">发送被拒绝</string>
+    <string name="errcode_unsupported">不支持错误</string>
+    <string name="errcode_unknown">发送返回</string>
+
 </resources>

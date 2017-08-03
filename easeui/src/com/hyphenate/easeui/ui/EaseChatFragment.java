@@ -644,6 +644,7 @@ public class EaseChatFragment extends EaseBaseFragment implements EMMessageListe
                 selectPicFromLocal();
                 break;
             case ITEM_LOCATION:
+                gotoMap();
                 //startActivityForResult(new Intent(getActivity(), EaseBaiduMapActivity.class), REQUEST_CODE_MAP);
                 break;
 
@@ -653,7 +654,10 @@ public class EaseChatFragment extends EaseBaseFragment implements EMMessageListe
         }
 
     }
-    
+
+    public void gotoMap() {
+    }
+
     /**
      * input @
      * @param username

@@ -231,9 +231,9 @@ public class EaseMessageAdapter extends BaseAdapter{
                 chatRow = new EaseChatRowText(context, message, position, this);
             }
             break;
-        case LOCATION:
+      /*  case LOCATION:
             chatRow = new EaseChatRowLocation(context, message, position, this);
-            break;
+            break;*/
         case FILE:
             chatRow = new EaseChatRowFile(context, message, position, this);
             break;

@@ -40,7 +40,7 @@ public class TaskDetailActivity extends BaseActivity implements BaseQuickAdapter
     private RecyclerView rv;
     private View headView;
     private int pagerNum;
-    private TextView tv1, tv2, tv3, tv4, tv5, tv6, tv7, tv8, tv9;
+    private TextView tv0,tv1, tv2, tv3, tv4, tv5, tv6, tv7, tv8, tv9;
     private Button btn1, btn_accept, btn_over, btn_cancel, btn_ok, btn_not, btn_recover;
     private Task task;
 
@@ -65,6 +65,7 @@ public class TaskDetailActivity extends BaseActivity implements BaseQuickAdapter
         rv.setLayoutManager(new LinearLayoutManager(this));
         rv.setAdapter(adapter);
         headView = LayoutInflater.from(this).inflate(R.layout.headview_task_detail, (ViewGroup) rv.getParent(), false);
+        tv0 = (TextView) headView.findViewById(R.id.tv0);
         tv1 = (TextView) headView.findViewById(R.id.tv1);
         tv2 = (TextView) headView.findViewById(R.id.tv2);
         tv3 = (TextView) headView.findViewById(R.id.tv3);
@@ -108,6 +109,7 @@ public class TaskDetailActivity extends BaseActivity implements BaseQuickAdapter
                 if (netBaseBean.isSuccess()) {
                     task = netBaseBean.parseObject(Task.class);
                     try {
+                        tv0.setText(task.getDesc());
                         tv1.setText(task.getTitle());
                         tv2.setText(task.getUpdate_time());
                         btn1.setVisibility(task.getIs_discuss() == 1 ? View.VISIBLE : View.GONE);

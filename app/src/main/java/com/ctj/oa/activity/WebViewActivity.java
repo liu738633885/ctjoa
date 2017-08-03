@@ -17,6 +17,7 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
 import com.ctj.oa.R;
+import com.ctj.oa.utils.ShareUtils;
 import com.ctj.oa.widgets.TitleBar;
 import com.lewis.widgets.LewisSwipeRefreshLayout;
 import com.orhanobut.logger.Logger;
@@ -75,7 +76,7 @@ public class WebViewActivity extends BaseActivity implements View.OnClickListene
             titleBar.getRightGroup().setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    
+                    ShareUtils.ShareWX(WebViewActivity.this, url, "仝君协仝", "仝君协仝-互联网工作平台，轻松实现自由工作！邀您使用：https://m.jingoal.com ", "", ShareUtils.SHARE_TO_SESSION);
                 }
             });
         }
@@ -137,13 +138,13 @@ public class WebViewActivity extends BaseActivity implements View.OnClickListene
         webSetting.setDomStorageEnabled(true);
         webSetting.setAllowFileAccess(true);
         webSetting.setAppCacheEnabled(true);
-        try {
+       /* try {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
                 webSetting.setMixedContentMode(WebSettings.MIXED_CONTENT_ALWAYS_ALLOW);
             }
         } catch (Exception e) {
             e.printStackTrace();
-        }
+        }*/
 
 
     }
