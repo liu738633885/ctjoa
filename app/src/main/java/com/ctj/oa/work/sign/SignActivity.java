@@ -1,5 +1,7 @@
 package com.ctj.oa.work.sign;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 import android.location.Location;
@@ -52,6 +54,7 @@ public class SignActivity extends BaseActivity {
     private String address;
     private Location mlocation;
     private Shift shift;
+    private SignRecord signRecord;
 
     @Override
     protected int getContentViewId() {
@@ -134,6 +137,29 @@ public class SignActivity extends BaseActivity {
             T.showShort(this, "还没有定位成功,定位不准确");
             //return;
         }
+        if (signRecord == null || signRecord.getAdd_time() == 0) {
+            AlertDialog alertDialog = new AlertDialog.Builder(this).setTitle("温馨提示").setMessage("是否要打卡签到?").setNegativeButton("马上签到", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    callAddSingn();
+                }
+            }).setPositiveButton("暂不签到", null).create();
+            alertDialog.show();
+        } else if (signRecord.getAdd_time() != 0 && signRecord.getCheck_time() == 0) {
+            AlertDialog alertDialog = new AlertDialog.Builder(this).setTitle("温馨提示").setMessage("是否要打卡签退?").setNegativeButton("马上签退", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    callAddSingn();
+                }
+            }).setPositiveButton("暂不签退", null).create();
+            alertDialog.show();
+        } else if (signRecord.getCheck_time() != 0) {
+            AlertDialog alertDialog = new AlertDialog.Builder(this).setTitle("温馨提示").setMessage("你已经签过退!").setNegativeButton("确定", null).create();
+            alertDialog.show();
+        }
+    }
+
+    private void callAddSingn() {
         NetBaseRequest request = RequsetFactory.creatBaseRequest(Constants.SIGN);
         request.add("address", address);
         request.add("longitude", mlocation.getLongitude());
@@ -161,7 +187,7 @@ public class SignActivity extends BaseActivity {
             @Override
             public void onSucceed(int what, NetBaseBean netBaseBean) {
                 if (netBaseBean.isSuccess()) {
-                    SignRecord signRecord = netBaseBean.parseObject(SignRecord.class);
+                    signRecord = netBaseBean.parseObject(SignRecord.class);
                     updateRv(signRecord);
                 } else {
                     T.showShort(SignActivity.this, netBaseBean.getMessage());
