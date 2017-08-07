@@ -120,10 +120,16 @@ public class GroupsActivity extends BaseActivity {
 					intent.putExtra("userId", groupAdapter.getItem(position - 3).getGroupId());
 					startActivityForResult(intent, 0);
 				}*/
-				Intent intent = new Intent(GroupsActivity.this, ChatActivity.class);
-				intent.putExtra("chatType", Constant.CHATTYPE_GROUP);
-				intent.putExtra("userId", groupAdapter.getItem(position).getGroupId());
-				startActivityForResult(intent, 0);
+				if (position == 0) {
+					// create a new group
+					startActivityForResult(new Intent(GroupsActivity.this, NewGroupActivity.class), 0);
+				}else {
+					Intent intent = new Intent(GroupsActivity.this, ChatActivity.class);
+					intent.putExtra("chatType", Constant.CHATTYPE_GROUP);
+					intent.putExtra("userId", groupAdapter.getItem(position-1).getGroupId());
+					startActivityForResult(intent, 0);
+				}
+
 			}
 
 		});

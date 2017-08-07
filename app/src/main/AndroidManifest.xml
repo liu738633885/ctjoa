@@ -495,6 +495,11 @@
         </activity>
         <activity android:name="com.hyphenate.chatuidemo.ui.EaseMapActivity">
         </activity>
+        <activity
+            android:name="com.hyphenate.chatuidemo.ui.NewGroupActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/horizontal_slide"
+            android:windowSoftInputMode="adjustPan"/>
     </application>
 
 </manifest>
