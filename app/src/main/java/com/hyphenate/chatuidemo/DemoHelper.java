@@ -681,7 +681,8 @@ public class DemoHelper {
             for (String member : mutes) {
                 sb.append(member).append(",");
             }
-            showToast("onMuterListAdded: " + sb.toString());
+            //showToast("onMuterListAdded: " + sb.toString());
+            //showToast("您已被禁言");
         }
 
 
@@ -691,35 +692,36 @@ public class DemoHelper {
             for (String member : mutes) {
                 sb.append(member).append(",");
             }
-            showToast("onMuterListRemoved: " + sb.toString());
+            //showToast("onMuterListRemoved: " + sb.toString());
+            //showToast("您被解除禁言了");
         }
 
 
         @Override
         public void onAdminAdded(String groupId, String administrator) {
-            showToast("onAdminAdded: " + administrator);
+            //showToast("onAdminAdded: " + administrator);
         }
 
         @Override
         public void onAdminRemoved(String groupId, String administrator) {
-            showToast("onAdminRemoved: " + administrator);
+            //showToast("onAdminRemoved: " + administrator);
         }
 
         @Override
         public void onOwnerChanged(String groupId, String newOwner, String oldOwner) {
-            showToast("onOwnerChanged new:" + newOwner + " old:" + oldOwner);
+            //showToast("onOwnerChanged new:" + newOwner + " old:" + oldOwner);
         }
 
         @Override
         public void onMemberJoined(String groupId, String member) {
             EMLog.d(TAG, "onMemberJoined");
-            showToast("onMemberJoined: " + member);
+            //showToast("onMemberJoined: " + member);
         }
 
         @Override
         public void onMemberExited(String groupId, String member) {
             EMLog.d(TAG, "onMemberJoined");
-            showToast("onMemberExited: " + member);
+            //showToast("onMemberExited: " + member);
         }
         // ============================= group_reform new add api end
     }

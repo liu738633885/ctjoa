@@ -523,6 +523,7 @@ public class GroupDetailsActivity extends BaseActivity implements OnClickListene
 							progressDialog.dismiss();
 						}
 					});
+					T.showShort(GroupDetailsActivity.this, "请求已发送");
 				} catch (final Exception e) {
 					runOnUiThread(new Runnable() {
 						public void run() {
