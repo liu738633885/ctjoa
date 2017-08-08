@@ -24,8 +24,8 @@ import com.ctj.oa.net.CallServer;
 import com.ctj.oa.net.HttpListenerCallback;
 import com.ctj.oa.net.NetBaseRequest;
 import com.ctj.oa.net.RequsetFactory;
-import com.ctj.oa.utils.manager.UserManager;
 import com.ctj.oa.utils.imageloader.ImageLoader;
+import com.ctj.oa.utils.manager.UserManager;
 import com.ctj.oa.work.approval.ApprovalHomeActivity;
 import com.ctj.oa.work.approval.ApprovalListActivity;
 import com.ctj.oa.work.log.LogHomeActivity;
@@ -34,6 +34,7 @@ import com.ctj.oa.work.memo.MemoActivity;
 import com.ctj.oa.work.notice.NoticeListActivity;
 import com.ctj.oa.work.sign.SignActivity;
 import com.ctj.oa.work.task.TaskHomeActivity;
+import com.lewis.utils.T;
 import com.lewis.widgets.LewisSwipeRefreshLayout;
 
 import java.util.ArrayList;
@@ -148,14 +149,18 @@ public class WorkFragmnet extends BaseFragment implements LewisSwipeRefreshLayou
                     ((ImageView) helper.getView(R.id.imv)).setImageResource(mineView.getId());
                     helper.setText(R.id.tv, mineView.getTittle());
                     helper.getConvertView().setEnabled(!TextUtils.isEmpty(mineView.getTittle()));
-                    if (mineView.getActivity() != null) {
+
                         helper.getConvertView().setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
+                                if (mineView.getActivity() != null) {
                                 mContext.startActivity(new Intent(mContext, mineView.getActivity()));
+                                } else {
+                                    T.showShort(getActivity(), "暂未开放");
+                                }
                             }
                         });
-                    }
+
                     break;
                 case 2:
                     final CircleClass aClass = (CircleClass) item;
@@ -230,8 +235,10 @@ public class WorkFragmnet extends BaseFragment implements LewisSwipeRefreshLayou
         dates.add(new MineView(R.mipmap.work_icon_gonggao, "公告", NoticeListActivity.class));
         dates.add(new MineView(R.mipmap.work_icon_rencaizhaopin, "任务", TaskHomeActivity.class));
         //dates.add(new MineView(R.drawable.ic_add2, "添加"));//加号
-        dates.add(new MineView(0, ""));//空白
-        dates.add(new MineView(0, ""));//空白
+        dates.add(new MineView(R.mipmap.work_icon_kehu, "客户"));
+        dates.add(new MineView(R.mipmap.work_icon_xiaoshou, "销售"));
+        //dates.add(new MineView(0, ""));//空白
+        //dates.add(new MineView(0, ""));//空白
         //dates.add(new MineView(0, ""));//空白
         dates.add(3);//文本:"外联服务"
         //dates.add(new MineView(R.mipmap.work_icon_rizhi, " 文档签名", SealActivity2.class));

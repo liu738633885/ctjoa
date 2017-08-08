@@ -49,7 +49,6 @@ import com.hyphenate.chat.EMCursorResult;
 import com.hyphenate.chat.EMGroup;
 import com.hyphenate.chat.EMPushConfigs;
 import com.hyphenate.easeui.ui.EaseGroupListener;
-import com.hyphenate.easeui.utils.EaseUserUtils;
 import com.hyphenate.easeui.widget.EaseAlertDialog;
 import com.hyphenate.easeui.widget.EaseAlertDialog.AlertDialogUser;
 import com.hyphenate.easeui.widget.EaseExpandGridView;
@@ -167,7 +166,7 @@ public class GroupDetailsActivity extends BaseActivity implements OnClickListene
 		ownerAdminGridview.setAdapter(ownerAdminAdapter);
 
 		// 保证每次进详情看到的都是最新的group
-		updateGroup();
+		updateGroupNew();
 
 		clearAllHistory.setOnClickListener(this);
 		changeGroupNameLayout.setOnClickListener(this);
@@ -529,6 +528,7 @@ public class GroupDetailsActivity extends BaseActivity implements OnClickListene
 						public void run() {
 							progressDialog.dismiss();
 							Toast.makeText(getApplicationContext(), st6 + e.getMessage(), Toast.LENGTH_LONG).show();
+							Logger.e(e.getMessage());
 						}
 					});
 				}
@@ -1052,7 +1052,7 @@ public class GroupDetailsActivity extends BaseActivity implements OnClickListene
 		}
 	}
 
-	protected void updateGroup() {
+	protected void updateGroupNew() {
 		NetBaseRequest request = RequsetFactory.creatBaseRequest(Constants.GET_GROUP_USER);
 		request.add("group_id", groupId);
 		CallServer.getRequestInstance().add(this, 0x01, request, new HttpListenerCallback() {
@@ -1070,21 +1070,21 @@ public class GroupDetailsActivity extends BaseActivity implements OnClickListene
 							map.put(userInfo.getId() + "", userInfo);
 						}
 					}
-					updateGroupold();
+					updateGroup();
 				} else {
 					T.showShort(GroupDetailsActivity.this, netBaseBean.getMessage());
-					updateGroupold();
+					updateGroup();
 				}
 			}
 
 			@Override
 			public void onFailed(int what, String url, Object tag, Exception exception, int responseCode, long networkMillis) {
-				updateGroupold();
+				updateGroup();
 			}
 		}, true, true);
 	}
 
-	protected void updateGroupold() {
+	protected void updateGroup() {
 		new Thread(new Runnable() {
 			public void run() {
 				try {
