@@ -714,13 +714,11 @@ public class DemoHelper {
 
         @Override
         public void onMemberJoined(String groupId, String member) {
-            EMLog.d(TAG, "onMemberJoined");
             //showToast("onMemberJoined: " + member);
         }
 
         @Override
         public void onMemberExited(String groupId, String member) {
-            EMLog.d(TAG, "onMemberJoined");
             //showToast("onMemberExited: " + member);
         }
         // ============================= group_reform new add api end
