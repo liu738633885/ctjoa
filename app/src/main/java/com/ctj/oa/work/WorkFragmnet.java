@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.text.TextUtils;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -15,11 +16,14 @@ import com.chad.library.adapter.base.BaseViewHolder;
 import com.ctj.oa.Constants;
 import com.ctj.oa.R;
 import com.ctj.oa.enterprise.JoinEntranceActivity;
+import com.ctj.oa.enterprise.ViewPagerAdapter3;
 import com.ctj.oa.enterprise.business.BusinessRegisterActivity;
 import com.ctj.oa.fragment.BaseFragment;
+import com.ctj.oa.model.UserInfo;
 import com.ctj.oa.model.netmodel.NetBaseBean;
 import com.ctj.oa.model.work.CircleClass;
 import com.ctj.oa.model.work.MineView;
+import com.ctj.oa.model.work.company.Banner2;
 import com.ctj.oa.net.CallServer;
 import com.ctj.oa.net.HttpListenerCallback;
 import com.ctj.oa.net.NetBaseRequest;
@@ -27,13 +31,13 @@ import com.ctj.oa.net.RequsetFactory;
 import com.ctj.oa.utils.imageloader.ImageLoader;
 import com.ctj.oa.utils.manager.UserManager;
 import com.ctj.oa.work.approval.ApprovalHomeActivity;
-import com.ctj.oa.work.approval.ApprovalListActivity;
 import com.ctj.oa.work.log.LogHomeActivity;
-import com.ctj.oa.work.log.LogListActivity;
 import com.ctj.oa.work.memo.MemoActivity;
 import com.ctj.oa.work.notice.NoticeListActivity;
 import com.ctj.oa.work.sign.SignActivity;
 import com.ctj.oa.work.task.TaskHomeActivity;
+import com.jude.rollviewpager.RollPagerView;
+import com.jude.rollviewpager.hintview.IconHintView;
 import com.lewis.utils.T;
 import com.lewis.widgets.LewisSwipeRefreshLayout;
 
@@ -48,7 +52,10 @@ public class WorkFragmnet extends BaseFragment implements LewisSwipeRefreshLayou
     private RecyclerView rv;
     private List<Object> dates;
     private LewisSwipeRefreshLayout swl;
-    //private String banner;
+    private View headView;
+    private TextView tv1, tv2;
+    private RollPagerView rollPagerView;
+    private ViewPagerAdapter3 pagerAdapter;
 
     @Override
     protected int getLayoutId() {
@@ -62,19 +69,31 @@ public class WorkFragmnet extends BaseFragment implements LewisSwipeRefreshLayou
         rv = (RecyclerView) view.findViewById(R.id.rv);
         rv.setLayoutManager(new StaggeredGridLayoutManager(4, StaggeredGridLayoutManager.VERTICAL));
         rv.setAdapter(adapter);
+        headView = LayoutInflater.from(getActivity()).inflate(R.layout.item_work_head, (ViewGroup) rv.getParent(), false);
+        tv1 = (TextView) headView.findViewById(R.id.tv1);
+        tv2 = (TextView) headView.findViewById(R.id.tv2);
+        rollPagerView = (RollPagerView) headView.findViewById(R.id.roll_view_pager);
+        pagerAdapter = new ViewPagerAdapter3(getActivity(), rollPagerView);
+        rollPagerView.setAdapter(pagerAdapter);
+        rollPagerView.setHintView(new IconHintView(getActivity(), R.drawable.shape_viewpager_point_focus, R.drawable.shape_viewpager_point_normal, 0));
+        adapter.addHeaderView(headView);
         makeDate(null);
         onRefresh();
-
     }
 
-    /*private void company_banner() {
-        NetBaseRequest request = RequsetFactory.creatBaseRequest(Constants.COMPANY_BANNER);
+    private void company_banner() {
+        NetBaseRequest request = RequsetFactory.creatBaseRequest(Constants.GET_COMPANY_BANNER_LIST);
         CallServer.getRequestInstance().add(getActivity(), 0x01, request, new HttpListenerCallback() {
             @Override
             public void onSucceed(int what, NetBaseBean netBaseBean) {
                 if (netBaseBean.isSuccess()) {
-                    List<Banner> list_class = netBaseBean.parseList(Banner.class);
-                    banner = list_class.get(0).getBanner_image();
+                    List<Banner2> list_class = netBaseBean.parseList(Banner2.class);
+                    if (list_class.size() > 1) {
+                        rollPagerView.setPlayDelay(3000);
+                    } else {
+                        rollPagerView.setPlayDelay(0);
+                    }
+                    pagerAdapter.updata(list_class);
                 }
             }
 
@@ -84,7 +103,6 @@ public class WorkFragmnet extends BaseFragment implements LewisSwipeRefreshLayou
             }
         }, false, false, "");
     }
-*/
 
     private void getCircleClassList() {
         NetBaseRequest request = RequsetFactory.creatBaseRequest(Constants.GET_CIRCLE_CLASS_LIST);
@@ -104,12 +122,38 @@ public class WorkFragmnet extends BaseFragment implements LewisSwipeRefreshLayou
         }, swl, "");
     }
 
+    private void updateHeadView() {
+        tv1.setText(UserManager.getCompanyName() + "");
+        tv2.setText(UserManager.getPostName() + "");
+        //if (!TextUtils.isEmpty(banner)) {
+        //ImageLoader.loadFromMipmap(getActivity(), R.mipmap.work_head, (ImageView) helper.getView(R.id.imv0));
+        //}
+    }
+
+    private void getUserInfo() {
+        NetBaseRequest request = RequsetFactory.creatBaseRequest(Constants.GET_USER_INFO);
+        request.add("get_user_id", UserManager.getId());
+        CallServer.getRequestInstance().add(getActivity(), 0x01, request, new HttpListenerCallback() {
+            @Override
+            public void onSucceed(int what, NetBaseBean netBaseBean) {
+                if (netBaseBean.isSuccess()) {
+                    UserInfo userInfo = netBaseBean.parseObject(UserInfo.class);
+                    UserManager.saveUserInfo(userInfo);
+                    updateHeadView();
+                }
+            }
+
+            @Override
+            public void onFailed(int what, String url, Object tag, Exception exception, int responseCode, long networkMillis) {
+            }
+        }, false, false);
+    }
     BaseQuickAdapter adapter = new BaseQuickAdapter<Object, BaseViewHolder>(new ArrayList<>()) {
 
         @Override
         protected void convert(final BaseViewHolder helper, final Object item) {
             switch (helper.getItemViewType()) {
-                case 0:
+               /* case 0:
                     helper.setText(R.id.tv1, UserManager.getCompanyName());
                     helper.setText(R.id.tv2, UserManager.getPostName());
                     TextView tv3 = helper.getView(R.id.tv3);
@@ -143,7 +187,7 @@ public class WorkFragmnet extends BaseFragment implements LewisSwipeRefreshLayou
                     //if (!TextUtils.isEmpty(banner)) {
                     ImageLoader.loadFromMipmap(getActivity(), R.mipmap.work_head, (ImageView) helper.getView(R.id.imv0));
                     //}
-                    break;
+                    break;*/
                 case 1:
                     final MineView mineView = (MineView) item;
                     ((ImageView) helper.getView(R.id.imv)).setImageResource(mineView.getId());
@@ -184,8 +228,8 @@ public class WorkFragmnet extends BaseFragment implements LewisSwipeRefreshLayou
         @Override
         protected BaseViewHolder onCreateDefViewHolder(ViewGroup parent, int viewType) {
             switch (viewType) {
-                case 0:
-                    return new FullViewHolder(this.getItemView(R.layout.item_work_head, parent));
+               /* case 0:
+                    return new FullViewHolder(this.getItemView(R.layout.item_work_head, parent));*/
                 case 1:
                     return new GridViewHolder(this.getItemView(R.layout.item_work_application, parent));
                 case 2:
@@ -208,7 +252,7 @@ public class WorkFragmnet extends BaseFragment implements LewisSwipeRefreshLayou
             if (getItem(position) instanceof Integer) {
                 return (int) getItem(position);
             }
-            return position;
+            return 1;
         }
 
         class FullViewHolder extends BaseViewHolder {
@@ -227,7 +271,7 @@ public class WorkFragmnet extends BaseFragment implements LewisSwipeRefreshLayou
 
     private void makeDate(List<CircleClass> list) {
         dates = new ArrayList<>();
-        dates.add(0);//头部
+        //dates.add(0);//头部
         dates.add(new MineView(R.mipmap.work_icon_qiandao, "签到", SignActivity.class));
         dates.add(new MineView(R.mipmap.work_icon_shenpi, "审批", ApprovalHomeActivity.class));
         dates.add(new MineView(R.mipmap.work_icon_beiwanglu, "备忘录", MemoActivity.class));
@@ -274,6 +318,8 @@ public class WorkFragmnet extends BaseFragment implements LewisSwipeRefreshLayou
     @Override
     public void onRefresh() {
         getCircleClassList();
-        //company_banner();
+        company_banner();
+        updateHeadView();
+        getUserInfo();
     }
 }

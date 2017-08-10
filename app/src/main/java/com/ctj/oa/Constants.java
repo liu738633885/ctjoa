@@ -52,6 +52,7 @@ public class Constants {
 
 
     public static final String COMPANY_BANNER = _COMPANY + "company_banner";
+    public static final String GET_COMPANY_BANNER_LIST = _COMPANY + "get_company_banner_list";
     public static final String GET_COMPANY_LIST = _COMPANY + "getCompanyList";
     public static final String APPLY_ADD_CIRCLE = _COMPANY + "applyAddCircle";
     public static final String GET_CIRCLE_INFO = _COMPANY + "getCircleInfo";
