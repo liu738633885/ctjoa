@@ -41,7 +41,7 @@ import com.ctj.oa.net.CallServer;
 import com.ctj.oa.net.HttpListenerCallback;
 import com.ctj.oa.net.NetBaseRequest;
 import com.ctj.oa.net.RequsetFactory;
-import com.ctj.oa.utils.imageloader.ImageLoader;
+import com.ctj.oa.utils.SPUtils;
 import com.hyphenate.chat.EMClient;
 import com.hyphenate.chat.EMConversation;
 import com.hyphenate.chat.EMConversation.EMConversationType;
@@ -49,6 +49,7 @@ import com.hyphenate.chat.EMCursorResult;
 import com.hyphenate.chat.EMGroup;
 import com.hyphenate.chat.EMPushConfigs;
 import com.hyphenate.easeui.ui.EaseGroupListener;
+import com.hyphenate.easeui.utils.EaseUserUtils;
 import com.hyphenate.easeui.widget.EaseAlertDialog;
 import com.hyphenate.easeui.widget.EaseAlertDialog.AlertDialogUser;
 import com.hyphenate.easeui.widget.EaseExpandGridView;
@@ -60,7 +61,6 @@ import com.orhanobut.logger.Logger;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
 
 public class GroupDetailsActivity extends BaseActivity implements OnClickListener {
@@ -80,7 +80,7 @@ public class GroupDetailsActivity extends BaseActivity implements OnClickListene
 	private GridAdapter membersAdapter;
 	private OwnerAdminAdapter ownerAdminAdapter;
 	private ProgressDialog progressDialog;
-	private HashMap<String, UserInfo> map;
+	//private HashMap<String, UserInfo> map;
 
 	public static GroupDetailsActivity instance;
 
@@ -521,9 +521,10 @@ public class GroupDetailsActivity extends BaseActivity implements OnClickListene
 							((TextView) findViewById(R.id.group_name)).setText(group.getGroupName() + "(" + group.getMemberCount()
 									+ st);
 							progressDialog.dismiss();
+							T.showShort(GroupDetailsActivity.this, "请求已发送");
 						}
 					});
-					T.showShort(GroupDetailsActivity.this, "请求已发送");
+
 				} catch (final Exception e) {
 					runOnUiThread(new Runnable() {
 						public void run() {
@@ -839,9 +840,9 @@ public class GroupDetailsActivity extends BaseActivity implements OnClickListene
 			final String username = getItem(position);
 			convertView.setVisibility(View.VISIBLE);
 			button.setVisibility(View.VISIBLE);
-			//EaseUserUtils.setUserNick(username, holder.textView);
-			//EaseUserUtils.setUserAvatar(getContext(), username, holder.imageView);
-			if (map != null && map.containsKey(username)) {
+			EaseUserUtils.setUserNick(username, holder.textView);
+			EaseUserUtils.setUserAvatar(getContext(), username, holder.imageView);
+			/*if (map != null && map.containsKey(username)) {
 				if (!TextUtils.isEmpty(map.get(username).getNickname())) {
 					holder.textView.setText(map.get(username).getNickname());
 				} else {
@@ -850,7 +851,7 @@ public class GroupDetailsActivity extends BaseActivity implements OnClickListene
 				ImageLoader.loadHeadImage(GroupDetailsActivity.this, map.get(username).getPortrait(), holder.imageView, -1);
 			} else {
 				holder.textView.setText(username);
-			}
+			}*/
 
 			LinearLayout id_background = (LinearLayout) convertView.findViewById(R.id.l_bg_id);
 			id_background.setBackgroundColor(convertView.getResources().getColor(
@@ -955,9 +956,9 @@ public class GroupDetailsActivity extends BaseActivity implements OnClickListene
 			} else {
 				// members
 				final String username = getItem(position);
-				/*EaseUserUtils.setUserNick(username, holder.textView);
-				EaseUserUtils.setUserAvatar(getContext(), username, holder.imageView);*/
-				if (map != null && map.containsKey(username)) {
+				EaseUserUtils.setUserNick(username, holder.textView);
+				EaseUserUtils.setUserAvatar(getContext(), username, holder.imageView);
+				/*if (map != null && map.containsKey(username)) {
 					if (!TextUtils.isEmpty(map.get(username).getNickname())) {
 						holder.textView.setText(map.get(username).getNickname());
 					} else {
@@ -966,7 +967,7 @@ public class GroupDetailsActivity extends BaseActivity implements OnClickListene
 					ImageLoader.loadHeadImage(GroupDetailsActivity.this, map.get(username).getPortrait(), holder.imageView, -1);
 				} else {
 					holder.textView.setText(username);
-				}
+				}*/
 				/*=====*/
 				LinearLayout id_background = (LinearLayout) convertView.findViewById(R.id.l_bg_id);
 				if (isInMuteList(username)) {
@@ -1062,13 +1063,9 @@ public class GroupDetailsActivity extends BaseActivity implements OnClickListene
 				if (netBaseBean.isSuccess()) {
 					List<UserInfo> userInfos = netBaseBean.parseList(UserInfo.class);
 					if (userInfos != null && userInfos.size() > 0) {
-						map = new HashMap<String, UserInfo>();
+						//map = new HashMap<String, UserInfo>();
 						for (UserInfo userInfo : userInfos) {
-							/*EaseUser easeUser = new EaseUser(userInfo.getId() + "");
-							easeUser.setAvatar(userInfo.getPortrait());
-							easeUser.setNickname(userInfo.getNickname());
-							DemoHelper.getInstance().saveContact(easeUser);*/
-							map.put(userInfo.getId() + "", userInfo);
+							SPUtils.getHuanxinUserInstance().put(userInfo.getId() + "", userInfo);
 						}
 					}
 					updateGroup();

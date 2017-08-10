@@ -13,9 +13,11 @@ import android.widget.Toast;
 import com.ctj.oa.Constants;
 import com.ctj.oa.R;
 import com.ctj.oa.activity.MainActivity;
+import com.ctj.oa.model.UserInfo;
 import com.ctj.oa.model.event.EventRefresh;
 import com.ctj.oa.utils.BadgeUtil;
 import com.ctj.oa.utils.GoToUtils;
+import com.ctj.oa.utils.SPUtils;
 import com.hyphenate.EMCallBack;
 import com.hyphenate.EMConnectionListener;
 import com.hyphenate.EMContactListener;
@@ -664,7 +666,8 @@ public class DemoHelper {
             msg.setFrom(inviter);
             msg.setTo(groupId);
             msg.setMsgId(UUID.randomUUID().toString());
-            msg.addBody(new EMTextMessageBody(inviter + " " + st3));
+            //msg.addBody(new EMTextMessageBody(inviter + " " + st3));
+            msg.addBody(new EMTextMessageBody("群主" + st3));
             msg.setStatus(EMMessage.Status.SUCCESS);
             // save invitation as messages
             EMClient.getInstance().chatManager().saveMessage(msg);
@@ -798,6 +801,7 @@ public class DemoHelper {
             msg.setStatus(InviteMesageStatus.BEINVITEED);
             notifyNewInviteMessage(msg);
             broadcastManager.sendBroadcast(new Intent(Constant.ACTION_CONTACT_CHANAGED));
+            getUserProfileManager().asyncGetUserInfo(username, null);
         }
 
         /**
@@ -860,18 +864,19 @@ public class DemoHelper {
     private EaseUser getUserInfo(final String username) {
         // To get instance of EaseUser, here we get it from the user list in memory
         // You'd better cache it if you get it from your server
-        EaseUser user = null;
-        if (username.equals(EMClient.getInstance().getCurrentUser()))
+        EaseUser user = new EaseUser(username);
+        if (username.equals(EMClient.getInstance().getCurrentUser())) {
             return getUserProfileManager().getCurrentUserInfo();
-        user = getContactList().get(username);
-        if (user == null && getRobotList() != null) {
-            user = getRobotList().get(username);
         }
-        if (user == null) {
+        if (SPUtils.getHuanxinUserInstance().contains(username)) {
+            UserInfo info = SPUtils.getHuanxinUserInstance().getObject(username, UserInfo.class);
+            user.setNickname(info.getNickname());
+            user.setAvatar(info.getPortrait());
+        } else {
             getUserProfileManager().asyncGetUserInfo(username, new EMValueCallBack<EaseUser>() {
                 @Override
                 public void onSuccess(EaseUser easeUser) {
-                    saveContact(easeUser);
+                    //saveContact(easeUser);
                 }
 
                 @Override
@@ -880,14 +885,34 @@ public class DemoHelper {
                 }
             });
         }
-        // if user is not in your bottombar_contacts, set inital letter for him/her
+       /* user = getContactList().get(username);
+        Logger.e("从联系人得到 userinfo" + user.getNick() + ":" + user.getAvatar());
+        if ((user == null) && getRobotList() != null) {
+            user = getRobotList().get(username);
+            Logger.e("从陌生人得到 userinfo" + user.getNick() + ":" + user.getAvatar());
+        }
         if (user == null) {
+            Logger.e("得不到 user  走网络");
+            getUserProfileManager().asyncGetUserInfo(username, new EMValueCallBack<EaseUser>() {
+                @Override
+                public void onSuccess(EaseUser easeUser) {
+                    saveContact(easeUser);
+                    Logger.e("从网络得到 user" + easeUser.getNick() + ":" + easeUser.getAvatar());
+                }
+
+                @Override
+                public void onError(int i, String s) {
+
+                }
+            });
+        }*/
+        // if user is not in your bottombar_contacts, set inital letter for him/her
+        /*if (user == null) {
             user = new EaseUser(username);
             EaseCommonUtils.setUserInitialLetter(user);
-        }
+        }*/
         return user;
     }
-
     /**
      * Global listener
      * If this event already handled by an activity, you don't need handle it again
@@ -901,7 +926,20 @@ public class DemoHelper {
             public void onMessageReceived(List<EMMessage> messages) {
                 for (EMMessage message : messages) {
                     EMLog.d(TAG, "onMessageReceived id : " + message.getMsgId());
-                    Logger.d("收到的消息" + message.getBody().toString() + "---type" + message.getStringAttribute("type", "null").toString());
+                    Logger.d("收到" + message.getFrom() + "的消息" + message.getBody().toString() + "---type" + message.getStringAttribute("type", "null").toString() + message.getStringAttribute("userNick", ""));
+                    try {
+                       /* EaseUser easeUser = new EaseUser(message.getFrom());
+                        easeUser.setNickname(message.getStringAttribute("userNick", ""));
+                        easeUser.setAvatar(message.getStringAttribute("userAvatar", ""));
+                        saveContact(easeUser);*/
+                        UserInfo userInfo = new UserInfo();
+                        userInfo.setId(Integer.parseInt(message.getFrom()));
+                        userInfo.setNickname(message.getStringAttribute("userNick", ""));
+                        userInfo.setPortrait(message.getStringAttribute("userAvatar", ""));
+                        SPUtils.getHuanxinUserInstance().put(message.getFrom(), userInfo);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                     // in background, do not refresh UI, notify it in notification bar
                     if (!easeUI.hasForegroundActivies()) {
                         getNotifier().onNewMsg(message);
@@ -1094,7 +1132,9 @@ public class DemoHelper {
      * save single contact
      */
     public void saveContact(EaseUser user) {
-        if (contactList.containsKey(user.getUsername())) {
+        contactList.put(user.getUsername(), user);
+        demoModel.saveContact(user);
+      /*  if (contactList.containsKey(user.getUsername())) {
             contactList.put(user.getUsername(), user);
             demoModel.saveContact(user);
         } else {
@@ -1103,7 +1143,7 @@ public class DemoHelper {
             robotUser.setAvatar(user.getAvatar());
             getRobotList().put(username, robotUser);
             demoModel.saveRobot(robotUser);
-        }
+        }*/
     }
 
     /**

@@ -29,6 +29,7 @@ import com.ctj.oa.net.HttpListenerCallback;
 import com.ctj.oa.net.NetBaseRequest;
 import com.ctj.oa.net.RequsetFactory;
 import com.ctj.oa.utils.GoToUtils;
+import com.ctj.oa.utils.SPUtils;
 import com.ctj.oa.utils.manager.UserManager;
 import com.hyphenate.chat.EMClient;
 import com.hyphenate.chat.EMCmdMessageBody;
@@ -42,7 +43,6 @@ import com.hyphenate.chatuidemo.domain.RobotUser;
 import com.hyphenate.chatuidemo.widget.ChatRowLocation;
 import com.hyphenate.chatuidemo.widget.ChatRowVoiceCall;
 import com.hyphenate.easeui.EaseConstant;
-import com.hyphenate.easeui.domain.EaseUser;
 import com.hyphenate.easeui.ui.EaseChatFragment;
 import com.hyphenate.easeui.ui.EaseChatFragment.EaseChatFragmentHelper;
 import com.hyphenate.easeui.widget.chatrow.EaseChatRow;
@@ -104,10 +104,11 @@ public class ChatFragment extends EaseChatFragment implements EaseChatFragmentHe
             public void onSucceed(int what, NetBaseBean netBaseBean) {
                 if (netBaseBean.isSuccess()) {
                     UserInfo userInfo = netBaseBean.parseObject(UserInfo.class);
-                    EaseUser easeUser = new EaseUser(userInfo.getId() + "");
+                    /*EaseUser easeUser = new EaseUser(userInfo.getId() + "");
                     easeUser.setNickname(userInfo.getNickname());
                     easeUser.setAvatar(userInfo.getPortrait());
-                    DemoHelper.getInstance().saveContact(easeUser);
+                    DemoHelper.getInstance().saveContact(easeUser);*/
+                    SPUtils.getHuanxinUserInstance().put(toChatUsername, userInfo);
                     titleBar.setTitle(userInfo.getNickname());
                 }
             }

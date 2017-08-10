@@ -19,6 +19,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -31,6 +32,7 @@ import com.ctj.oa.net.CallServer;
 import com.ctj.oa.net.HttpListenerCallback;
 import com.ctj.oa.net.NetBaseRequest;
 import com.ctj.oa.net.RequsetFactory;
+import com.ctj.oa.utils.imageloader.ImageLoader;
 import com.hyphenate.chat.EMClient;
 import com.hyphenate.chatuidemo.DemoHelper;
 import com.hyphenate.easeui.widget.EaseAlertDialog;
@@ -44,6 +46,7 @@ public class AddContactActivity extends BaseActivity {
     private Button searchBtn;
     private String toAddUsername;
     private ProgressDialog progressDialog;
+    private ImageView avatar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +60,7 @@ public class AddContactActivity extends BaseActivity {
         searchedUserLayout = (RelativeLayout) findViewById(R.id.ll_user);
         nameText = (TextView) findViewById(R.id.name);
         searchBtn = (Button) findViewById(R.id.search);
+        avatar = (ImageView) findViewById(R.id.avatar);
     }
 
 
@@ -88,6 +92,7 @@ public class AddContactActivity extends BaseActivity {
                     if (netBaseBean.isSuccess()) {
                         UserInfo userInfo = netBaseBean.parseObject(UserInfo.class);
                         searchedUserLayout.setVisibility(View.VISIBLE);
+                        ImageLoader.loadHeadImage(AddContactActivity.this, userInfo.getPortrait(), avatar, 2);
                         nameText.setText(userInfo.getNickname());
                         toAddUsername = userInfo.getId()+"";
                     } else {

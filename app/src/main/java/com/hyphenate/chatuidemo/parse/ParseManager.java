@@ -10,6 +10,7 @@ import com.ctj.oa.net.CallServer;
 import com.ctj.oa.net.HttpListenerCallback;
 import com.ctj.oa.net.NetBaseRequest;
 import com.ctj.oa.net.RequsetFactory;
+import com.ctj.oa.utils.SPUtils;
 import com.ctj.oa.utils.manager.UserManager;
 import com.hyphenate.EMValueCallBack;
 import com.hyphenate.chat.EMClient;
@@ -134,6 +135,7 @@ public class ParseManager {
             public void onSucceed(int what, NetBaseBean netBaseBean) {
                 if (netBaseBean.isSuccess()) {
                     UserInfo info = netBaseBean.parseObject(UserInfo.class);
+                    SPUtils.getHuanxinUserInstance().put(username, info);
                     if (callback != null) {
                         EaseUser user = DemoHelper.getInstance().getContactList().get(username);
                         if (user == null) {

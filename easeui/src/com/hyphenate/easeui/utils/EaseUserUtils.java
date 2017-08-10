@@ -10,6 +10,7 @@ import com.hyphenate.easeui.R;
 import com.hyphenate.easeui.controller.EaseUI;
 import com.hyphenate.easeui.controller.EaseUI.EaseUserProfileProvider;
 import com.hyphenate.easeui.domain.EaseUser;
+import com.orhanobut.logger.Logger;
 
 
 public class EaseUserUtils {
@@ -38,6 +39,7 @@ public class EaseUserUtils {
      */
     public static void setUserAvatar(Context context, String username, ImageView imageView){
     	EaseUser user = getUserInfo(username);
+        Logger.e(username+"的头像"+"http://oaapi.weihainan.com"+user.getAvatar());
         if(user != null && user.getAvatar() != null){
             try {
                 int avatarResId = Integer.parseInt(user.getAvatar());
@@ -57,7 +59,8 @@ public class EaseUserUtils {
     public static void setUserNick(String username,TextView textView){
         if(textView != null){
         	EaseUser user = getUserInfo(username);
-        	if(user != null && user.getNick() != null){
+            Logger.e(username+"的昵称:"+user.getNickname());
+            if(user != null && user.getNick() != null){
         		textView.setText(user.getNick());
         	}else{
         		textView.setText(username);

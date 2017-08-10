@@ -22,6 +22,7 @@ import com.ctj.oa.net.HttpListenerCallback;
 import com.ctj.oa.net.NetBaseRequest;
 import com.ctj.oa.net.RequsetFactory;
 import com.ctj.oa.utils.BitmapUtils;
+import com.ctj.oa.utils.SPUtils;
 import com.ctj.oa.utils.UpLoadManager;
 import com.ctj.oa.utils.manager.UserManager;
 import com.ctj.oa.utils.imageloader.ImageLoader;
@@ -215,10 +216,11 @@ public class UserProfileActivity extends BaseActivity implements View.OnClickLis
                     if (isMine) {
                         UserManager.saveUserInfo(userInfo);
                     } else {
-                        EaseUser easeUser = new EaseUser(userInfo.getId() + "");
+                        SPUtils.getHuanxinUserInstance().put(userId, userInfo);
+                        /*EaseUser easeUser = new EaseUser(userInfo.getId() + "");
                         easeUser.setNickname(userInfo.getNickname());
                         easeUser.setAvatar(userInfo.getPortrait());
-                        DemoHelper.getInstance().saveContact(easeUser);
+                        DemoHelper.getInstance().saveContact(easeUser);*/
                     }
                     updateUI();
                 } else {

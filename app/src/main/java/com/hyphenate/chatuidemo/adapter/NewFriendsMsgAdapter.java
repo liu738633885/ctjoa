@@ -88,13 +88,15 @@ public class NewFriendsMsgAdapter extends ArrayAdapter<InviteMessage> {
             if (msg.getGroupId() != null) { // show group name
                 holder.groupContainer.setVisibility(View.VISIBLE);
                 holder.groupname.setText(msg.getGroupName());
+                holder.name.setText(msg.getGroupName());
             } else {
                 holder.groupContainer.setVisibility(View.GONE);
+                EaseUserUtils.setUserNick(msg.getFrom(), holder.name);
             }
 
             holder.reason.setText(msg.getReason());
             //holder.name.setText(msg.getFrom());
-            EaseUserUtils.setUserNick(msg.getFrom(), holder.name);
+
             EaseUserUtils.setUserAvatar(context,msg.getFrom(), holder.avator);
             // holder.time.setText(DateUtils.getTimestampString(new
             // Date(msg.getTime())));
@@ -151,12 +153,14 @@ public class NewFriendsMsgAdapter extends ArrayAdapter<InviteMessage> {
                 holder.status.setBackgroundDrawable(null);
                 holder.status.setEnabled(false);
             } else if (msg.getStatus() == InviteMesageStatus.GROUPINVITATION_ACCEPTED) {
-                String str = msg.getGroupInviter() + str9 + msg.getGroupName();
+                //String str = msg.getGroupInviter() + str9 + msg.getGroupName();
+                String str = "成员" + str9 + msg.getGroupName();
                 holder.status.setText(str);
                 holder.status.setBackgroundDrawable(null);
                 holder.status.setEnabled(false);
             } else if (msg.getStatus() == InviteMesageStatus.GROUPINVITATION_DECLINED) {
-                String str = msg.getGroupInviter() + str10 + msg.getGroupName();
+                //String str = msg.getGroupInviter() + str10 + msg.getGroupName();
+                String str = "成员" + str10 + msg.getGroupName();
                 holder.status.setText(str);
                 holder.status.setBackgroundDrawable(null);
                 holder.status.setEnabled(false);
