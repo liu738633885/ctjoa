@@ -24,8 +24,8 @@
         android:id="@+id/application_item"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:contactItemImage="@mipmap/contacts_friend"
-        app:contactItemName="我的好友"/>
+        app:contactItemImage="@mipmap/contacts_friend2"
+        app:contactItemName="申请与通知"/>
 
     <com.hyphenate.chatuidemo.widget.ContactItemView
         android:id="@+id/group_item"
