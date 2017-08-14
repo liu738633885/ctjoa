@@ -471,6 +471,11 @@ public class ChatFragment extends EaseChatFragment implements EaseChatFragmentHe
     }
 
     @Override
+    public void emptyHistory() {
+        UserProfileActivity.goTo(getActivity(), toChatUsername);
+    }
+
+    @Override
     public void gotoMap() {
         startActivityForResult(new Intent(getActivity(), EaseMapActivity.class), REQUEST_CODE_MAP);
     }

@@ -24,6 +24,7 @@ import com.ctj.oa.model.netmodel.NetBaseBean;
 import com.ctj.oa.model.work.CircleClass;
 import com.ctj.oa.model.work.MineView;
 import com.ctj.oa.model.work.company.Banner2;
+import com.ctj.oa.model.work.company.Banner2List;
 import com.ctj.oa.net.CallServer;
 import com.ctj.oa.net.HttpListenerCallback;
 import com.ctj.oa.net.NetBaseRequest;
@@ -87,7 +88,8 @@ public class WorkFragmnet extends BaseFragment implements LewisSwipeRefreshLayou
             @Override
             public void onSucceed(int what, NetBaseBean netBaseBean) {
                 if (netBaseBean.isSuccess()) {
-                    List<Banner2> list_class = netBaseBean.parseList(Banner2.class);
+                    Banner2List data = netBaseBean.parseObject(Banner2List.class);
+                    List<Banner2> list_class = data.list;
                     if (list_class.size() > 1) {
                         rollPagerView.setPlayDelay(3000);
                     } else {

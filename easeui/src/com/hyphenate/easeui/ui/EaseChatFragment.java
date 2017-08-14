@@ -189,7 +189,8 @@ public class EaseChatFragment extends EaseBaseFragment implements EMMessageListe
                     titleBar.setTitle(user.getNick());
                 }
             }
-            titleBar.setRightImageResource(R.drawable.ease_mm_title_remove);
+            //titleBar.setRightImageResource(R.drawable.ease_mm_title_remove);
+            titleBar.setRightImageResource(R.drawable.ease_mm_title_user);
         } else {
         	titleBar.setRightImageResource(R.drawable.ease_to_group_details_normal);
             if (chatType == EaseConstant.CHATTYPE_GROUP) {
@@ -249,7 +250,7 @@ public class EaseChatFragment extends EaseBaseFragment implements EMMessageListe
         }
     }
     
-    
+
     protected void onConversationInit(){
         conversation = EMClient.getInstance().chatManager().getConversation(toChatUsername, EaseCommonUtils.getConversationType(chatType), true);
         conversation.markAllMessagesAsRead();
@@ -900,7 +901,7 @@ public class EaseChatFragment extends EaseBaseFragment implements EMMessageListe
      * clear the conversation history
      * 
      */
-    protected void emptyHistory() {
+    public void emptyHistory() {
         String msg = getResources().getString(R.string.Whether_to_empty_all_chats);
         new EaseAlertDialog(getActivity(),null, msg, null,new AlertDialogUser() {
             

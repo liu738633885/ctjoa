@@ -122,6 +122,9 @@ public class ParseManager {
         netBaseRequest.add("type", 1);
         if (username.equals(Constants.ADMIN_ID)) {
             EaseUser user = DemoHelper.getInstance().getContactList().get(username);
+            UserInfo info = new UserInfo();
+            info.setNickname("消息通知");
+            SPUtils.getHuanxinUserInstance().put(username, info);
             if (user == null) {
                 user = new EaseUser(username);
             }
