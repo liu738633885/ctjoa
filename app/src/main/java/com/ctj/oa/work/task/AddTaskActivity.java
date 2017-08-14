@@ -167,7 +167,7 @@ public class AddTaskActivity extends BaseActivity {
         if (listener == null) {
             return;
         }
-        long twoYears = 2L * 365 * 1000 * 60 * 60 * 24L;
+        long Years = 100L * 365 * 1000 * 60 * 60 * 24L;
         TimePickerDialog.Builder build = new TimePickerDialog.Builder()
                 .setCallBack(listener)
                 .setCancelStringId("取消")
@@ -179,8 +179,8 @@ public class AddTaskActivity extends BaseActivity {
                 .setHourText("时")
                 .setMinuteText("分")
                 .setCyclic(false)
-                .setMinMillseconds(System.currentTimeMillis())
-                .setMaxMillseconds(System.currentTimeMillis() + twoYears)
+                .setMinMillseconds(System.currentTimeMillis() - Years)
+                .setMaxMillseconds(System.currentTimeMillis() + Years)
                 .setCurrentMillseconds(System.currentTimeMillis())
                 .setThemeColor(ContextCompat.getColor(bContext, R.color.super_blue2))
                 .setWheelItemTextNormalColor(ContextCompat.getColor(bContext, R.color.gray01))
