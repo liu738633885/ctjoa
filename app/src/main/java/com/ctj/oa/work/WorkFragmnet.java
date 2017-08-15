@@ -280,12 +280,13 @@ public class WorkFragmnet extends BaseFragment implements LewisSwipeRefreshLayou
         dates.add(new MineView(R.mipmap.work_icon_rizhi, "日志", LogHomeActivity.class));
         dates.add(new MineView(R.mipmap.work_icon_gonggao, "公告", NoticeListActivity.class));
         dates.add(new MineView(R.mipmap.work_icon_rencaizhaopin, "任务", TaskHomeActivity.class));
+        dates.add(new MineView(R.mipmap.work_icon_wenjian, "文件"));
         //dates.add(new MineView(R.drawable.ic_add2, "添加"));//加号
         dates.add(new MineView(R.mipmap.work_icon_kehu, "客户"));
         dates.add(new MineView(R.mipmap.work_icon_xiaoshou, "销售"));
-        //dates.add(new MineView(0, ""));//空白
-        //dates.add(new MineView(0, ""));//空白
-        //dates.add(new MineView(0, ""));//空白
+        dates.add(new MineView(0, ""));//空白
+        dates.add(new MineView(0, ""));//空白
+        dates.add(new MineView(0, ""));//空白
         dates.add(3);//文本:"外联服务"
         //dates.add(new MineView(R.mipmap.work_icon_rizhi, " 文档签名", SealActivity2.class));
         if (list != null && list.size() > 0) {

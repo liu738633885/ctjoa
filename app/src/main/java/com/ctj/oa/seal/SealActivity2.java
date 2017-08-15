@@ -16,10 +16,6 @@ import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
-import com.artifex.mupdf.MuPDFCore;
-import com.artifex.mupdf.MuPDFPageAdapter;
-import com.artifex.mupdf.ReaderView;
-import com.artifex.mupdf.SavePdf;
 import com.ctj.oa.R;
 import com.ctj.oa.activity.BaseActivity;
 import com.ctj.oa.widgets.SignatureView;
@@ -29,7 +25,16 @@ import java.io.FileOutputStream;
 import java.io.InputStream;
 
 public class SealActivity2 extends BaseActivity {
-    private ReaderView readerView;
+    @Override
+    protected int getContentViewId() {
+        return 0;
+    }
+
+    @Override
+    protected void initView(Bundle savedInstanceState) {
+
+    }
+    /*private ReaderView readerView;
 
     private RelativeLayout rlBack, rlSign, rlUpdate, rlClear, rlSave;
 
@@ -196,9 +201,9 @@ public class SealActivity2 extends BaseActivity {
         }
     }
 
-    /*
+    *//*
     * 用于存储的异步,并上传更新
-    * */
+    * *//*
     class Save_Pdf extends AsyncTask {
 
         SavePdf savePdf;
@@ -238,9 +243,9 @@ public class SealActivity2 extends BaseActivity {
         }
     }
 
-    /**
+    *//**
      * 返回按钮，退出时删除那两个文件
-     */
+     *//*
     @Override
     public void onBackPressed() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -277,7 +282,7 @@ public class SealActivity2 extends BaseActivity {
         }
     }
 
-    /* public String getFromAssets(String fileName){
+    *//* public String getFromAssets(String fileName){
          try {
              InputStreamReader inputReader = new InputStreamReader( getResources().getAssets().open(fileName) );
              BufferedReader bufReader = new BufferedReader(inputReader);
@@ -289,7 +294,7 @@ public class SealActivity2 extends BaseActivity {
          } catch (Exception e) {
              e.printStackTrace();
          }
-     }*/
+     }*//*
     public void initData() {
         File dirFile = new File(in_path);
         if (!dirFile.exists()) {
@@ -307,5 +312,5 @@ public class SealActivity2 extends BaseActivity {
                 e.printStackTrace();
             }
         }
-    }
+    }*/
 }
