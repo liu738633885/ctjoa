@@ -66,6 +66,7 @@ public class EaseMapActivity extends com.ctj.oa.activity.BaseActivity {
                 sendLocation();
             }
         });
+        titleBar.setRight_text("定位中..");
         //获取地图控件引用
         mMapView = (MapView) findViewById(R.id.map);
         //在activity执行onCreate时执行mMapView.onCreate(savedInstanceState)，创建地图
@@ -107,6 +108,7 @@ public class EaseMapActivity extends com.ctj.oa.activity.BaseActivity {
         mAMap.setOnMyLocationChangeListener(new AMap.OnMyLocationChangeListener() {
             @Override
             public void onMyLocationChange(Location location) {
+                titleBar.setRight_text("发送");
                 mlocation = location;
                 //T.showLong(SignActivity.this, ((AMapLocation)mAMap.getMyLocation()().toString());
                 String str = location.toString();
