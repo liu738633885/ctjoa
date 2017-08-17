@@ -54,8 +54,11 @@ import com.orhanobut.logger.Logger;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+
+import me.iwf.photopicker.PhotoPicker;
 
 public class ChatFragment extends EaseChatFragment implements EaseChatFragmentHelper {
 
@@ -242,6 +245,7 @@ public class ChatFragment extends EaseChatFragment implements EaseChatFragmentHe
                         inputAtUsername(username, false);
                     }
                     break;
+
                 default:
                     break;
             }
@@ -486,5 +490,15 @@ public class ChatFragment extends EaseChatFragment implements EaseChatFragmentHe
         super.onDestroy();
         //调用该方法可防止红包SDK引起的内存泄漏
         // RPRedPacketUtil.getInstance().detachView();
+    }
+
+    @Override
+    public void selectPicFromLocal() {
+        PhotoPicker.builder()
+                .setPhotoCount(1)
+                .setShowCamera(true)
+                .setShowGif(false)
+                .setPreviewEnabled(true)
+                .start(getActivity(), PhotoPicker.REQUEST_CODE);
     }
 }

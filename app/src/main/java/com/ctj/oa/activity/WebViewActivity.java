@@ -96,11 +96,12 @@ public class WebViewActivity extends BaseActivity implements View.OnClickListene
      * 左上角返回键的点击事件
      */
     public void back() {
-        if (webView.canGoBack()) {
+        finish();
+        /*if (webView.canGoBack()) {
             webView.goBack();
         } else {
             finish();
-        }
+        }*/
     }
 
 
@@ -200,6 +201,7 @@ public class WebViewActivity extends BaseActivity implements View.OnClickListene
             } else {
                 view.loadUrl(url); // 在当前的webview中跳转到新的url
                 Log.i(TAG, "loadUrl = " + url);
+                swl.setEnabled(!url.startsWith("http://api.idocv.com"));
                 return true;
             }
         }

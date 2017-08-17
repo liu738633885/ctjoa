@@ -96,6 +96,12 @@ public class MessageListActivity extends BaseActivity implements LewisSwipeRefre
                     case 6:
                         text = "备忘消息";
                         break;
+                    case 7:
+                        text = "任务消息";
+                        break;
+                    case 8:
+                        text = "文件共享";
+                        break;
                 }
                 helper.setText(R.id.tv1, text);
                 helper.setText(R.id.tv2, item.getMessage_title());

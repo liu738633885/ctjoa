@@ -41,6 +41,9 @@ public class GoToUtils {
             case 7:
                 TaskDetailActivity.goTo(context, id);
                 break;
+            case 8:
+                WebViewActivity.goTo(context, Constants.WEB_FILE_LIST + "?user_id=" + UserManager.getId() + "&token=" + UserManager.getToken(), "文件列表");
+                break;
         }
     }
 
@@ -83,6 +86,11 @@ public class GoToUtils {
             case 7:
                 intent = new Intent(context, TaskDetailActivity.class);
                 intent.putExtra("id", id);
+                break;
+            case 8:
+                intent = new Intent(context, WebViewActivity.class);
+                intent.putExtra("url", Constants.WEB_FILE_LIST + "?user_id=" + UserManager.getId() + "&token=" + UserManager.getToken());
+                intent.putExtra("title", "文件列表");
                 break;
             default:
         }

@@ -21,13 +21,13 @@ import com.ctj.oa.model.netmodel.NetBaseBean;
 import com.ctj.oa.net.CallServer;
 import com.ctj.oa.net.HttpListenerCallback;
 import com.ctj.oa.net.NetBaseRequest;
-import com.lewis.utils.MD5Util;
 import com.lewis.utils.EditTextUitls;
+import com.lewis.utils.MD5Util;
 
 import org.greenrobot.eventbus.EventBus;
 
 public class RegisterActivity extends BaseActivity implements View.OnClickListener {
-    private EditText edt_phone, edt_code, edt_username, edt_password;
+    private EditText edt_phone, edt_code, edt_username, edt_password, edt_invitation_code;
     private Button btn_getCode, btn_register;
     private ImageView imv_look;
     private TextView tv;
@@ -43,6 +43,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
         edt_code = (EditText) findViewById(R.id.edt_code);
         edt_username = (EditText) findViewById(R.id.edt_username);
         edt_password = (EditText) findViewById(R.id.edt_password);
+        edt_invitation_code = (EditText) findViewById(R.id.edt_invitation_code);
         edt_phone = (EditText) findViewById(R.id.edt_phone);
         btn_getCode = (Button) findViewById(R.id.btn_getCode);
         btn_register = (Button) findViewById(R.id.btn_register);
@@ -126,6 +127,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
         request.add("platform", "1");
         request.add("code", edt_code.getText().toString());
         request.add("password", MD5Util.MD5String(edt_password.getText().toString()));
+        request.add("edt_invitation_code", edt_invitation_code.getText().toString());
         CallServer.getRequestInstance().add(this, 0x01, request, new HttpListenerCallback() {
             @Override
             public void onSucceed(int what, NetBaseBean netBaseBean) {

@@ -158,6 +158,7 @@ public class Constants {
     public static final String WEB_TASK_DISCUSS = _WEB + "open/task_discuss_info.html";
     public static final String WEB_ABOUT = _WEB + "open/content_page/alias/about.html";
     public static final String WEB_AGREEMENT = _WEB + "open/content_page/alias/user_agreement.html";
+    public static final String WEB_FILE_LIST = _WEB + "mycenter/myFileList.html";
 
 
     /**

@@ -15,6 +15,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.ctj.oa.Constants;
 import com.ctj.oa.R;
+import com.ctj.oa.activity.WebViewActivity;
 import com.ctj.oa.enterprise.JoinEntranceActivity;
 import com.ctj.oa.enterprise.ViewPagerAdapter3;
 import com.ctj.oa.enterprise.business.BusinessRegisterActivity;
@@ -201,8 +202,10 @@ public class WorkFragmnet extends BaseFragment implements LewisSwipeRefreshLayou
                             public void onClick(View v) {
                                 if (mineView.getActivity() != null) {
                                 mContext.startActivity(new Intent(mContext, mineView.getActivity()));
+                                } else if (!TextUtils.isEmpty(mineView.getInfo()) && mineView.getInfo().startsWith("http")) {
+                                    WebViewActivity.goTo(getActivity(), mineView.getInfo(), "文件列表");
                                 } else {
-                                    T.showShort(getActivity(), "暂未开放");
+                                    T.showShort(getActivity(), "功能暂未开放");
                                 }
                             }
                         });
@@ -280,11 +283,12 @@ public class WorkFragmnet extends BaseFragment implements LewisSwipeRefreshLayou
         dates.add(new MineView(R.mipmap.work_icon_rizhi, "日志", LogHomeActivity.class));
         dates.add(new MineView(R.mipmap.work_icon_gonggao, "公告", NoticeListActivity.class));
         dates.add(new MineView(R.mipmap.work_icon_rencaizhaopin, "任务", TaskHomeActivity.class));
-        dates.add(new MineView(R.mipmap.work_icon_wenjian, "文件"));
-        //dates.add(new MineView(R.drawable.ic_add2, "添加"));//加号
+        dates.add(new MineView(R.mipmap.work_icon_wenjian, "文件", Constants.WEB_FILE_LIST + "?user_id=" + UserManager.getId() + "&token=" + UserManager.getToken()));
         dates.add(new MineView(R.mipmap.work_icon_kehu, "客户"));
         dates.add(new MineView(R.mipmap.work_icon_xiaoshou, "销售"));
-        dates.add(new MineView(0, ""));//空白
+        //dates.add(new MineView(R.drawable.ic_add2, "添加", "功能暂未开放"));//加号
+        dates.add(new MineView(R.mipmap.work_icon_shenqingjiaru, "加入"));//加号
+        //dates.add(new MineView(0, ""));//空白
         dates.add(new MineView(0, ""));//空白
         dates.add(new MineView(0, ""));//空白
         dates.add(3);//文本:"外联服务"
