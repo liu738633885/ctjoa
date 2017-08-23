@@ -32,7 +32,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:contactItemImage="@mipmap/contacts_group"
-        app:contactItemName="群组"/>
+        app:contactItemName="群聊"/>
 
     <com.hyphenate.chatuidemo.widget.ContactItemView
         android:visibility="gone"

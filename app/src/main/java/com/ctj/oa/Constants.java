@@ -23,7 +23,8 @@ public class Constants {
         }
     }
 
-    public static final String API_URL_RELEASE = "http://oaapi.weihainan.com";
+    //public static final String API_URL_RELEASE = "http://oaapi.weihainan.com";
+    public static final String API_URL_RELEASE = "http://api.rockbrain.net";
     public static final String API_URL_DEBUG = "http://oaapi.weihainan.com";
     public static final String IMG_HEAD = API_URL_RELEASE;
     public static final String ADMIN_ID = "admin";
@@ -149,7 +150,8 @@ public class Constants {
     /**
      * ====WEB==========
      */
-    public static final String _WEB = "http://oaweb.weihainan.com/";
+    //public static final String _WEB = "http://oaweb.weihainan.com/";
+    public static final String _WEB = "http://web.rockbrain.net/";
     public static final String WEB_NOTICE_DETAIL = _WEB + "mycenter/notice_detail.html";
     public static final String WEB_ARTICLE_DETAIL = _WEB + "mycenter/article_detail.html";
     public static final String WEB_CREATE_COMPANY = _WEB + "open/create_company.html";

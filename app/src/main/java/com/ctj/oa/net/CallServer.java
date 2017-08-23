@@ -20,10 +20,10 @@ import android.content.Context;
 
 import com.ctj.oa.utils.manager.UserManager;
 import com.lewis.widgets.swl.SwipeRefreshLayout;
-import com.yolanda.nohttp.NoHttp;
-import com.yolanda.nohttp.download.DownloadQueue;
-import com.yolanda.nohttp.rest.Request;
-import com.yolanda.nohttp.rest.RequestQueue;
+import com.yanzhenjie.nohttp.NoHttp;
+import com.yanzhenjie.nohttp.download.DownloadQueue;
+import com.yanzhenjie.nohttp.rest.Request;
+import com.yanzhenjie.nohttp.rest.RequestQueue;
 
 /**
  * Created in Oct 23, 2015 1:00:56 PM.

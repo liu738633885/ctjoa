@@ -12,8 +12,8 @@ import com.ctj.oa.net.NetBaseRequest;
 import com.ctj.oa.net.RequsetFactory;
 import com.ctj.oa.utils.manager.UserManager;
 import com.orhanobut.logger.Logger;
-import com.yolanda.nohttp.BasicBinary;
-import com.yolanda.nohttp.FileBinary;
+import com.yanzhenjie.nohttp.BasicBinary;
+import com.yanzhenjie.nohttp.FileBinary;
 
 import java.io.File;
 import java.util.ArrayList;

@@ -91,7 +91,7 @@ public class LogHomeActivity extends BaseActivity {
             helper.getConvertView().setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    AddLogActivity.goTo(bContext, item.getId());
+                    AddLogActivity.goTo(bContext, item.getId(),item.getName());
                 }
             });
         }

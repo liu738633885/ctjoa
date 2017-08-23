@@ -15,8 +15,8 @@
  */
 package com.ctj.oa.net;
 
-import com.yolanda.nohttp.Headers;
-import com.yolanda.nohttp.rest.RestRequest;
+import com.yanzhenjie.nohttp.Headers;
+import com.yanzhenjie.nohttp.rest.RestRequest;
 
 /**
  * <p>
@@ -32,7 +32,7 @@ public class AllModuleReqeust<T> extends RestRequest<T> {
 	}
 
 	@Override
-	public T parseResponse(Headers responseHeaders, byte[] responseBody) throws Throwable {
+	public T parseResponse(Headers responseHeaders, byte[] responseBody) {
 		return null;
 	}
 /*

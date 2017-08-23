@@ -19,10 +19,10 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.ctj.oa.model.netmodel.NetBaseBean;
 import com.orhanobut.logger.Logger;
-import com.yolanda.nohttp.Headers;
-import com.yolanda.nohttp.RequestMethod;
-import com.yolanda.nohttp.rest.RestRequest;
-import com.yolanda.nohttp.rest.StringRequest;
+import com.yanzhenjie.nohttp.Headers;
+import com.yanzhenjie.nohttp.RequestMethod;
+import com.yanzhenjie.nohttp.rest.RestRequest;
+import com.yanzhenjie.nohttp.rest.StringRequest;
 
 import java.util.List;
 
@@ -66,7 +66,7 @@ public class NetBaseRequest extends RestRequest<NetBaseBean> {
     }
 
     @Override
-    public NetBaseBean parseResponse(Headers responseHeaders, byte[] responseBody) throws Throwable {
+    public NetBaseBean parseResponse(Headers responseHeaders, byte[] responseBody) {
         String result = StringRequest.parseResponseString(responseHeaders, responseBody);
         Logger.d("后台返回的数据:" + result);
         // 这里如果数据格式错误，或者解析失败，会在失败的回调方法中返回 ParseError 异常。

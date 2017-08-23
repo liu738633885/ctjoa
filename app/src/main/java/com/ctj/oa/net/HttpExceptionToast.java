@@ -19,12 +19,12 @@ package com.ctj.oa.net;
 import android.widget.Toast;
 
 import com.ctj.oa.MainApplication;
-import com.yolanda.nohttp.error.NetworkError;
-import com.yolanda.nohttp.error.NotFoundCacheError;
-import com.yolanda.nohttp.error.ServerError;
-import com.yolanda.nohttp.error.TimeoutError;
-import com.yolanda.nohttp.error.URLError;
-import com.yolanda.nohttp.error.UnKnownHostError;
+import com.yanzhenjie.nohttp.error.NetworkError;
+import com.yanzhenjie.nohttp.error.NotFoundCacheError;
+import com.yanzhenjie.nohttp.error.ServerError;
+import com.yanzhenjie.nohttp.error.TimeoutError;
+import com.yanzhenjie.nohttp.error.URLError;
+import com.yanzhenjie.nohttp.error.UnKnownHostError;
 
 import java.net.ProtocolException;
 

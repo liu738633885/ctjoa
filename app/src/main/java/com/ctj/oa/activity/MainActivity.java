@@ -54,10 +54,10 @@ import com.hyphenate.util.EMLog;
 import com.lewis.utils.DensityUtil;
 import com.lewis.utils.T;
 import com.orhanobut.logger.Logger;
-import com.yolanda.nohttp.Headers;
-import com.yolanda.nohttp.NoHttp;
-import com.yolanda.nohttp.download.DownloadListener;
-import com.yolanda.nohttp.download.DownloadRequest;
+import com.yanzhenjie.nohttp.Headers;
+import com.yanzhenjie.nohttp.NoHttp;
+import com.yanzhenjie.nohttp.download.DownloadListener;
+import com.yanzhenjie.nohttp.download.DownloadRequest;
 
 import org.greenrobot.eventbus.Subscribe;
 
@@ -654,7 +654,7 @@ public class MainActivity extends BaseActivity {
                 }
 
                 @Override
-                public void onProgress(int what, int progress, long fileCount) {
+                public void onProgress(int what, int progress, long fileCount, long speed) {
 
                 }
 

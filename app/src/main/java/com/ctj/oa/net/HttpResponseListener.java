@@ -28,16 +28,15 @@ import com.ctj.oa.model.netmodel.NetBaseBean;
 import com.ctj.oa.utils.manager.UserManager;
 import com.ctj.oa.widgets.dialog.LoadingDialog;
 import com.lewis.widgets.swl.SwipeRefreshLayout;
-import com.yolanda.nohttp.Logger;
-import com.yolanda.nohttp.error.NetworkError;
-import com.yolanda.nohttp.error.NotFoundCacheError;
-import com.yolanda.nohttp.error.ParseError;
-import com.yolanda.nohttp.error.TimeoutError;
-import com.yolanda.nohttp.error.URLError;
-import com.yolanda.nohttp.error.UnKnownHostError;
-import com.yolanda.nohttp.rest.OnResponseListener;
-import com.yolanda.nohttp.rest.Request;
-import com.yolanda.nohttp.rest.Response;
+import com.yanzhenjie.nohttp.Logger;
+import com.yanzhenjie.nohttp.error.NetworkError;
+import com.yanzhenjie.nohttp.error.NotFoundCacheError;
+import com.yanzhenjie.nohttp.error.TimeoutError;
+import com.yanzhenjie.nohttp.error.URLError;
+import com.yanzhenjie.nohttp.error.UnKnownHostError;
+import com.yanzhenjie.nohttp.rest.OnResponseListener;
+import com.yanzhenjie.nohttp.rest.Request;
+import com.yanzhenjie.nohttp.rest.Response;
 
 import java.net.ProtocolException;
 
@@ -244,9 +243,9 @@ public class HttpResponseListener<T> implements OnResponseListener<T> {
             HttpExceptionToast.show(R.string.error_not_found_cache);
         } else if (exception instanceof ProtocolException) {
             HttpExceptionToast.show(R.string.error_system_unsupport_method);
-        } else if (exception instanceof ParseError) {
+        } /*else if (exception instanceof ParseError) {
             HttpExceptionToast.show(R.string.error_parse_data_error);
-        } else {
+        } */ else {
             HttpExceptionToast.show(R.string.error_unknow);
         }
         Logger.e("错误：" + exception.getMessage());
@@ -263,5 +262,4 @@ public class HttpResponseListener<T> implements OnResponseListener<T> {
             }
         }
     }
-
 }

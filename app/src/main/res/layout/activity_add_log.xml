@@ -12,7 +12,7 @@
         android:id="@+id/titleBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:center_text="日报"
+        app:center_text="日志"
         app:right_text="提交"
         />
     <!-- app:right_text="模板编辑"-->

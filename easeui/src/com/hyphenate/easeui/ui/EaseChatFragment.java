@@ -103,15 +103,15 @@ public class EaseChatFragment extends EaseBaseFragment implements EMMessageListe
     static final int ITEM_TAKE_PICTURE = 1;
     static final int ITEM_PICTURE = 2;
     static final int ITEM_LOCATION = 3;
-    
-    //protected int[] itemStrings = { R.string.attach_take_pic, R.string.attach_picture, R.string.attach_location };
-    protected int[] itemStrings = {R.string.attach_picture, R.string.attach_location };
-    protected int[] itemdrawables = { R.drawable.ease_chat_image_selector,
-            R.drawable.ease_chat_location_selector };
-   /* protected int[] itemdrawables = { R.drawable.ease_chat_takepic_selector, R.drawable.ease_chat_image_selector,
+
+    protected int[] itemStrings = {R.string.attach_take_pic, R.string.attach_picture, R.string.attach_location};
+    //protected int[] itemStrings = {R.string.attach_picture, R.string.attach_location };
+    /*protected int[] itemdrawables = { R.drawable.ease_chat_image_selector,
             R.drawable.ease_chat_location_selector };*/
-   // protected int[] itemIds = { ITEM_TAKE_PICTURE, ITEM_PICTURE, ITEM_LOCATION };
-    protected int[] itemIds = {ITEM_PICTURE, ITEM_LOCATION };
+    protected int[] itemdrawables = {R.drawable.ease_chat_takepic_selector, R.drawable.ease_chat_image_selector,
+            R.drawable.ease_chat_location_selector};
+    protected int[] itemIds = {ITEM_TAKE_PICTURE, ITEM_PICTURE, ITEM_LOCATION};
+    // protected int[] itemIds = {ITEM_PICTURE, ITEM_LOCATION };
     private boolean isMessageListInited;
     protected MyItemClickListener extendMenuItemClickListener;
 
@@ -869,7 +869,7 @@ public class EaseChatFragment extends EaseBaseFragment implements EMMessageListe
     /**
      * capture new image
      */
-    protected void selectPicFromCamera() {
+    public void selectPicFromCamera() {
         if (!EaseCommonUtils.isSdcardExist()) {
             Toast.makeText(getActivity(), R.string.sd_card_does_not_exist, Toast.LENGTH_SHORT).show();
             return;

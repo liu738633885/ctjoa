@@ -60,26 +60,32 @@ public class AddLogActivity extends BaseActivity {
     private TimePickerDialog pickerDialog;
     private List<UserInfo> users = new ArrayList<UserInfo>();
     private LogTemplate logTemplate;
+    private String name;
 
     @Override
     protected int getContentViewId() {
         return R.layout.activity_add_log;
     }
 
-    public static void goTo(Context context, int id) {
+    public static void goTo(Context context, int id, String name) {
         Intent intent = new Intent(context, AddLogActivity.class);
         intent.putExtra("id", id);
+        intent.putExtra("name", name);
         context.startActivity(intent);
     }
 
     protected void handleIntent(Intent intent) {
         id = intent.getIntExtra("id", 0);
+        name = intent.getStringExtra("name");
     }
 
 
     @Override
     protected void initView(Bundle savedInstanceState) {
         titleBar = (TitleBar) findViewById(R.id.titleBar);
+        if (!TextUtils.isEmpty(name)) {
+            titleBar.setCenterText(name);
+        }
         titleBar.getRightGroup().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

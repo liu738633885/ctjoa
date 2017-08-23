@@ -6,10 +6,12 @@ import android.support.multidex.MultiDexApplication;
 
 import com.hyphenate.chatuidemo.DemoHelper;
 import com.pgyersdk.crash.PgyCrashManager;
+import com.yanzhenjie.nohttp.InitializationConfig;
+import com.yanzhenjie.nohttp.Logger;
+import com.yanzhenjie.nohttp.NoHttp;
 import com.yanzhenjie.nohttp.OkHttpNetworkExecutor;
-import com.yolanda.nohttp.Logger;
-import com.yolanda.nohttp.NoHttp;
-import com.yolanda.nohttp.cache.DBCacheStore;
+import com.yanzhenjie.nohttp.cache.DBCacheStore;
+import com.yanzhenjie.nohttp.cookie.DBCookieStore;
 
 
 /**
@@ -23,15 +25,23 @@ public class MainApplication extends MultiDexApplication {
     public void onCreate() {
         super.onCreate();
         instance = this;
-        NoHttp.initialize(this, new NoHttp.Config()
+        NoHttp.initialize(InitializationConfig.newBuilder(this)
                 // 设置全局连接超时时间，单位毫秒，默认10s。
-                .setConnectTimeout(30 * 1000)
+                .connectionTimeout(30 * 1000)
                 // 设置全局服务器响应超时时间，单位毫秒，默认10s。
-                .setReadTimeout(30 * 1000)
+                .readTimeout(30 * 1000)
                 // 配置缓存，默认保存数据库DBCacheStore，保存到SD卡使用DiskCacheStore。
-                .setCacheStore(
-                        new DBCacheStore(this).setEnable(true) // 如果不使用缓存，设置false禁用。
-                ).setNetworkExecutor(new OkHttpNetworkExecutor()));
+                .cacheStore(
+                        new DBCacheStore(this).setEnable(true) // 如果不使用缓存，设置setEnable(false)禁用。
+                )
+                // 配置Cookie，默认保存数据库DBCookieStore，开发者可以自己实现。
+                .cookieStore(
+                        new DBCookieStore(this).setEnable(true) // 如果不维护cookie，设置false禁用。
+                )
+                // 配置网络层，URLConnectionNetworkExecutor，如果想用OkHttp：OkHttpNetworkExecutor。
+                .networkExecutor(new OkHttpNetworkExecutor())
+                .build()
+        );
         Logger.setTag("NoHttpSample");
         Logger.setDebug(BuildConfig.DEBUG);// 开始NoHttp的调试模式, 这样就能看到请求过程和日志
         // 环信

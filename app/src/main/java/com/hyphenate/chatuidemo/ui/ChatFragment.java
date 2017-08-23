@@ -54,7 +54,6 @@ import com.orhanobut.logger.Logger;
 
 import java.io.File;
 import java.io.FileOutputStream;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -494,6 +493,16 @@ public class ChatFragment extends EaseChatFragment implements EaseChatFragmentHe
 
     @Override
     public void selectPicFromLocal() {
+        PhotoPicker.builder()
+                .setPhotoCount(1)
+                .setShowCamera(false)
+                .setShowGif(false)
+                .setPreviewEnabled(true)
+                .start(getActivity(), PhotoPicker.REQUEST_CODE);
+    }
+
+    @Override
+    public void selectPicFromCamera() {
         PhotoPicker.builder()
                 .setPhotoCount(1)
                 .setShowCamera(true)
