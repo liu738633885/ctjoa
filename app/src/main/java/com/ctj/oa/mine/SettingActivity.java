@@ -18,10 +18,11 @@ import com.ctj.oa.activity.BaseActivity;
 import com.ctj.oa.activity.LoginActivity;
 import com.ctj.oa.activity.WebViewActivity;
 import com.ctj.oa.utils.BitmapUtils;
-import com.lewis.utils.FileUtil;
+import com.ctj.oa.utils.SPUtils;
 import com.ctj.oa.utils.manager.SettingsManager;
 import com.hyphenate.EMCallBack;
 import com.hyphenate.chatuidemo.DemoHelper;
+import com.lewis.utils.FileUtil;
 
 import java.io.File;
 
@@ -126,6 +127,7 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
                         handler.sendEmptyMessage(1);
                     }
                 }).start();
+                SPUtils.getHuanxinUserInstance().clear();
 
                 break;
             case R.id.ll_reset:
