@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    tools:context=".work.log.AddLogTemplateActivity">
+    tools:context=".work.approval.AddApprovalActivity">
 
     <com.ctj.oa.widgets.TitleBar
         android:id="@+id/titleBar"
@@ -15,6 +15,8 @@
         app:center_text="新建申请"
         app:right_text="提交"/>
     <android.support.v7.widget.RecyclerView
+        android:descendantFocusability="beforeDescendants"
+        android:fastScrollEnabled="false"
         android:id="@+id/rv"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>

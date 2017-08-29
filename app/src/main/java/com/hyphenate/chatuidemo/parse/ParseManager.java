@@ -123,12 +123,12 @@ public class ParseManager {
         if (username.equals(Constants.ADMIN_ID)) {
             EaseUser user = DemoHelper.getInstance().getContactList().get(username);
             UserInfo info = new UserInfo();
-            info.setNickname("仝小密通知");
+            info.setNickname("仝小秘");
             SPUtils.getHuanxinUserInstance().put(username, info);
             if (user == null) {
                 user = new EaseUser(username);
             }
-            user.setNickname("仝小密通知");
+            user.setNickname("仝小秘");
             //user.setAvatar(info.getPortrait());
             callback.onSuccess(user);
             return;

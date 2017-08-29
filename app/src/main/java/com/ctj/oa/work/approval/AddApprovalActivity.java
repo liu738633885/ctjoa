@@ -181,6 +181,9 @@ public class AddApprovalActivity extends BaseActivity {
             public void onSucceed(int what, NetBaseBean netBaseBean) {
                 if (netBaseBean.isSuccess()) {
                     detail = netBaseBean.parseObject(ApproveTemplate.class);
+                    if (!TextUtils.isEmpty(detail.getApprove_title())) {
+                        titleBar.setCenterText(detail.getApprove_title());
+                    }
                     tv_title.setText(detail.getApprove_title());
                     tv_desc.setText(detail.getApprove_desc());
                     adapter.setNewData(detail.getApprove_ext());

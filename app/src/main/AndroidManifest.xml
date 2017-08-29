@@ -427,7 +427,10 @@
         </activity>
         <activity android:name=".work.log.LogListActivity">
         </activity>
-        <activity android:name=".work.log.AddLogActivity">
+        <activity
+            android:name=".work.log.AddLogActivity"
+            android:windowSoftInputMode="stateHidden|adjustPan"
+            >
         </activity>
         <activity android:name=".work.log.AddLogTemplateActivity">
         </activity>
@@ -447,7 +450,10 @@
         </activity>
         <activity android:name=".work.sign.SignActivity">
         </activity>
-        <activity android:name=".work.approval.AddApprovalActivity">
+        <activity
+            android:name=".work.approval.AddApprovalActivity"
+            android:windowSoftInputMode="stateHidden|adjustPan"
+            >
         </activity>
         <activity android:name=".seal.SealActivity">
         </activity>

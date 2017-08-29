@@ -9,6 +9,7 @@
     tools:context="com.ctj.oa.work.approval.ApprovalDetailActivity">
 
     <com.ctj.oa.widgets.TitleBar
+        android:id="@+id/titleBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:center_text="申请详情"/>

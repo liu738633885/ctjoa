@@ -31,6 +31,7 @@ import com.ctj.oa.net.NetBaseRequest;
 import com.ctj.oa.net.RequsetFactory;
 import com.ctj.oa.utils.MyViewUtils;
 import com.ctj.oa.utils.imageloader.ImageLoader;
+import com.ctj.oa.widgets.TitleBar;
 import com.lewis.utils.CommonUtils;
 import com.lewis.utils.DateUtils;
 
@@ -50,6 +51,7 @@ public class LogDetailActivity extends BaseActivity implements BaseQuickAdapter.
     private int pagerNum;
     private EditText edt;
     private Button btn_send;
+    private TitleBar titleBar;
 
     @Override
     protected int getContentViewId() {
@@ -68,6 +70,7 @@ public class LogDetailActivity extends BaseActivity implements BaseQuickAdapter.
 
     @Override
     protected void initView(Bundle savedInstanceState) {
+        titleBar = (TitleBar) findViewById(R.id.titleBar);
         rv = (RecyclerView) findViewById(R.id.rv);
         rv.setLayoutManager(new LinearLayoutManager(this));
         rv.setAdapter(adapter);
@@ -129,6 +132,9 @@ public class LogDetailActivity extends BaseActivity implements BaseQuickAdapter.
                 if (netBaseBean.isSuccess()) {
                     LogDetail logDetail = netBaseBean.parseObject(LogDetail.class);
                     try {
+                        if (!TextUtils.isEmpty(logDetail.getTitle())) {
+                            titleBar.setCenterText(logDetail.getTitle());
+                        }
                         h_tv.setText(logDetail.getTitle().substring(0, 1));
                         h_tv3.setText(DateUtils.tenLongToString(logDetail.getAdd_time(), DateUtils.yyyyMMddHHmmss));
                         h_tv2.setText(logDetail.getNickname());

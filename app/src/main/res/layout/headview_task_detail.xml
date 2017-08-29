@@ -128,7 +128,7 @@
                 android:layout_marginRight="10dp"
                 android:paddingBottom="15dp"
                 android:paddingTop="15dp"
-                android:text="紧要程度:"
+                android:text="紧急程度:"
                 android:textColor="@color/gray01"
                 android:textSize="12dp"/>
 

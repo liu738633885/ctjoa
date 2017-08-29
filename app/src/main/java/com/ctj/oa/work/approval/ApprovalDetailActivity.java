@@ -28,6 +28,7 @@ import com.ctj.oa.net.HttpListenerCallback;
 import com.ctj.oa.net.NetBaseRequest;
 import com.ctj.oa.net.RequsetFactory;
 import com.ctj.oa.utils.imageloader.ImageLoader;
+import com.ctj.oa.widgets.TitleBar;
 import com.ctj.oa.work.ChooseUserActivity;
 import com.lewis.utils.DateUtils;
 import com.orhanobut.logger.Logger;
@@ -51,6 +52,7 @@ public class ApprovalDetailActivity extends BaseActivity implements View.OnClick
     private ImageView imv;
     private Approve approve;
     private int type = -1;
+    private TitleBar titleBar;
 
     @Override
     protected int getContentViewId() {
@@ -80,6 +82,7 @@ public class ApprovalDetailActivity extends BaseActivity implements View.OnClick
 
     @Override
     protected void initView(Bundle savedInstanceState) {
+        titleBar = (TitleBar) findViewById(R.id.titleBar);
         btn1 = (Button) findViewById(R.id.btn1);
         btn2 = (Button) findViewById(R.id.btn2);
         btn3 = (Button) findViewById(R.id.btn3);
@@ -147,6 +150,9 @@ public class ApprovalDetailActivity extends BaseActivity implements View.OnClick
 
     private void updateUI() {
         try {
+            if (!TextUtils.isEmpty(approve.getApprove_title())) {
+                titleBar.setCenterText(approve.getApprove_title());
+            }
             if (mode == MODE_APPLY) {
                 if (approve.getRevoke_state() == 1 && approve.getApplay_state() == 0) {
                     btn1.setVisibility(View.VISIBLE);
@@ -294,11 +300,12 @@ public class ApprovalDetailActivity extends BaseActivity implements View.OnClick
     private void send_CCapprove(String ids) {
         NetBaseRequest request = RequsetFactory.creatBaseRequest(Constants.CC_APPROVE);
         request.add("user_id_list", ids);
-        if (mode == MODE_APPLY) {
+        /*if (mode == MODE_APPLY) {
             request.add("id", id);
         } else {
             request.add("id", approve.getApprove_id());
-        }
+        }*/
+        request.add("id", approve.getCt_id());
         CallServer.getRequestInstance().add(this, 0x02, request, new HttpListenerCallback() {
             @Override
             public void onSucceed(int what, NetBaseBean netBaseBean) {

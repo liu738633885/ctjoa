@@ -42,6 +42,7 @@ public class Approve implements Serializable {
     private List<Field> field_ext;
     private List<UserInfo> approve_user;
     private UserInfo apply_user_info;
+    private int ct_id;
 
     public class Field implements Serializable{
         public String title_field;
@@ -245,5 +246,13 @@ public class Approve implements Serializable {
 
     public void setApply_user_info(UserInfo apply_user_info) {
         this.apply_user_info = apply_user_info;
+    }
+
+    public int getCt_id() {
+        return ct_id;
+    }
+
+    public void setCt_id(int ct_id) {
+        this.ct_id = ct_id;
     }
 }

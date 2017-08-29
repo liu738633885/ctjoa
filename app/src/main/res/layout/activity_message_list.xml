@@ -11,7 +11,7 @@
     <com.ctj.oa.widgets.TitleBar
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:center_text="未读消息"/>
+        app:center_text="仝小秘"/>
 
     <com.lewis.widgets.LewisSwipeRefreshLayout
         android:id="@+id/swl"

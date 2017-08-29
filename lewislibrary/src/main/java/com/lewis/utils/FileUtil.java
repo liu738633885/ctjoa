@@ -420,7 +420,7 @@ public class FileUtil {
         double kiloByte = size / 1024;
         if (kiloByte < 1) {
             //return size + "Byte(s)";
-            return "没有缓存";
+            return "0.00MB";
         }
 
         double megaByte = kiloByte / 1024;

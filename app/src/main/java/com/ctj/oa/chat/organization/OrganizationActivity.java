@@ -46,7 +46,7 @@ public class OrganizationActivity extends BaseActivity {
     @Override
     protected void initView(Bundle savedInstanceState) {
         titleBar = (TitleBar) findViewById(R.id.titleBar);
-        titleBar.getRightGroup().setOnClickListener(new View.OnClickListener() {
+        /*titleBar.getRightGroup().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (UserManager.isAdmin()) {
@@ -55,7 +55,7 @@ public class OrganizationActivity extends BaseActivity {
                     Toast("你不是当前公司管理者");
                 }
             }
-        });
+        });*/
         rv = (RecyclerView) findViewById(R.id.rv);
         rv.setLayoutManager(new LinearLayoutManager(this));
         mAdapter = new SimpleTreeRecyclerAdapter(rv, this,
