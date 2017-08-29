@@ -16,9 +16,10 @@ import com.ctj.oa.model.netmodel.NetBaseBean;
 import com.ctj.oa.net.CallServer;
 import com.ctj.oa.net.HttpListenerCallback;
 import com.ctj.oa.net.NetBaseRequest;
-import com.lewis.utils.MD5Util;
 import com.ctj.oa.widgets.TitleBar;
 import com.lewis.utils.EditTextUitls;
+import com.lewis.utils.MD5Util;
+import com.lewis.utils.T;
 
 public class ForgetPasswordActivity extends BaseActivity {
     private TitleBar titleBar;
@@ -75,6 +76,10 @@ public class ForgetPasswordActivity extends BaseActivity {
         NetBaseRequest request = new NetBaseRequest(Constants.FIND_PASSWORD);
         request.add("phone", edt_phone.getText().toString());
         request.add("code", edt_code.getText().toString());
+        if (edt_password.getText().length() < 8 || edt_password.getText().length() > 20) {
+            T.showShort(this, "密码长度必须为8~20之间!");
+            return;
+        }
         request.add("password", MD5Util.MD5String(edt_password.getText().toString()));
         CallServer.getRequestInstance().add(this, 0x01, request, new HttpListenerCallback() {
             @Override

@@ -13,8 +13,9 @@ import com.ctj.oa.net.CallServer;
 import com.ctj.oa.net.HttpListenerCallback;
 import com.ctj.oa.net.NetBaseRequest;
 import com.ctj.oa.net.RequsetFactory;
-import com.lewis.utils.MD5Util;
 import com.ctj.oa.widgets.TitleBar;
+import com.lewis.utils.MD5Util;
+import com.lewis.utils.T;
 
 public class EditPasswordActivity extends BaseActivity {
     private TitleBar titleBar;
@@ -45,8 +46,8 @@ public class EditPasswordActivity extends BaseActivity {
             Toast(" 请先输入旧密码");
             return;
         }
-        if (edt_new_password.getText().toString().length() < 8) {
-            Toast("新密码最少8位");
+        if (edt_new_password.getText().length() < 8 || edt_new_password.getText().length() > 20) {
+            T.showShort(this, "密码长度必须为8~20之间!");
             return;
         }
 
