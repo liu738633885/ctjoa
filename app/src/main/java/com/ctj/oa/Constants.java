@@ -127,6 +127,7 @@ public class Constants {
     public static final String GET_MEMO_INFO = _MEMO + "getMemoInfo";
     public static final String MEMO_SAVE = _MEMO + "memoSave";
     public static final String GET_MEMO_LIST = _MEMO + "getMemoList";
+    public static final String CLEAN_TIPS = _MEMO + "clear_tips";
     /**
      * ====task=========
      */

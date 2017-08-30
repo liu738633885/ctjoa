@@ -39,7 +39,7 @@ public class MemoDetailActivity extends BaseActivity implements BaseQuickAdapter
     private RecyclerView rv;
     private int pagerNum;
     private EditText edt;
-    private Button btn_send;
+    private Button btn_send, btn_stop;
     private View headView;
     private ImageView imv, imv2;
     private TextView tv2, tv3, tv_content, tv4;
@@ -66,6 +66,7 @@ public class MemoDetailActivity extends BaseActivity implements BaseQuickAdapter
         rv.setAdapter(commentAdapter);
         commentAdapter.setOnLoadMoreListener(this, rv);
         headView = LayoutInflater.from(this).inflate(R.layout.headview_memo_detail, (ViewGroup) rv.getParent(), false);
+        btn_stop = (Button) headView.findViewById(R.id.btn_stop);
         tv2 = (TextView) headView.findViewById(R.id.tv2);
         tv3 = (TextView) headView.findViewById(R.id.tv3);
         tv_content = (TextView) headView.findViewById(R.id.tv_content);
@@ -82,6 +83,12 @@ public class MemoDetailActivity extends BaseActivity implements BaseQuickAdapter
             }
         });
         getMemoInfo();
+        btn_stop.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                cleanTips();
+            }
+        });
     }
 
     private void sendComment() {
@@ -132,6 +139,11 @@ public class MemoDetailActivity extends BaseActivity implements BaseQuickAdapter
                         } else {
                             imv2.setVisibility(View.INVISIBLE);
                         }
+                        if (memo.getIs_stop() == 1) {
+                            btn_stop.setVisibility(View.VISIBLE);
+                        } else {
+                            btn_stop.setVisibility(View.GONE);
+                        }
                         getCommentList(0);
                     } catch (Exception e) {
                         e.printStackTrace();
@@ -145,6 +157,26 @@ public class MemoDetailActivity extends BaseActivity implements BaseQuickAdapter
             }
         }, true, true, "");
     }
+
+    private void cleanTips() {
+        NetBaseRequest request = RequsetFactory.creatBaseRequest(Constants.CLEAN_TIPS);
+        request.add("id", id);
+        CallServer.getRequestInstance().add(this, 0x01, request, new HttpListenerCallback() {
+            @Override
+            public void onSucceed(int what, NetBaseBean netBaseBean) {
+                Toast(netBaseBean.getMessage());
+                if (netBaseBean.isSuccess()) {
+                    getMemoInfo();
+                }
+            }
+
+            @Override
+            public void onFailed(int what, String url, Object tag, Exception exception, int responseCode, long networkMillis) {
+
+            }
+        }, true, true);
+    }
+
 
     private BaseQuickAdapter<LogComment, BaseViewHolder> commentAdapter = new BaseQuickAdapter<LogComment, BaseViewHolder>(R.layout.item_log_detail_comment) {
         @Override

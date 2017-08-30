@@ -52,6 +52,18 @@
         android:textColor="@color/super_orange"
         android:textSize="17sp"/>
 
+    <Button
+        android:id="@+id/btn_stop"
+        android:layout_width="60dp"
+        android:layout_height="25dp"
+        android:layout_alignParentRight="true"
+        android:layout_below="@id/imv2"
+        android:layout_margin="5dp"
+        android:background="@drawable/shape_button_bg_blue"
+        android:text="关闭提醒"
+        android:textColor="@color/white"
+        android:textSize="12sp"/>
+
     <TextView
         android:id="@+id/tv_content"
         android:layout_width="match_parent"

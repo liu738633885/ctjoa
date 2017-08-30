@@ -12,6 +12,7 @@ public class Memo {
     private String nickname;
     private String portrait;
     private String content;
+    private int is_stop;//1时可关闭提醒
 
 
     public int getId() {
@@ -68,5 +69,13 @@ public class Memo {
 
     public void setContent(String content) {
         this.content = content;
+    }
+
+    public int getIs_stop() {
+        return is_stop;
+    }
+
+    public void setIs_stop(int is_stop) {
+        this.is_stop = is_stop;
     }
 }
