@@ -155,11 +155,11 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
             T.showShort(this, "用户名或手机号不能为空!");
             return;
         }
-        if (TextUtils.isEmpty(edt_username.getText().toString())) {
+        if (TextUtils.isEmpty(edt_password.getText().toString())) {
             T.showShort(this, "密码不能为空!");
             return;
         }
-        if (edt_username.getText().length() < 8 || edt_username.getText().length() > 20) {
+        if (edt_password.getText().length() < 8 || edt_password.getText().length() > 20) {
             T.showShort(this, "密码长度必须为8~20之间!");
             return;
         }
