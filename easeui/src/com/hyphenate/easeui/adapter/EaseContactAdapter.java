@@ -83,9 +83,14 @@ public class EaseContactAdapter extends ArrayAdapter<EaseUser> implements Sectio
             holder.headerView.setVisibility(View.GONE);
         }
 
-        EaseUserUtils.setUserNick(username, holder.nameView);
-        EaseUserUtils.setUserAvatar(getContext(), username, holder.avatar);
-        
+        if(user.getAvatar().equals("group")){
+            holder.nameView.setText(user.getNickname());
+            holder.avatar.setImageResource(R.drawable.em_group_icon);
+        }else {
+            EaseUserUtils.setUserNick(username, holder.nameView);
+            EaseUserUtils.setUserAvatar(getContext(), username, holder.avatar);
+        }
+
        
         if(primaryColor != 0)
             holder.nameView.setTextColor(primaryColor);

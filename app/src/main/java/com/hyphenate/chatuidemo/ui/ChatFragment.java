@@ -30,10 +30,12 @@ import com.ctj.oa.net.NetBaseRequest;
 import com.ctj.oa.net.RequsetFactory;
 import com.ctj.oa.utils.GoToUtils;
 import com.ctj.oa.utils.SPUtils;
+import com.ctj.oa.utils.ShareUtils;
 import com.ctj.oa.utils.manager.UserManager;
 import com.hyphenate.chat.EMClient;
 import com.hyphenate.chat.EMCmdMessageBody;
 import com.hyphenate.chat.EMGroup;
+import com.hyphenate.chat.EMImageMessageBody;
 import com.hyphenate.chat.EMMessage;
 import com.hyphenate.chat.EMTextMessageBody;
 import com.hyphenate.chatuidemo.Constant;
@@ -206,6 +208,13 @@ public class ChatFragment extends EaseChatFragment implements EaseChatFragmentHe
                     intent.putExtra("forward_msg_id", contextMenuMessage.getMsgId());
                     startActivity(intent);
 
+                    break;
+                case ContextMenuActivity.RESULT_CODE_SHARE: // forward
+                    /*Intent intent = new Intent(getActivity(), ForwardMessageActivity.class);
+                    intent.putExtra("forward_msg_id", contextMenuMessage.getMsgId());
+                    startActivity(intent);*/
+                    //T.showShort(getActivity(),((EMImageMessageBody)contextMenuMessage.getBody()).getLocalUrl());
+                    ShareUtils.ShareWXIMG(getActivity(), ((EMImageMessageBody) contextMenuMessage.getBody()).getLocalUrl());
                     break;
 
                 default:

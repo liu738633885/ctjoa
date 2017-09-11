@@ -22,6 +22,8 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 
 import com.ctj.oa.R;
+import com.hyphenate.chat.EMClient;
+import com.hyphenate.chat.EMGroup;
 import com.hyphenate.chatuidemo.Constant;
 import com.hyphenate.chatuidemo.DemoHelper;
 import com.hyphenate.easeui.adapter.EaseContactAdapter;
@@ -74,6 +76,7 @@ public class PickContactNoCheckboxActivity extends BaseActivity {
 		finish();
 	}
 
+	protected List<EMGroup> grouplist;
 	private void getContactList() {
 		contactList.clear();
 		Map<String, EaseUser> users = DemoHelper.getInstance().getContactList();
@@ -99,6 +102,13 @@ public class PickContactNoCheckboxActivity extends BaseActivity {
                 
             }
         });
+		grouplist = EMClient.getInstance().groupManager().getAllGroups();
+		for (EMGroup group : grouplist) {
+			EaseUser user = new EaseUser(group.getGroupId());
+			user.setNickname(group.getGroupName());
+			user.setAvatar("group");
+			contactList.add(user);
+		}
 	}
 
 }

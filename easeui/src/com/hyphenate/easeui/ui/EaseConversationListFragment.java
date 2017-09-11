@@ -19,14 +19,20 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
+import android.widget.TextView;
 
 import com.hyphenate.EMConnectionListener;
 import com.hyphenate.EMConversationListener;
 import com.hyphenate.EMError;
 import com.hyphenate.chat.EMClient;
 import com.hyphenate.chat.EMConversation;
+import com.hyphenate.chat.EMMessage;
 import com.hyphenate.easeui.R;
+import com.hyphenate.easeui.utils.EaseCommonUtils;
+import com.hyphenate.easeui.utils.EaseSmileUtils;
+import com.hyphenate.easeui.utils.EaseUserUtils;
 import com.hyphenate.easeui.widget.EaseConversationList;
+import com.lewis.utils.DateUtils;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -70,14 +76,55 @@ public class EaseConversationListFragment extends EaseBaseFragment{
         super.onActivityCreated(savedInstanceState);
     }
 
+    private View adminView;
+    private TextView unread_msg_number, name, time, message;
     @Override
     protected void initView() {
         inputMethodManager = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
         conversationListView = (EaseConversationList) getView().findViewById(R.id.list);
+        adminView = LayoutInflater.from(getContext()).inflate(R.layout.ease_row_chat_history2, conversationListView, false);
+        //findviewbyid
+        unread_msg_number = (TextView) adminView.findViewById(R.id.unread_msg_number);
+        name = (TextView) adminView.findViewById(R.id.name);
+        time = (TextView) adminView.findViewById(R.id.time);
+        message = (TextView) adminView.findViewById(R.id.message);
+        adminView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                return true;
+            }
+        });
+        adminView.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                gotoAdmin();
+            }
+        });
+
+        conversationListView.addHeaderView(adminView);
         query = (EditText) getView().findViewById(R.id.query);
         // button to clear content in search bar
         clearSearch = (ImageButton) getView().findViewById(R.id.search_clear);
         errorItemContainer = (FrameLayout) getView().findViewById(R.id.fl_error_item);
+    }
+
+    protected void gotoAdmin() {
+    }
+
+    private void updateAdminUi() {
+        EaseUserUtils.setUserNick("admin", name);
+        if (admin != null) {
+            if (admin.getUnreadMsgCount() > 0) {
+                unread_msg_number.setText(String.valueOf(admin.getUnreadMsgCount()));
+                unread_msg_number.setVisibility(View.VISIBLE);
+            } else {
+                unread_msg_number.setVisibility(View.INVISIBLE);
+            }
+            EMMessage lastMessage = admin.getLastMessage();
+            time.setText(DateUtils.translateDate3(lastMessage.getMsgTime()));
+            message.setText(EaseSmileUtils.getSmiledText(getContext(), EaseCommonUtils.getMessageDigest(lastMessage, (this.getContext()))),
+                    TextView.BufferType.SPANNABLE);
+        }
     }
     
     @Override
@@ -160,14 +207,15 @@ public class EaseConversationListFragment extends EaseBaseFragment{
             case 1:
                 onConnectionConnected();
                 break;
-            
+
             case MSG_REFRESH:
 	            {
 	            	conversationList.clear();
 	                conversationList.addAll(loadConversationList());
 	                conversationListView.refresh();
-	                break;
-	            }
+                    updateAdminUi();
+                    break;
+                }
             default:
                 break;
             }
@@ -197,7 +245,9 @@ public class EaseConversationListFragment extends EaseBaseFragment{
     		handler.sendEmptyMessage(MSG_REFRESH);
     	}
     }
-    
+
+    //private Map<String, EMConversation> conversations;
+    private EMConversation admin;
     /**
      * load conversation list
      * 
@@ -206,6 +256,7 @@ public class EaseConversationListFragment extends EaseBaseFragment{
     protected List<EMConversation> loadConversationList(){
         // get all conversations
         Map<String, EMConversation> conversations = EMClient.getInstance().chatManager().getAllConversations();
+        admin = conversations.get("admin");
         List<Pair<Long, EMConversation>> sortList = new ArrayList<Pair<Long, EMConversation>>();
         /**
          * lastMsgTime will change if there is new message during sorting
@@ -228,6 +279,7 @@ public class EaseConversationListFragment extends EaseBaseFragment{
         for (Pair<Long, EMConversation> sortItem : sortList) {
             list.add(sortItem.second);
         }
+        list.remove(admin);
         return list;
     }
 

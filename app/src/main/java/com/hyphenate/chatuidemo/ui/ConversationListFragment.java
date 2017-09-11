@@ -12,8 +12,9 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.ctj.oa.activity.MainActivity;
+import com.ctj.oa.Constants;
 import com.ctj.oa.R;
+import com.ctj.oa.activity.MainActivity;
 import com.hyphenate.chat.EMClient;
 import com.hyphenate.chat.EMConversation;
 import com.hyphenate.chat.EMConversation.EMConversationType;
@@ -24,10 +25,12 @@ import com.hyphenate.easeui.model.EaseAtMessageHelper;
 import com.hyphenate.easeui.ui.EaseConversationListFragment;
 import com.hyphenate.easeui.widget.EaseConversationList.EaseConversationListHelper;
 import com.hyphenate.util.NetUtils;
+import com.orhanobut.logger.Logger;
 
 public class ConversationListFragment extends EaseConversationListFragment{
 
     private TextView errorText;
+    private View adminView;
 
     @Override
     protected void initView() {
@@ -36,17 +39,30 @@ public class ConversationListFragment extends EaseConversationListFragment{
         errorItemContainer.addView(errorView);
         errorText = (TextView) errorView.findViewById(R.id.tv_connect_errormsg);
     }
-    
+
+    @Override
+    protected void gotoAdmin() {
+        Intent intent = new Intent(getActivity(), ChatActivity.class);
+        intent.putExtra(Constant.EXTRA_USER_ID, Constants.ADMIN_ID);
+        startActivity(intent);
+    }
+
     @Override
     protected void setUpView() {
         super.setUpView();
         // register context menu
         registerForContextMenu(conversationListView);
+        //
+
         conversationListView.setOnItemClickListener(new OnItemClickListener() {
 
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                EMConversation conversation = conversationListView.getItem(position);
+                Logger.e("点击" + position);
+                if (position == 0) {
+                    return;
+                }
+                EMConversation conversation = conversationListView.getItem(position - 1);
                 String username = conversation.conversationId();
                 if (username.equals(EMClient.getInstance().getCurrentUser()))
                     Toast.makeText(getActivity(), R.string.Cant_chat_with_yourself, Toast.LENGTH_SHORT).show();
@@ -118,10 +134,10 @@ public class ConversationListFragment extends EaseConversationListFragment{
         } else if (item.getItemId() == R.id.delete_conversation) {
             deleteMessage = false;
         }
-    	EMConversation tobeDeleteCons = conversationListView.getItem(((AdapterContextMenuInfo) item.getMenuInfo()).position);
-    	if (tobeDeleteCons == null) {
-    	    return true;
-    	}
+        EMConversation tobeDeleteCons = conversationListView.getItem(((AdapterContextMenuInfo) item.getMenuInfo()).position - 1);
+        if (tobeDeleteCons == null) {
+            return true;
+        }
         if(tobeDeleteCons.getType() == EMConversationType.GroupChat){
             EaseAtMessageHelper.get().removeAtMeGroup(tobeDeleteCons.conversationId());
         }

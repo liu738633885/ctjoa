@@ -5,24 +5,31 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
 import android.text.TextUtils;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
+import com.ctj.oa.MainApplication;
 import com.ctj.oa.R;
+import com.lewis.utils.T;
 import com.tencent.mm.opensdk.modelmsg.SendMessageToWX;
+import com.tencent.mm.opensdk.modelmsg.WXImageObject;
 import com.tencent.mm.opensdk.modelmsg.WXMediaMessage;
 import com.tencent.mm.opensdk.modelmsg.WXWebpageObject;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 
+import java.io.File;
+
+import static android.R.attr.path;
 
 
 /**
  * Created by AINANA-RD-X on 2016/8/11.
  */
 public class ShareUtils {
-
+    private static final int THUMB_SIZE = 150;
     //发送到聊天界面
     public static final int SHARE_TO_SESSION = SendMessageToWX.Req.WXSceneSession;
     //发送到朋友圈
@@ -66,6 +73,38 @@ public class ShareUtils {
                 ShareWX(context, shareUrl, title, description, resource, shareStyle);
             }
         });
+    }
+    public static void ShareWXIMG(final Context context, final String imgpath) {
+        IWXAPI msgApi = WXAPIFactory.createWXAPI(context, "wx2be5d3f05af61ca3");
+        File file = new File(imgpath);
+        if (!file.exists()) {
+            //String tip = "文件不存在";
+            //Toast.makeText(MainApplication.getInstance(), tip + " path = " + imgpath, Toast.LENGTH_LONG).show();
+            T.showShort(MainApplication.getInstance(),"请先浏览图片,才能分享");
+            return;
+        }
+
+        WXImageObject imgObj = new WXImageObject();
+        imgObj.setImagePath(imgpath);
+
+        WXMediaMessage msg = new WXMediaMessage();
+        msg.mediaObject = imgObj;
+
+        Bitmap bmp = BitmapFactory.decodeFile(imgpath);
+        Bitmap thumbBmp = Bitmap.createScaledBitmap(bmp, THUMB_SIZE, THUMB_SIZE, true);
+        bmp.recycle();
+        msg.thumbData = Util.bmpToByteArray(thumbBmp, true);
+
+        SendMessageToWX.Req req = new SendMessageToWX.Req();
+        req.transaction = buildTransaction("img");
+        req.message = msg;
+        int mTargetScene = SendMessageToWX.Req.WXSceneSession;
+        req.scene = mTargetScene;
+        msgApi.sendReq(req);
+    }
+    //private int mTargetScene = SendMessageToWX.Req.WXSceneSession;
+    private static String buildTransaction(final String type) {
+        return (type == null) ? String.valueOf(System.currentTimeMillis()) : type + System.currentTimeMillis();
     }
 
 }

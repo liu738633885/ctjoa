@@ -17,6 +17,7 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import com.ctj.oa.R;
+import com.hyphenate.chatuidemo.Constant;
 import com.hyphenate.easeui.domain.EaseUser;
 import com.hyphenate.easeui.widget.EaseAlertDialog;
 import com.hyphenate.easeui.widget.EaseAlertDialog.AlertDialogUser;
@@ -49,6 +50,9 @@ public class ForwardMessageActivity extends PickContactNoCheckboxActivity {
                     // it is single chat
                     intent.putExtra("userId", selectUser.getUsername());
                     intent.putExtra("forward_msg_id", forward_msg_id);
+                    if (selectUser.getAvatar().equals("group")) {
+                        intent.putExtra("chatType", Constant.CHATTYPE_GROUP);
+                    }
                     startActivity(intent);
                     finish();
                 }

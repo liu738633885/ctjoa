@@ -25,7 +25,8 @@ public class ContextMenuActivity extends BaseActivity {
     public static final int RESULT_CODE_COPY = 1;
     public static final int RESULT_CODE_DELETE = 2;
     public static final int RESULT_CODE_FORWARD = 3;
-    
+	public static final int RESULT_CODE_SHARE = 4;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -87,5 +88,10 @@ public class ContextMenuActivity extends BaseActivity {
 		setResult(RESULT_CODE_FORWARD);
 		finish();
 	}
-	
+
+	public void share(View view) {
+		setResult(RESULT_CODE_SHARE);
+		finish();
+	}
+
 }
