@@ -58,7 +58,7 @@ public class ConversationListFragment extends EaseConversationListFragment{
 
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Logger.e("点击" + position);
+//                Logger.e("点击" + position);
                 if (position == 0) {
                     return;
                 }

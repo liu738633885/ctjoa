@@ -3,6 +3,7 @@ package com.ctj.oa.utils;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
 import android.graphics.drawable.Drawable;
 import android.text.TextUtils;
 import android.widget.Toast;
@@ -13,6 +14,7 @@ import com.bumptech.glide.request.target.SimpleTarget;
 import com.ctj.oa.MainApplication;
 import com.ctj.oa.R;
 import com.lewis.utils.T;
+import com.orhanobut.logger.Logger;
 import com.tencent.mm.opensdk.modelmsg.SendMessageToWX;
 import com.tencent.mm.opensdk.modelmsg.WXImageObject;
 import com.tencent.mm.opensdk.modelmsg.WXMediaMessage;
@@ -77,6 +79,7 @@ public class ShareUtils {
     public static void ShareWXIMG(final Context context, final String imgpath) {
         IWXAPI msgApi = WXAPIFactory.createWXAPI(context, "wx2be5d3f05af61ca3");
         File file = new File(imgpath);
+        Logger.e(imgpath);
         if (!file.exists()) {
             //String tip = "文件不存在";
             //Toast.makeText(MainApplication.getInstance(), tip + " path = " + imgpath, Toast.LENGTH_LONG).show();
@@ -91,7 +94,8 @@ public class ShareUtils {
         msg.mediaObject = imgObj;
 
         Bitmap bmp = BitmapFactory.decodeFile(imgpath);
-        Bitmap thumbBmp = Bitmap.createScaledBitmap(bmp, THUMB_SIZE, THUMB_SIZE, true);
+        //Bitmap thumbBmp = Bitmap.createScaledBitmap(bmp, THUMB_SIZE, THUMB_SIZE, true);
+        Bitmap thumbBmp = createBitmapThumbnail(bmp);
         bmp.recycle();
         msg.thumbData = Util.bmpToByteArray(thumbBmp, true);
 
@@ -106,5 +110,21 @@ public class ShareUtils {
     private static String buildTransaction(final String type) {
         return (type == null) ? String.valueOf(System.currentTimeMillis()) : type + System.currentTimeMillis();
     }
-
+    public static Bitmap createBitmapThumbnail(Bitmap bitMap) {
+        int width = bitMap.getWidth();
+        int height = bitMap.getHeight();
+        // 设置想要的大小
+        int newWidth = 99;
+        int newHeight = 99;
+        // 计算缩放比例
+        float scaleWidth = ((float) newWidth) / width;
+        float scaleHeight = ((float) newHeight) / height;
+        // 取得想要缩放的matrix参数
+        Matrix matrix = new Matrix();
+        matrix.postScale(scaleWidth, scaleHeight);
+        // 得到新的图片
+        Bitmap newBitMap = Bitmap.createBitmap(bitMap, 0, 0, width, height,
+                matrix, true);
+        return newBitMap;
+    }
 }

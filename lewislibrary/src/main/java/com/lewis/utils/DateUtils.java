@@ -228,7 +228,7 @@ public class DateUtils {
      * @return
      */
     public static String translateDate2(long time, long curTime) {
-        Logger.d(time + "===" + curTime);
+//        Logger.d(time + "===" + curTime);
         long oneDay = 24 * 60 * 60 * 1000;
         Calendar today = Calendar.getInstance();    //今天
         today.setTimeInMillis(curTime);

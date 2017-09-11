@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.ctj.oa.Constants;
 import com.ctj.oa.R;
@@ -24,12 +25,14 @@ import com.ctj.oa.net.RequsetFactory;
 import com.ctj.oa.utils.BitmapUtils;
 import com.ctj.oa.utils.SPUtils;
 import com.ctj.oa.utils.UpLoadManager;
-import com.ctj.oa.utils.manager.UserManager;
 import com.ctj.oa.utils.imageloader.ImageLoader;
+import com.ctj.oa.utils.manager.UserManager;
 import com.ctj.oa.widgets.WaveHelper;
+import com.hyphenate.chat.EMClient;
 import com.hyphenate.chatuidemo.DemoHelper;
 import com.hyphenate.chatuidemo.ui.ChatActivity;
-import com.hyphenate.easeui.domain.EaseUser;
+import com.hyphenate.easeui.EaseConstant;
+import com.hyphenate.easeui.widget.EaseAlertDialog;
 import com.lewis.utils.T;
 import com.lewis.widgets.WaveView;
 import com.soundcloud.android.crop.Crop;
@@ -52,7 +55,7 @@ public class UserProfileActivity extends BaseActivity implements View.OnClickLis
     boolean isMine;
     private ImageView imv_avatar;
     private TextView post_name, dept_name, phone;
-    private Button btn_chat;
+    private Button btn_chat, btn_add_friend;
     private UserInfo userInfo;
     private boolean isFinish;
 
@@ -93,6 +96,7 @@ public class UserProfileActivity extends BaseActivity implements View.OnClickLis
         phone = (TextView) findViewById(R.id.phone);
         imv_avatar = (ImageView) findViewById(R.id.imv_avatar);
         btn_chat = (Button) findViewById(R.id.btn_chat);
+        btn_add_friend = (Button) findViewById(R.id.btn_add_friend);
         setEdit(false);
 
         if (isMine) {
@@ -244,6 +248,7 @@ public class UserProfileActivity extends BaseActivity implements View.OnClickLis
         edt_email.setText(userInfo.getMail());
         edt_tell.setText(userInfo.getTell());
         setEdit(false);
+        findFriend();
     }
 
 
@@ -280,6 +285,36 @@ public class UserProfileActivity extends BaseActivity implements View.OnClickLis
             mWaveHelper.start();
         }
     }
-
+    /*判断好友添加*/
+    private void findFriend() {
+        if (isMine) {
+            btn_add_friend.setVisibility(View.GONE);
+            return;
+        }
+        if (DemoHelper.getInstance().getContactList().containsKey(userId)) {
+            btn_add_friend.setVisibility(View.GONE);
+        } else {
+            btn_add_friend.setVisibility(View.VISIBLE);
+            btn_add_friend.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    addFrend();
+                }
+            });
+        }
+    }
+    private void addFrend() {
+        // 向环信发送添加好友的信息
+        try {
+            EMClient.getInstance().contactManager().addContact(userId, getResources().getString(R.string.Add_a_friend));
+        } catch (final Exception e) {
+            runOnUiThread(new Runnable() {
+                public void run() {
+                    String s2 = getResources().getString(R.string.Request_add_buddy_failure);
+                    Toast.makeText(getApplicationContext(), s2 + e.getMessage(), Toast.LENGTH_LONG).show();
+                }
+            });
+        }
+    }
 
 }
