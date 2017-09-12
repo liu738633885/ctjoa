@@ -16,7 +16,6 @@ import com.chad.library.adapter.base.BaseViewHolder;
 import com.ctj.oa.Constants;
 import com.ctj.oa.R;
 import com.ctj.oa.activity.WebViewActivity;
-import com.ctj.oa.enterprise.JoinEntranceActivity;
 import com.ctj.oa.enterprise.ViewPagerAdapter3;
 import com.ctj.oa.enterprise.business.BusinessRegisterActivity;
 import com.ctj.oa.fragment.BaseFragment;
@@ -104,10 +103,10 @@ public class WorkFragmnet extends BaseFragment implements LewisSwipeRefreshLayou
             public void onFailed(int what, String url, Object tag, Exception exception, int responseCode, long networkMillis) {
 
             }
-        }, false, false, "");
+        }, swl, "");
     }
 
-    private void getCircleClassList() {
+   /* private void getCircleClassList() {
         NetBaseRequest request = RequsetFactory.creatBaseRequest(Constants.GET_CIRCLE_CLASS_LIST);
         CallServer.getRequestInstance().add(getActivity(), 0x01, request, new HttpListenerCallback() {
             @Override
@@ -123,7 +122,7 @@ public class WorkFragmnet extends BaseFragment implements LewisSwipeRefreshLayou
 
             }
         }, swl, "");
-    }
+    }*/
 
     private void updateHeadView() {
         tv1.setText(UserManager.getCompanyName() + "");
@@ -287,13 +286,14 @@ public class WorkFragmnet extends BaseFragment implements LewisSwipeRefreshLayou
         dates.add(new MineView(R.mipmap.work_icon_kehu, "客户"));
         dates.add(new MineView(R.mipmap.work_icon_xiaoshou, "销售"));
         //dates.add(new MineView(R.drawable.ic_add2, "添加", "功能暂未开放"));//加号
+        dates.add(new MineView(R.mipmap.work_icon_wailian, "外联",WailianActivity.class));//外联
         dates.add(new MineView(R.mipmap.work_icon_shenqingjiaru, "加入"));//加号
         //dates.add(new MineView(0, ""));//空白
+        //dates.add(new MineView(0, ""));//空白
         dates.add(new MineView(0, ""));//空白
-        dates.add(new MineView(0, ""));//空白
-        dates.add(3);//文本:"外联服务"
+       // dates.add(3);//文本:"外联服务"
         //dates.add(new MineView(R.mipmap.work_icon_rizhi, " 文档签名", SealActivity2.class));
-        if (list != null && list.size() > 0) {
+       /* if (list != null && list.size() > 0) {
             dates.addAll(list);
             int x=0;
             if (UserManager.isAdmin()) {
@@ -307,7 +307,7 @@ public class WorkFragmnet extends BaseFragment implements LewisSwipeRefreshLayou
                     dates.add(new MineView(0, ""));//空白
                 }
             }
-        }
+        }*/
 
         adapter.setNewData(dates);
        /*
@@ -328,7 +328,7 @@ public class WorkFragmnet extends BaseFragment implements LewisSwipeRefreshLayou
 
     @Override
     public void onRefresh() {
-        getCircleClassList();
+        //getCircleClassList();
         company_banner();
         updateHeadView();
         getUserInfo();

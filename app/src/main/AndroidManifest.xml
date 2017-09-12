@@ -87,11 +87,12 @@
                 android:resource="@xml/provider_paths"
                 tools:replace="android:resource"/>
         </provider>
+
         <activity
             android:name=".wxapi.WXEntryActivity"
             android:exported="true"
             android:launchMode="singleTop"
-            android:theme="@android:style/Theme.NoDisplay" />
+            android:theme="@android:style/Theme.NoDisplay"/>
         <!-- 声明sdk所需的service -->
         <service
             android:name="com.hyphenate.chat.EMChatService"
@@ -429,8 +430,7 @@
         </activity>
         <activity
             android:name=".work.log.AddLogActivity"
-            android:windowSoftInputMode="stateHidden|adjustPan"
-            >
+            android:windowSoftInputMode="stateHidden|adjustPan">
         </activity>
         <activity android:name=".work.log.AddLogTemplateActivity">
         </activity>
@@ -452,8 +452,7 @@
         </activity>
         <activity
             android:name=".work.approval.AddApprovalActivity"
-            android:windowSoftInputMode="stateHidden|adjustPan"
-            >
+            android:windowSoftInputMode="stateHidden|adjustPan">
         </activity>
         <activity android:name=".seal.SealActivity">
         </activity>
@@ -506,6 +505,8 @@
             android:screenOrientation="portrait"
             android:theme="@style/horizontal_slide"
             android:windowSoftInputMode="adjustPan"/>
+        <activity android:name=".work.WailianActivity">
+        </activity>
     </application>
 
 </manifest>
