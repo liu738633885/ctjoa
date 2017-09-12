@@ -29,6 +29,7 @@
         <TextView
             android:id="@+id/tv1"
             android:layout_width="0dp"
+            android:textIsSelectable="true"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:textColor="@color/black"
@@ -48,6 +49,7 @@
             android:layout_marginLeft="15dp"
             android:layout_marginRight="25dp"
             android:minWidth="70dp"
+            android:textIsSelectable="true"
             android:text="申请部门"
             android:textColor="@color/gray02"
             android:textSize="13sp"/>
@@ -74,6 +76,7 @@
             android:layout_marginLeft="15dp"
             android:layout_marginRight="25dp"
             android:minWidth="70dp"
+            android:textIsSelectable="true"
             android:text="申请流程"
             android:textColor="@color/gray02"
             android:textSize="13sp"/>

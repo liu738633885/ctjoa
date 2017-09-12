@@ -5,22 +5,26 @@
               android:layout_marginBottom="1dp"
               android:background="@color/white"
               android:orientation="vertical"
-              android:padding="15dp">
+    >
 
     <TextView
         android:id="@+id/tv1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginTop="15dp"
         android:text="标题"
         android:textColor="@color/gray01"
         android:textSize="14sp"/>
 
     <TextView
+        android:padding="15dp"
         android:id="@+id/tv2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="内容"
+        android:textIsSelectable="true"
         android:textColor="@color/black"
         android:textSize="16sp"/>
 

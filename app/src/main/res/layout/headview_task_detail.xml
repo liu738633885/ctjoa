@@ -27,6 +27,7 @@
                 android:layout_marginRight="15dp"
                 android:layout_marginTop="20dp"
                 android:text="标题"
+                android:textIsSelectable="true"
                 android:textColor="@color/black"
                 android:textSize="15sp"/>
 
@@ -40,6 +41,7 @@
                 android:layout_marginRight="15dp"
                 android:layout_marginTop="14dp"
                 android:text="时间"
+                android:textIsSelectable="true"
                 android:textColor="@color/gray03"
                 android:textSize="10sp"/>
         </LinearLayout>
@@ -106,6 +108,7 @@
                 android:layout_height="wrap_content"
                 android:paddingBottom="15dp"
                 android:paddingTop="15dp"
+                android:textIsSelectable="true"
                 android:textColor="@color/black"
                 android:textSize="12dp"/>
         </LinearLayout>
@@ -139,6 +142,7 @@
                 android:paddingBottom="15dp"
                 android:paddingTop="15dp"
                 android:text="普通"
+                android:textIsSelectable="true"
                 android:textColor="@color/black"
                 android:textSize="12dp"/>
         </LinearLayout>
@@ -171,6 +175,7 @@
                 android:paddingBottom="15dp"
                 android:paddingTop="15dp"
                 android:text="尽快完成"
+                android:textIsSelectable="true"
                 android:textColor="@color/black"
                 android:textSize="12dp"/>
         </LinearLayout>
@@ -222,6 +227,7 @@
                 android:paddingBottom="15dp"
                 android:paddingTop="15dp"
                 android:text="创建者"
+                android:textIsSelectable="true"
                 android:textColor="@color/black"
                 android:textSize="12dp"/>
         </LinearLayout>
@@ -254,6 +260,7 @@
                 android:paddingBottom="15dp"
                 android:paddingTop="15dp"
                 android:text="负责人"
+                android:textIsSelectable="true"
                 android:textColor="@color/black"
                 android:textSize="12dp"/>
         </LinearLayout>
@@ -285,6 +292,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:paddingBottom="15dp"
+                android:textIsSelectable="true"
                 android:paddingTop="15dp"
                 android:textColor="@color/black"
                 android:textSize="12dp"/>
@@ -297,6 +305,7 @@
                 android:paddingBottom="15dp"
                 android:paddingTop="15dp"
                 android:text="2个"
+                android:textIsSelectable="true"
                 android:textColor="@color/gray03"
                 android:textSize="11dp"
                 android:visibility="gone"/>

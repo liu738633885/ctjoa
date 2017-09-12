@@ -62,6 +62,7 @@
         android:layout_centerVertical="true"
         android:layout_marginRight="13dp"
         android:layout_toLeftOf="@id/tv2"
+        android:textIsSelectable="true"
         android:layout_toRightOf="@id/imv"
         android:text="用户名"
         android:textColor="@color/black"

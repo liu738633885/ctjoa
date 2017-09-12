@@ -21,6 +21,7 @@
         android:layout_marginTop="13dp"
         android:layout_toRightOf="@id/imv"
         android:text="姓名"
+        android:textIsSelectable="true"
         android:textColor="@color/black"
         android:textSize="15sp"/>
 
@@ -33,6 +34,7 @@
         android:layout_marginTop="8dp"
         android:layout_toRightOf="@id/imv"
         android:text="时间"
+        android:textIsSelectable="true"
         android:textColor="@color/gray02"
         android:textSize="12sp"/>
 
@@ -48,6 +50,7 @@
         android:orientation="vertical"
         android:paddingLeft="18dp"
         android:text="审批进度"
+        android:textIsSelectable="true"
         android:textColor="@color/black"
         android:textSize="15sp"/>
 </RelativeLayout>
