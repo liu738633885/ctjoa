@@ -162,8 +162,13 @@ public class SignActivity extends BaseActivity {
     private void callAddSingn() {
         NetBaseRequest request = RequsetFactory.creatBaseRequest(Constants.SIGN);
         request.add("address", address);
-        request.add("longitude", mlocation.getLongitude());
-        request.add("latitude", mlocation.getLatitude());
+        if(mlocation==null){
+            request.add("longitude",0);
+            request.add("latitude", 0);
+        }else {
+            request.add("longitude", mlocation.getLongitude());
+            request.add("latitude", mlocation.getLatitude());
+        }
         CallServer.getRequestInstance().add(this, 0x01, request, new HttpListenerCallback() {
             @Override
             public void onSucceed(int what, NetBaseBean netBaseBean) {

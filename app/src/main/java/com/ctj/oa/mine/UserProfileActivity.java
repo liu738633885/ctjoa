@@ -307,6 +307,7 @@ public class UserProfileActivity extends BaseActivity implements View.OnClickLis
         // 向环信发送添加好友的信息
         try {
             EMClient.getInstance().contactManager().addContact(userId, getResources().getString(R.string.Add_a_friend));
+            T.showShort(bContext,"请求已发送");
         } catch (final Exception e) {
             runOnUiThread(new Runnable() {
                 public void run() {

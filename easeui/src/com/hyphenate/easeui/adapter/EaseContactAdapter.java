@@ -83,7 +83,7 @@ public class EaseContactAdapter extends ArrayAdapter<EaseUser> implements Sectio
             holder.headerView.setVisibility(View.GONE);
         }
 
-        if(user.getAvatar().equals("group")){
+        if (!TextUtils.isEmpty(user.getAvatar()) && user.getAvatar().equals("group")) {
             holder.nameView.setText(user.getNickname());
             holder.avatar.setImageResource(R.drawable.em_group_icon);
         }else {
