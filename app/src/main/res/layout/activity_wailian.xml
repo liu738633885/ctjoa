@@ -11,7 +11,7 @@
     <com.ctj.oa.widgets.TitleBar
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:center_text="外链服务"/>
+        app:center_text="外联服务"/>
 
     <com.lewis.widgets.LewisSwipeRefreshLayout
         android:id="@+id/swl"
