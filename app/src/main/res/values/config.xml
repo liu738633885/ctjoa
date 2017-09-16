@@ -3,7 +3,7 @@
     <!--http环境  1.线上 2.测试-->
     <integer name="HTTP_CONFIG">1</integer>
     <!--蒲公英正式-->
-    <string name="PGYER_APPID">"b2d1a6faaaa7af704ff96373c58210c8"</string>
+    <string name="PGYER_APPID">"1d8858d395b9fa25800d1e16405e7c05"</string>
     <!--蒲公英测试-->
     <!--<string name="PGYER_APPID">"12eae0083680cfb5f7954aeb7b6c1f14"</string>-->
 
