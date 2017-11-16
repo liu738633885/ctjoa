@@ -503,7 +503,7 @@ public class ChatFragment extends EaseChatFragment implements EaseChatFragmentHe
     @Override
     public void selectPicFromLocal() {
         PhotoPicker.builder()
-                .setPhotoCount(1)
+                .setPhotoCount(9)
                 .setShowCamera(false)
                 .setShowGif(false)
                 .setPreviewEnabled(true)
@@ -513,7 +513,7 @@ public class ChatFragment extends EaseChatFragment implements EaseChatFragmentHe
     @Override
     public void selectPicFromCamera() {
         PhotoPicker.builder()
-                .setPhotoCount(1)
+                .setPhotoCount(9)
                 .setShowCamera(true)
                 .setShowGif(false)
                 .setPreviewEnabled(true)

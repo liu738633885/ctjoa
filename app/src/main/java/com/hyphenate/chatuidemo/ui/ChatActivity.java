@@ -8,21 +8,11 @@ import android.support.annotation.NonNull;
 import com.ctj.oa.Constants;
 import com.ctj.oa.R;
 import com.ctj.oa.chat.message.MessageListActivity;
-import com.ctj.oa.model.UserInfo;
-import com.ctj.oa.model.netmodel.NetBaseBean;
-import com.ctj.oa.net.CallServer;
-import com.ctj.oa.net.HttpListenerCallback;
-import com.ctj.oa.net.NetBaseRequest;
-import com.ctj.oa.net.RequsetFactory;
-import com.ctj.oa.utils.UpLoadManager;
-import com.hyphenate.chatuidemo.DemoHelper;
 import com.hyphenate.chatuidemo.runtimepermissions.PermissionsManager;
-import com.hyphenate.easeui.domain.EaseUser;
 import com.hyphenate.easeui.ui.EaseChatFragment;
 import com.hyphenate.util.EasyUtils;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import me.iwf.photopicker.PhotoPicker;
 
@@ -98,9 +88,17 @@ public class ChatActivity extends BaseActivity {
                     ArrayList<String> photos =
                             data.getStringArrayListExtra(PhotoPicker.KEY_SELECTED_PHOTOS);
                     //Uri selectedImage = data.getData();
-                    Uri selectedImage = Uri.parse(photos.get(0));
+                   /* Uri selectedImage = Uri.parse(photos.get(0));
                     if (selectedImage != null) {
                         chatFragment.sendPicByUri(selectedImage);
+                    }*/
+                    if (photos.size() > 0) {
+                        for (String s : photos) {
+                            Uri selectedImage = Uri.parse(s);
+                            if (selectedImage != null) {
+                                chatFragment.sendPicByUri(selectedImage);
+                            }
+                        }
                     }
                 }
         }
