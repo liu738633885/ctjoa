@@ -581,8 +581,8 @@ public class MainActivity extends BaseActivity {
                 T.showShort(getApplicationContext(), "再按一次退出程序");
                 exitTime = System.currentTimeMillis();
             } else {
-                moveTaskToBack(false);
-                //finish();
+                //moveTaskToBack(false);
+                finish();
                 //System.exit(0);
             }
             return true;
