@@ -1,27 +1,35 @@
 package com.hyphenate.easeui.widget.chatrow;
 
-import java.io.File;
-
-import com.hyphenate.chat.EMClient;
-import com.hyphenate.chat.EMFileMessageBody;
-import com.hyphenate.chat.EMImageMessageBody;
-import com.hyphenate.chat.EMMessage;
-import com.hyphenate.chat.EMMessage.ChatType;
-import com.hyphenate.easeui.R;
-import com.hyphenate.easeui.model.EaseImageCache;
-import com.hyphenate.easeui.ui.EaseShowBigImageActivity;
-import com.hyphenate.easeui.utils.EaseCommonUtils;
-import com.hyphenate.easeui.utils.EaseImageUtils;
-
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Message;
+import android.util.Log;
 import android.view.View;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.hyphenate.chat.EMClient;
+import com.hyphenate.chat.EMConversation;
+import com.hyphenate.chat.EMFileMessageBody;
+import com.hyphenate.chat.EMImageMessageBody;
+import com.hyphenate.chat.EMMessage;
+import com.hyphenate.chat.EMMessage.ChatType;
+import com.hyphenate.easeui.R;
+import com.hyphenate.easeui.adapter.EaseMessageAdapter;
+import com.hyphenate.easeui.model.EaseImageCache;
+import com.hyphenate.easeui.ui.EaseShowBigImageActivity;
+import com.hyphenate.easeui.ui.EaseShowBigImagesActivity;
+import com.hyphenate.easeui.utils.EaseCommonUtils;
+import com.hyphenate.easeui.utils.EaseImageUtils;
+
+import java.io.File;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 public class EaseChatRowImage extends EaseChatRowFile{
 
@@ -80,6 +88,30 @@ public class EaseChatRowImage extends EaseChatRowFile{
     
     @Override
     protected void onBubbleClick() {
+        if (true) {
+           /* EMConversation conversation = EMClient.getInstance().chatManager().getConversation(((EaseMessageAdapter) adapter).getToChatUsername());
+            List<EMMessage> messages=conversation.getAllMessages();
+            Log.e(TAG,"message 个数"+messages.size());
+            Log.e(TAG,"当前位置"+position);
+            List<EMMessage> images=new ArrayList<>();
+            int imagePosition=0;
+            int i=0;
+            for (EMMessage e:messages){
+                Log.e(TAG,"类型"+ e.getType()+"id"+e.getMsgId());
+                if(e.getType()==EMMessage.Type.IMAGE){
+                    EMImageMessageBody imagebody=(EMImageMessageBody) e.getBody();
+                    Log.e(TAG,"localUrl:"+imagebody.getLocalUrl()+"---messageId:"+e.getMsgId());
+                    images.add(e);
+                    i++;
+                    if(e==message){
+                        imagePosition=i;
+                    }
+                }
+            }
+            Collections.reverse(images);*/
+            EaseShowBigImagesActivity.startImagePagerActivity(context,((EaseMessageAdapter) adapter).getToChatUsername(),message.getMsgId());
+            return;
+        }
         Intent intent = new Intent(context, EaseShowBigImageActivity.class);
         File file = new File(imgBody.getLocalUrl());
         if (file.exists()) {

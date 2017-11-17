@@ -70,9 +70,9 @@ public class ImagePagerActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_imagepager);
-        ViewPager viewPager = (ViewPager) findViewById(R.id.pager);
-        guideGroup = (LinearLayout) findViewById(R.id.guideGroup);
+        setContentView(R.layout.ease_activity_show_big_images);
+        ViewPager viewPager = findViewById(R.id.pager);
+        guideGroup =  findViewById(R.id.guideGroup);
 
         getIntentData();
 
@@ -115,7 +115,7 @@ public class ImagePagerActivity extends Activity {
             guideViewList.clear();
             for (int i = 0; i < imgUrls.size(); i++) {
                 View view = new View(this);
-                view.setBackgroundResource(R.drawable.shape_viewpager_point_normal_gray);
+                view.setBackgroundResource(R.drawable.selector_guide_bg);
                 view.setSelected(i == startPos ? true : false);
                 LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(getResources().getDimensionPixelSize(R.dimen.gudieview_width),
                         getResources().getDimensionPixelSize(R.dimen.gudieview_heigh));
