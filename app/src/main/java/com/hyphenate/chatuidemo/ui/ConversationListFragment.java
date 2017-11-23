@@ -15,11 +15,14 @@ import android.widget.Toast;
 import com.ctj.oa.Constants;
 import com.ctj.oa.R;
 import com.ctj.oa.activity.MainActivity;
+import com.ctj.oa.utils.manager.UserManager;
+import com.hyphenate.EMCallBack;
 import com.hyphenate.chat.EMClient;
 import com.hyphenate.chat.EMConversation;
 import com.hyphenate.chat.EMConversation.EMConversationType;
 import com.hyphenate.chat.EMMessage;
 import com.hyphenate.chatuidemo.Constant;
+import com.hyphenate.chatuidemo.DemoHelper;
 import com.hyphenate.chatuidemo.db.InviteMessgeDao;
 import com.hyphenate.easeui.model.EaseAtMessageHelper;
 import com.hyphenate.easeui.ui.EaseConversationListFragment;
@@ -118,6 +121,22 @@ public class ConversationListFragment extends EaseConversationListFragment{
         } else {
           errorText.setText(R.string.the_current_network);
         }
+        EMClient.getInstance().login(UserManager.getId() + "", "123456", new EMCallBack() {
+            @Override
+            public void onSuccess() {
+
+            }
+
+            @Override
+            public void onError(int i, String s) {
+
+            }
+
+            @Override
+            public void onProgress(int i, String s) {
+
+            }
+        });
     }
     
     
