@@ -39,18 +39,18 @@ import android.widget.Toast;
 
 import com.ctj.oa.R;
 import com.hyphenate.chat.EMCallManager.EMCameraDataProcessor;
-import com.hyphenate.chat.EMCallManager.EMVideoCallHelper;
 import com.hyphenate.chat.EMCallStateChangeListener;
 import com.hyphenate.chat.EMClient;
+import com.hyphenate.chat.EMVideoCallHelper;
 import com.hyphenate.chatuidemo.DemoHelper;
 import com.hyphenate.easeui.utils.EaseUserUtils;
 import com.hyphenate.exceptions.HyphenateException;
-import com.hyphenate.media.EMLocalSurfaceView;
-import com.hyphenate.media.EMOppositeSurfaceView;
+import com.hyphenate.media.EMCallSurfaceView;
 import com.hyphenate.util.EMLog;
 import com.superrtc.sdk.VideoView;
 
-import java.text.DateFormat;
+import java.io.File;
+import android.text.format.DateFormat;
 import java.util.Date;
 import java.util.UUID;
 
@@ -61,6 +61,11 @@ public class VideoCallActivity extends CallActivity implements OnClickListener {
     private boolean isAnswered;
     private boolean endCallTriggerByMe = false;
     private boolean monitor = true;
+
+    // 视频通话画面显示控件，这里在新版中使用同一类型的控件，方便本地和远端视图切换
+    protected EMCallSurfaceView localSurface;
+    protected EMCallSurfaceView oppositeSurface;
+    private int surfaceState = -1;
 
     private TextView callStateTextView;
 
@@ -99,7 +104,7 @@ public class VideoCallActivity extends CallActivity implements OnClickListener {
 
         // data size is width*height*2
         // the first width*height is Y, second part is UV
-        // the storage layout detailed please refer 2.ic_new demo CameraHelper.onPreviewFrame
+        // the storage layout detailed please refer 2.x demo CameraHelper.onPreviewFrame
         @Override
         public synchronized void onProcessData(byte[] data, Camera camera, final int width, final int height, final int rotateAngel) {
             int wh = width * height;
@@ -172,12 +177,12 @@ public class VideoCallActivity extends CallActivity implements OnClickListener {
         nickTextView.setText(EaseUserUtils.getUserInfo(username).getNickname());
 
         // local surfaceview
-        localSurface = (EMLocalSurfaceView) findViewById(R.id.local_surface);
+        localSurface = (EMCallSurfaceView) findViewById(R.id.local_surface);
+        localSurface.setOnClickListener(this);
         localSurface.setZOrderMediaOverlay(true);
         localSurface.setZOrderOnTop(true);
-
         // remote surfaceview
-        oppositeSurface = (EMOppositeSurfaceView) findViewById(R.id.opposite_surface);
+        oppositeSurface = (EMCallSurfaceView) findViewById(R.id.opposite_surface);
 
         // set call state listener
         addCallStateListener();
@@ -239,7 +244,18 @@ public class VideoCallActivity extends CallActivity implements OnClickListener {
         @Override
         public void onStopTrackingTouch(SeekBar seekBar) {
         }
-        
+    }
+    /**
+     * 切换通话界面，这里就是交换本地和远端画面控件设置，以达到通话大小画面的切换
+     */
+    private void changeCallView() {
+        if (surfaceState == 0) {
+            surfaceState = 1;
+            EMClient.getInstance().callManager().setSurfaceView(oppositeSurface, localSurface);
+        } else {
+            surfaceState = 0;
+            EMClient.getInstance().callManager().setSurfaceView(localSurface, oppositeSurface);
+        }
     }
 
     /**
@@ -274,6 +290,7 @@ public class VideoCallActivity extends CallActivity implements OnClickListener {
                     break;
 
                 case ACCEPTED: // call is accepted
+                    surfaceState = 0;
                     handler.removeCallbacks(timeoutHangup);
                     runOnUiThread(new Runnable() {
 
@@ -462,6 +479,9 @@ public class VideoCallActivity extends CallActivity implements OnClickListener {
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
+            case R.id.local_surface:
+                changeCallView();
+                break;
         case R.id.btn_refuse_call: // decline the call
             isRefused = true;
             refuseBtn.setEnabled(false);
@@ -565,9 +585,11 @@ public class VideoCallActivity extends CallActivity implements OnClickListener {
             handler.sendEmptyMessage(MSG_CALL_SWITCH_CAMERA);
             break;
         case R.id.btn_capture_image:
-            DateFormat df = DateFormat.getDateTimeInstance();
+            DateFormat df = new DateFormat();
             Date d = new Date();
-            final String filename = Environment.getExternalStorageDirectory() + df.format(d) + ".jpg";
+            File storage = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
+            final String filename = storage.getAbsolutePath() + "/" + df.format("MM-dd-yy--h-mm-ss", d) + ".jpg";
+
             EMClient.getInstance().callManager().getVideoCallHelper().takePicture(filename);
             runOnUiThread(new Runnable() {
                 @Override
@@ -612,7 +634,7 @@ public class VideoCallActivity extends CallActivity implements OnClickListener {
                 while(monitor){
                     runOnUiThread(new Runnable() {
                         public void run() {
-                            monitorTextView.setText("WidthxHeight："+callHelper.getVideoWidth()+"ic_new"+callHelper.getVideoHeight()
+                            monitorTextView.setText("WidthxHeight："+callHelper.getVideoWidth()+"x"+callHelper.getVideoHeight()
                                     + "\nDelay：" + callHelper.getVideoLatency()
                                     + "\nFramerate：" + callHelper.getVideoFrameRate()
                                     + "\nLost：" + callHelper.getVideoLostRate()

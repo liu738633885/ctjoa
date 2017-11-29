@@ -68,7 +68,15 @@ public class InviteMessgeDao {
 	public void deleteMessage(String from){
 	    DemoDBManager.getInstance().deleteMessage(from);
 	}
-	
+
+	public void deleteGroupMessage(String groupId) {
+		DemoDBManager.getInstance().deleteGroupMessage(groupId);
+	}
+
+	public void deleteGroupMessage(String groupId, String from) {
+		DemoDBManager.getInstance().deleteGroupMessage(groupId, from);
+	}
+
 	public int getUnreadMessagesCount(){
 	    return DemoDBManager.getInstance().getUnreadNotifyCount();
 	}

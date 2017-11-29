@@ -38,6 +38,7 @@ public class SplashActivity extends BaseActivity {
 
     @Override
     protected void initView(Bundle savedInstanceState) {
+        DemoHelper.getInstance().initHandler(this.getMainLooper());
         tv_info = (TextView) findViewById(R.id.tv_info);
         imv_splash = (ImageView) findViewById(R.id.imv_splash);
         ImageLoader.loadSplashImage(this, Constants.APP_PATH_ROOT + "/splash.jpg", imv_splash);

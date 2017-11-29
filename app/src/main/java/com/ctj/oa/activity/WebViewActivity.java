@@ -7,10 +7,12 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
+import android.webkit.JavascriptInterface;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
@@ -29,6 +31,7 @@ public class WebViewActivity extends BaseActivity implements View.OnClickListene
     private String TAG = WebViewActivity.class.getSimpleName();
     private String title, url;
     private boolean share;
+    private Handler mHandler = new Handler();
 
 
     @Override
@@ -61,7 +64,7 @@ public class WebViewActivity extends BaseActivity implements View.OnClickListene
 
     @Override
     protected void initView(Bundle savedInstanceState) {
-        titleBar = (TitleBar) findViewById(R.id.titleBar);
+        titleBar = findViewById(R.id.titleBar);
         titleBar.setLeftClike(new TitleBar.LeftClike() {
             @Override
             public void onClick(View view) {
@@ -80,14 +83,15 @@ public class WebViewActivity extends BaseActivity implements View.OnClickListene
                 }
             });
         }
-        webView = (WebView) findViewById(R.id.webView);
-        swl = (LewisSwipeRefreshLayout) findViewById(R.id.swl);
+        webView = findViewById(R.id.webView);
+        swl = findViewById(R.id.swl);
         swl.setOnRefreshListener(new LewisSwipeRefreshLayout.OnRefreshListener() {
             public void onRefresh() {
                 webView.reload();
             }
         });
         setWebView();
+        url = "http://tapi.wiseexpo.com/jobs.Recruit/index.html?token=123123131&user_id=77";
         webView.loadUrl(url);
         Logger.d(url);
     }
@@ -139,6 +143,7 @@ public class WebViewActivity extends BaseActivity implements View.OnClickListene
         webSetting.setDomStorageEnabled(true);
         webSetting.setAllowFileAccess(true);
         webSetting.setAppCacheEnabled(true);
+        webView.addJavascriptInterface(new MyJavaScriptInterface(), "xtoa");
        /* try {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
                 webSetting.setMixedContentMode(WebSettings.MIXED_CONTENT_ALWAYS_ALLOW);
@@ -222,6 +227,32 @@ public class WebViewActivity extends BaseActivity implements View.OnClickListene
 
     }
 
+    final class MyJavaScriptInterface {
+
+        MyJavaScriptInterface() {
+        }
+
+        /**
+         * This is not called on the UI thread. Post a runnable to invoke
+         * loadUrl on the UI thread.
+         */
+        @JavascriptInterface
+        public void uploadLogo() {
+            mHandler.post(new Runnable() {
+                public void run() {
+                    //mWebView.loadUrl("javascript:wave()");
+                    Toast("order_no:");
+                    String url = "http://api.rockbrain.net/uploads/img/593761400d33020170607101320.jpg";
+                    webView.loadUrl("javascript:callUpload('" + url + "')");
+                    //webView.loadUrl("javascript:alert(123)");
+                }
+            });
+        }
+        @JavascriptInterface
+        public void load(String url) {
+
+        }
+    }
     @Override
     public void onClick(View view) {
 

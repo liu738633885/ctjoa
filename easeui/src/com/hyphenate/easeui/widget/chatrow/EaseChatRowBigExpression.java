@@ -8,15 +8,15 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.hyphenate.chat.EMMessage;
 import com.hyphenate.easeui.EaseConstant;
+import com.hyphenate.easeui.EaseUI;
 import com.hyphenate.easeui.R;
-import com.hyphenate.easeui.controller.EaseUI;
 import com.hyphenate.easeui.domain.EaseEmojicon;
 
 /**
  * big emoji icons
  *
  */
-public class EaseChatRowBigExpression extends EaseChatRowText{
+public class EaseChatRowBigExpression extends EaseChatRowText {
 
     private ImageView imageView;
 
@@ -27,7 +27,7 @@ public class EaseChatRowBigExpression extends EaseChatRowText{
     
     @Override
     protected void onInflateView() {
-        inflater.inflate(message.direct() == EMMessage.Direct.RECEIVE ? 
+        inflater.inflate(message.direct() == EMMessage.Direct.RECEIVE ?
                 R.layout.ease_row_received_bigexpression : R.layout.ease_row_sent_bigexpression, this);
     }
 
@@ -54,7 +54,5 @@ public class EaseChatRowBigExpression extends EaseChatRowText{
                 imageView.setImageResource(R.drawable.ease_default_expression);
             }
         }
-        
-        handleTextMessage();
     }
 }

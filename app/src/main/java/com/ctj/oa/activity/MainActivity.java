@@ -268,6 +268,11 @@ public class MainActivity extends BaseActivity {
         }
 
         @Override
+        public void onMessageRecalled(List<EMMessage> messages) {
+            refreshUIWithMessage();
+        }
+
+        @Override
         public void onMessageChanged(EMMessage message, Object change) {
         }
     };

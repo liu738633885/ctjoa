@@ -33,7 +33,9 @@ public class PreferenceManager {
 
 	private static String SHARED_KEY_SETTING_CHATROOM_OWNER_LEAVE = "shared_key_setting_chatroom_owner_leave";
     private static String SHARED_KEY_SETTING_DELETE_MESSAGES_WHEN_EXIT_GROUP = "shared_key_setting_delete_messages_when_exit_group";
-    private static String SHARED_KEY_SETTING_AUTO_ACCEPT_GROUP_INVITATION = "shared_key_setting_auto_accept_group_invitation";
+	private static String SHARED_KEY_SETTING_TRANSFER_FILE_BY_USER = "shared_key_setting_transfer_file_by_user";
+	private static String SHARED_KEY_SETTING_AUTODOWNLOAD_THUMBNAIL = "shared_key_setting_autodownload_thumbnail";
+	private static String SHARED_KEY_SETTING_AUTO_ACCEPT_GROUP_INVITATION = "shared_key_setting_auto_accept_group_invitation";
     private static String SHARED_KEY_SETTING_ADAPTIVE_VIDEO_ENCODE = "shared_key_setting_adaptive_video_encode";
 	private static String SHARED_KEY_SETTING_OFFLINE_PUSH_CALL = "shared_key_setting_offline_push_call";
 
@@ -50,6 +52,7 @@ public class PreferenceManager {
 	private static String SHARED_KEY_ENABLE_CUSTOM_SERVER = "SHARED_KEY_ENABLE_CUSTOM_SERVER";
 	private static String SHARED_KEY_ENABLE_CUSTOM_APPKEY = "SHARED_KEY_ENABLE_CUSTOM_APPKEY";
 	private static String SHARED_KEY_CUSTOM_APPKEY = "SHARED_KEY_CUSTOM_APPKEY";
+	private static String SHARED_KEY_MSG_ROAMING = "SHARED_KEY_MSG_ROAMING";
 
 	private static String SHARED_KEY_CALL_MIN_VIDEO_KBPS = "SHARED_KEY_CALL_MIN_VIDEO_KBPS";
 	private static String SHARED_KEY_CALL_MAX_VIDEO_KBPS = "SHARED_KEY_CALL_Max_VIDEO_KBPS";
@@ -140,7 +143,24 @@ public class PreferenceManager {
         return mSharedPreferences.getBoolean(SHARED_KEY_SETTING_DELETE_MESSAGES_WHEN_EXIT_GROUP, true);
     }
 
-    public void setAutoAcceptGroupInvitation(boolean value) {
+	public void setTransferFileByUser(boolean value) {
+		editor.putBoolean(SHARED_KEY_SETTING_TRANSFER_FILE_BY_USER, value);
+		editor.apply();
+	}
+
+	public boolean isSetTransferFileByUser() {
+		return mSharedPreferences.getBoolean(SHARED_KEY_SETTING_TRANSFER_FILE_BY_USER, true);
+	}
+	public void setAudodownloadThumbnail(boolean autodownload) {
+		editor.putBoolean(SHARED_KEY_SETTING_AUTODOWNLOAD_THUMBNAIL, autodownload);
+		editor.apply();
+	}
+
+	public boolean isSetAutodownloadThumbnail() {
+		return mSharedPreferences.getBoolean(SHARED_KEY_SETTING_AUTODOWNLOAD_THUMBNAIL, true);
+	}
+
+	public void setAutoAcceptGroupInvitation(boolean value) {
         editor.putBoolean(SHARED_KEY_SETTING_AUTO_ACCEPT_GROUP_INVITATION, value);
         editor.commit();
     }
@@ -269,6 +289,15 @@ public class PreferenceManager {
 	public void removeCurrentUserInfo() {
 		editor.remove(SHARED_KEY_CURRENTUSER_NICK);
 		editor.remove(SHARED_KEY_CURRENTUSER_AVATAR);
+		editor.apply();
+	}
+
+	public boolean isMsgRoaming() {
+		return mSharedPreferences.getBoolean(SHARED_KEY_MSG_ROAMING, false);
+	}
+
+	public void setMsgRoaming(boolean isRoaming) {
+		editor.putBoolean(SHARED_KEY_MSG_ROAMING, isRoaming);
 		editor.apply();
 	}
 

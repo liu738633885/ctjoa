@@ -19,13 +19,16 @@ import com.hyphenate.chat.EMConversation;
 import com.hyphenate.chat.EMConversation.EMConversationType;
 import com.hyphenate.chat.EMGroup;
 import com.hyphenate.chat.EMMessage;
+import com.hyphenate.easeui.EaseUI;
 import com.hyphenate.easeui.R;
+import com.hyphenate.easeui.domain.EaseAvatarOptions;
 import com.hyphenate.easeui.domain.EaseUser;
 import com.hyphenate.easeui.model.EaseAtMessageHelper;
 import com.hyphenate.easeui.utils.EaseCommonUtils;
 import com.hyphenate.easeui.utils.EaseSmileUtils;
 import com.hyphenate.easeui.utils.EaseUserUtils;
 import com.hyphenate.easeui.widget.EaseConversationList.EaseConversationListHelper;
+import com.hyphenate.easeui.widget.EaseImageView;
 import com.lewis.utils.DateUtils;
 
 import java.util.ArrayList;
@@ -120,7 +123,18 @@ public class EaseConversationAdapter extends ArrayAdapter<EMConversation> {
             EaseUserUtils.setUserNick(username, holder.name);
             holder.motioned.setVisibility(View.GONE);
         }
-
+        EaseAvatarOptions avatarOptions = EaseUI.getInstance().getAvatarOptions();
+        if (avatarOptions != null && holder.avatar instanceof EaseImageView) {
+            EaseImageView avatarView = ((EaseImageView) holder.avatar);
+            if (avatarOptions.getAvatarShape() != 0)
+                avatarView.setShapeType(avatarOptions.getAvatarShape());
+            if (avatarOptions.getAvatarBorderWidth() != 0)
+                avatarView.setBorderWidth(avatarOptions.getAvatarBorderWidth());
+            if (avatarOptions.getAvatarBorderColor() != 0)
+                avatarView.setBorderColor(avatarOptions.getAvatarBorderColor());
+            if (avatarOptions.getAvatarRadius() != 0)
+                avatarView.setRadius(avatarOptions.getAvatarRadius());
+        }
         if (conversation.getUnreadMsgCount() > 0) {
             // show unread message count
             holder.unreadLabel.setText(String.valueOf(conversation.getUnreadMsgCount()));
@@ -226,6 +240,9 @@ public class EaseConversationAdapter extends ArrayAdapter<EMConversation> {
                 results.values = copyConversationList;
                 results.count = copyConversationList.size();
             } else {
+                if (copyConversationList.size() > mOriginalValues.size()) {
+                    mOriginalValues = copyConversationList;
+                }
                 String prefixString = prefix.toString();
                 final int count = mOriginalValues.size();
                 final ArrayList<EMConversation> newValues = new ArrayList<EMConversation>();

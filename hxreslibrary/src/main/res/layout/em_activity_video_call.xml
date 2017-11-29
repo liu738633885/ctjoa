@@ -1,15 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/root_layout"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:animateLayoutChanges="true" >
+                xmlns:tools="http://schemas.android.com/tools"
+                android:id="@+id/root_layout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:animateLayoutChanges="true" >
 
-    <com.hyphenate.media.EMOppositeSurfaceView
-        android:id="@+id/opposite_surface"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:id="@+id/layout_surface_container"
+        >
+        <com.hyphenate.media.EMCallSurfaceView
+            android:id="@+id/opposite_surface"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <com.hyphenate.media.EMCallSurfaceView
+            android:id="@+id/local_surface"
+            android:layout_width="100dp"
+            android:layout_height="120dp"
+            android:layout_marginTop="96dp"
+            android:layout_alignParentRight="true" />
+    </RelativeLayout>
+
     <RelativeLayout
         android:id="@+id/ll_btns"
         android:layout_width="match_parent"
@@ -63,8 +77,8 @@
                 tools:ignore="HardcodedText" />
         </LinearLayout>
 
-           <!-- 演示视频录制功能 -->
-        <Button 
+        <!-- 演示视频录制功能 -->
+        <Button
             android:id="@+id/btn_record_video"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -72,9 +86,8 @@
             android:layout_below="@id/ll_top_container"
             android:visibility="gone"
             />
-        
+
         <Button
-            android:visibility="gone"
             android:id="@+id/btn_switch_camera"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -82,7 +95,6 @@
             android:layout_below="@id/btn_record_video"
             />
         <Button
-            android:visibility="gone"
             android:id="@+id/btn_capture_image"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -90,7 +102,6 @@
             android:layout_below="@id/btn_switch_camera"
             />
         <SeekBar
-            android:visibility="gone"
             android:id="@+id/seekbar_y_detal"
             android:layout_width="200dp"
             android:layout_height="wrap_content"
@@ -98,7 +109,7 @@
             android:max="200"
             android:progress="100"
             />
-        <!--     <Button 
+        <!--     <Button
             android:layout_marginTop="3dp"
             android:id="@+id/btn_toggle_video_stream"
             android:layout_width="wrap_content"
@@ -106,24 +117,17 @@
             android:text="暂停视频"
             android:layout_below="@id/btn_record_video"
             /> -->
-        
-        <TextView 
+
+        <TextView
             android:id="@+id/tv_call_monitor"
-            android:visibility="gone"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_above="@+id/local_surface"
             android:layout_alignParentRight="true"
             android:textColor="#afff"
             android:textSize="12sp"
             android:layout_marginBottom="6dp"
             />
-        <!--  android:layout_above="@+id/local_surface"-->
-        <com.hyphenate.media.EMLocalSurfaceView
-            android:id="@+id/local_surface"
-            android:layout_width="100dp"
-            android:layout_height="120dp"
-            android:layout_above="@+id/ll_surface_baseline"
-            android:layout_alignParentRight="true" />
 
         <LinearLayout
             android:id="@+id/ll_surface_baseline"
@@ -246,7 +250,6 @@
         </LinearLayout>
     </RelativeLayout>
 
-    
     <TextView
         android:id="@+id/tv_network_status"
         android:layout_width="wrap_content"
@@ -254,6 +257,6 @@
         android:layout_marginTop="10dp"
         android:textColor="@android:color/white"
         android:layout_centerInParent="true"
-     />
+        />
 
 </RelativeLayout>

@@ -292,102 +292,82 @@
         <!-- 开机自启动服务 -->
         <receiver android:name="com.hyphenate.chatuidemo.receiver.StartServiceReceiver">
             <intent-filter android:priority="1000">
-                <action android:name="android.intent.action.BOOT_COMPLETED"/>
-                <action android:name="android.intent.action.QUICKBOOT_POWERON"/>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.intent.action.QUICKBOOT_POWERON" />
 
-                <category android:name="android.intent.category.LAUNCHER"/>
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </receiver>
 
-        <!-- gcm start -->
-        <receiver
-            android:name="com.hyphenate.chat.EMGCMBroadcastReceiver"
-            android:exported="true"
-            android:permission="com.google.android.c2dm.permission.SEND">
+        <!-- FCM required start -->
+        <service android:name="com.hyphenate.chatuidemo.fcm.EMFCMMSGService">
             <intent-filter>
-                <action android:name="com.google.android.c2dm.intent.RECEIVE"/>
-
-                <category android:name="com.hyphenate.chatuidemo"/>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
-        </receiver>
+        </service>
 
-        <service
-            android:name="com.hyphenate.chat.EMGCMListenerService"
-            android:exported="false"/>
-
-        <receiver
-            android:name="com.hyphenate.chatuidemo.receiver.GCMPushBroadCast"
-            android:exported="false">
+        <service android:name="com.hyphenate.chatuidemo.fcm.EMFCMTokenRefreshService">
             <intent-filter>
-                <action android:name="com.hyphenate.sdk.push"/>
-
-                <category android:name="com.hyphenate.chatuidemo"/>
+                <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
             </intent-filter>
-        </receiver>
-        <!-- gcm end -->
+        </service>
+        <!-- FCM required end -->
+
         <!-- mi push -->
         <service
             android:name="com.xiaomi.mipush.sdk.PushMessageHandler"
             android:enabled="true"
             android:exported="true"
-            tools:ignore="ExportedService"/>
+            tools:ignore="ExportedService" />
         <service
             android:name="com.xiaomi.mipush.sdk.MessageHandleService"
-            android:enabled="true"/>
+            android:enabled="true" />
 
         <receiver
             android:name="com.hyphenate.chat.EMMipushReceiver"
             android:exported="true"
             tools:ignore="ExportedReceiver">
             <intent-filter>
-                <action android:name="com.xiaomi.mipush.RECEIVE_MESSAGE"/>
+                <action android:name="com.xiaomi.mipush.RECEIVE_MESSAGE" />
             </intent-filter>
             <intent-filter>
-                <action android:name="com.xiaomi.mipush.MESSAGE_ARRIVED"/>
+                <action android:name="com.xiaomi.mipush.MESSAGE_ARRIVED" />
             </intent-filter>
             <intent-filter>
-                <action android:name="com.xiaomi.mipush.ERROR"/>
+                <action android:name="com.xiaomi.mipush.ERROR" />
             </intent-filter>
         </receiver>
         <!-- mi push end -->
 
 
-        <!-- huawei push 第三方相关 :接收Push消息（注册、Push消息、Push连接状态、标签，LBS上报结果）广播 -->
-        <receiver
-            android:name="com.hyphenate.chat.EMHuaweiPushReceiver"
-            android:exported="true">
+        <!--华为 HMS Config-->
+        <!--华为开发者后台创建的应用的 APP ID-->
+        <meta-data
+            android:name="com.huawei.hms.client.appid"
+            android:value="100148521" />
+        <!--华为推送广播接收器，可以直接使用环信 sdk 封装好的，也可以继承自环信重写，如果继承自环信，实现 onToken 方法时必须要调用 super 方法-->
+        <receiver android:name="com.hyphenate.chat.EMHWPushReceiver">
             <intent-filter>
-
-                <!-- 必须,用于接收token -->
+                <!-- 必须,用于接收 TOKEN -->
                 <action android:name="com.huawei.android.push.intent.REGISTRATION"/>
                 <!-- 必须，用于接收消息 -->
                 <action android:name="com.huawei.android.push.intent.RECEIVE"/>
+                <!-- 可选，用于点击通知栏或通知栏上的按钮后触发 onEvent 回调 -->
+                <action android:name="com.huawei.android.push.intent.CLICK"/>
+                <!-- 可选，查看 PUSH 通道是否连接，不查看则不需要 -->
+                <action android:name="com.huawei.intent.action.PUSH_STATE"/>
             </intent-filter>
-            />
-            <meta-data
-                android:name="CS_cloud_ablitity"
-                android:value="successRateAnalytics"/>
         </receiver>
 
-        <!-- PushSDK:PushSDK接收外部请求事件入口 -->
-        <receiver
-            android:name="com.huawei.android.pushagent.PushEventReceiver"
-            android:exported="true"
-            android:process=":pushservice">
+        <receiver android:name="com.huawei.hms.support.api.push.PushEventReceiver">
             <intent-filter>
-                <action android:name="com.huawei.android.push.intent.REFRESH_PUSH_CHANNEL"/>
+                <!-- 接收通道发来的通知栏消息，兼容老版本 PUSH -->
                 <action android:name="com.huawei.intent.action.PUSH"/>
-                <action android:name="com.huawei.intent.action.PUSH_ON"/>
-                <action android:name="com.huawei.android.push.PLUGIN"/>
             </intent-filter>
         </receiver>
-
-        <!-- PushSDK:Push服务 -->
-        <service
-            android:name="com.huawei.android.pushagent.PushService"
-            android:process=":pushservice"/>
-
         <!-- huawei push end -->
+
+
         <!-- ================自己的界面================= -->
         <!-- 启动界面 -->
         <activity

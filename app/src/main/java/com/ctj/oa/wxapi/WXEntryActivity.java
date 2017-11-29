@@ -18,7 +18,6 @@ import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.IWXAPIEventHandler;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 
-import org.apache.commons.logging.Log;
 
 public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
 

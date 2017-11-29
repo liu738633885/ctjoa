@@ -31,7 +31,7 @@ import java.util.Set;
  * requestPermissionsIfNecessaryForResult method. The result will be sent back to you as
  * either onGranted (all permissions have been granted), or onDenied (a required permission
  * has been denied). Ideally you put your functionality in the onGranted method and notify
- * the user what won't bottombar_work in the onDenied method.
+ * the user what won't work in the onDenied method.
  */
 public abstract class PermissionsResultAction {
 
@@ -79,7 +79,7 @@ public abstract class PermissionsResultAction {
    * affect whether the PermissionsResultAction should continue
    * listening for events. By default, it returns true and will
    * simply ignore the permission that did not exist. Usually this will
-   * bottombar_work fine since most new permissions are introduced to
+   * work fine since most new permissions are introduced to
    * restrict what was previously allowed without permission.
    * If that is not the case for your particular permission you
    * request, override this method and return false to result in the

@@ -29,6 +29,7 @@ import com.ctj.oa.R;
 import com.hyphenate.chat.EMClient;
 import com.hyphenate.chat.EMGroupManager;
 import com.hyphenate.chat.EMGroupManager.EMGroupStyle;
+import com.hyphenate.chat.EMGroupOptions;
 import com.hyphenate.easeui.widget.EaseAlertDialog;
 import com.hyphenate.exceptions.HyphenateException;
 public class NewGroupActivity extends BaseActivity {
@@ -94,7 +95,7 @@ public class NewGroupActivity extends BaseActivity {
 					String desc = introductionEditText.getText().toString();
 					String[] members = data.getStringArrayExtra("newmembers");
 					try {
-						EMGroupManager.EMGroupOptions option = new EMGroupManager.EMGroupOptions();
+						EMGroupOptions option = new EMGroupOptions();
 					    option.maxUsers = 200;
 						option.inviteNeedConfirm = true;
 					    

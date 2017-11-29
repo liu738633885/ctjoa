@@ -38,10 +38,6 @@ public class DemoModel {
         UserDao dao = new UserDao(context);
         dao.saveContact(user);
     }
-    public void saveRobot(EaseUser user){
-        UserDao dao = new UserDao(context);
-        dao.saveRobot(user);
-    }
     
     /**
      * save current username
@@ -229,7 +225,23 @@ public class DemoModel {
     public boolean isDeleteMessagesAsExitGroup() {
         return PreferenceManager.getInstance().isDeleteMessagesAsExitGroup();
     }
-    
+
+    public void setTransfeFileByUser(boolean value) {
+        PreferenceManager.getInstance().setTransferFileByUser(value);
+    }
+
+    public boolean isSetTransferFileByUser() {
+        return PreferenceManager.getInstance().isSetTransferFileByUser();
+    }
+
+    public void setAutodownloadThumbnail(boolean autodownload) {
+        PreferenceManager.getInstance().setAudodownloadThumbnail(autodownload);
+    }
+
+    public boolean isSetAutodownloadThumbnail() {
+        return PreferenceManager.getInstance().isSetAutodownloadThumbnail();
+    }
+
     public void setAutoAcceptGroupInvitation(boolean value) {
         PreferenceManager.getInstance().setAutoAcceptGroupInvitation(value);
     }
@@ -289,6 +301,14 @@ public class DemoModel {
 
     public void setCustomAppkey(String appkey) {
         PreferenceManager.getInstance().setCustomAppkey(appkey);
+    }
+
+    public boolean isMsgRoaming() {
+        return PreferenceManager.getInstance().isMsgRoaming();
+    }
+
+    public void setMsgRoaming(boolean roaming) {
+        PreferenceManager.getInstance().setMsgRoaming(roaming);
     }
 
     public String getCutomAppkey() {

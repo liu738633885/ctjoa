@@ -4,13 +4,13 @@ import android.content.Context;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+import com.ctj.oa.R;
 import com.hyphenate.chat.EMMessage;
 import com.hyphenate.chat.EMTextMessageBody;
 import com.hyphenate.chatuidemo.Constant;
-import com.hyphenate.easeui.R;
 import com.hyphenate.easeui.widget.chatrow.EaseChatRow;
 
-public class ChatRowVoiceCall extends EaseChatRow{
+public class ChatRowVoiceCall extends EaseChatRow {
 
     private TextView contentvView;
 
@@ -40,17 +40,8 @@ public class ChatRowVoiceCall extends EaseChatRow{
         EMTextMessageBody txtBody = (EMTextMessageBody) message.getBody();
         contentvView.setText(txtBody.getMessage());
     }
-    
-    @Override
-    protected void onUpdateView() {
-        
-    }
 
     @Override
-    protected void onBubbleClick() {
-        
+    protected void onViewUpdate(EMMessage msg) {
     }
-
-  
-
 }

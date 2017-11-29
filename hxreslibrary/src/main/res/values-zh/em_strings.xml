@@ -33,6 +33,9 @@
     <string name="network_unavailable">网络连接不可用，请检查网络</string>
     <string name="copy">复制</string>
     <string name="forward">转发</string>
+    <string name="recall">撤回</string>
+    <string name="msg_recall_by_self">您撤回了一条消息</string>
+    <string name="msg_recall_by_user">%1$s 撤回了一条消息</string>
     <string name="button_logout">退出登录</string>
     <string name="button_uploadlog">上传运行日志</string>
     <string name="ok">确定</string>
@@ -93,12 +96,15 @@
     <string name="nickname_description">设置此昵称以后，在与iOS客户端demo聊天过程中，iOS一侧会显示此昵称而不是环信ID，如果对方使用安卓客户端则此设置不生效</string>
     <string name="group_chat">群聊</string>
     <string name="chat_room">聊天室</string>
+    <string name="voice_and_video_conference">音视频会议</string>
+    <string name="conference_invite_error">还没有获取到会议信息，无法邀请其他人加入</string>
     <string name="add_friend">添加好友</string>
     <string name="search">搜索</string>
     <string name="black_item">黑名单</string>
     <string name="diagnose">诊断</string>
     <string name="push_nick">iOS离线推送昵称</string>
     <string name="call_option">通话设置</string>
+    <string name="multi_device_management">多设备管理</string>
     <string name="Current_version">当前版本</string>
     <string name="Not_Set">未设置</string>
     <string name="Upload_the_log">上传日志中</string>
@@ -142,8 +148,8 @@
     <string name="Please_enter_a_username">请输入用户名</string>
     <string name="is_down_please_wait">正在下载视频请稍候</string>
     <string name="Exit_the_group_chat">退出群聊</string>
-    <string name="accept_join_group">同意加入群：</string>
-    <string name="refuse_join_group">拒绝加入群：</string>
+    <string name="accept_join_group">%s同意加入群</string>
+    <string name="refuse_join_group">%s拒绝加入群</string>
     <string name="at_your_in_group">%s在群聊中@了你</string>
     <string name="emojicon_test_name">示例</string>
     <string name="all_members">所有成员</string>
@@ -200,8 +206,10 @@
     <string name="is_modify_the_group_description">正在修改群详情..</string>
     <string name="Modify_the_group_name_successful">修改群名称成功</string>
     <string name="Modify_the_group_description_successful">修改群详情成功</string>
+    <string name="Modify_the_group_extension_successful">修改群扩展成功</string>
     <string name="change_the_group_name_failed_please">改变群名称失败，请检查网络或稍后重试</string>
     <string name="change_the_group_description_failed_please">修改群详情失败，请检查网络或稍后重试</string>
+    <string name="change_the_group_extension_failed_please">修改群扩展失败，请检查网络或稍后重试</string>
     <string name="Are_moving_to_blacklist">正在移入至黑名单</string>
     <string name="failed_to_move_into">移入黑名单失败,请检查网络或稍后重试</string>
     <string name="Exit_the_group_chat_failure">退出群聊失败:</string>
@@ -293,6 +301,7 @@
     <string name="Move_into_the_blacklist_new">移入到黑名单</string>
     <string name="Change_the_group_name">改变群名称</string>
     <string name="change_the_group_description">改变群描述</string>
+    <string name="change_the_group_extension">改变群扩展</string>
     <string name="Sync_Groups_From_Server">从服务器下载群聊信息</string>
     
     <string name="update_contact_list">更新联系人列表</string>
@@ -308,10 +317,16 @@
     <string name="join_public_group">加入公开群</string>
     <string name="chatroom_allow_owner_leave"> 允许聊天室群主离开</string>
     <string name="delete_msg_when_exit_group">退出群组时删除聊天数据</string>
+    <string name="set_transfer_file_by_userself">无需用户实现上传下载</string>
+    <string name="set_autodownload_thumbnail">是否自动下载缩略图附件</string>
     <string name="auto_accept_group_invitation">自动同意群组加群邀请</string>
     <string name="adaptive_video_encode">视频自适应码率编码</string>
+    <string name="msg_roaming">消息漫游</string>
     <string name="offline_call_push">通话离线推送</string>
     <string name="group_id">群ID</string>
+    <string name="group_announcement">公告</string>
+    <string name="share_files">共享文件</string>
+    <string name="upload_files">上传</string>
     <string name="move_out_backlist">移出黑名单</string>
     <string name="input_new_nick_hint">输入新昵称</string>
     <string name="search_pubic_group">搜索公开群</string>
@@ -373,4 +388,34 @@
     <string name="Failed_to_create_chat_room">创建聊天室失败</string>
 
     <string name="mail_log_title">发送邮件附件中包含log</string>
+
+    <string name="multi_device_contact_accept">接受%s的好友邀请[remote]</string>
+    <string name="multi_device_contact_decline">拒绝%s的好友邀请[remote]</string>
+    <string name="multi_device_contact_add">发送好友邀请给%s[remote]</string>
+    <string name="multi_device_contact_ban">加%s到黑名单[remote]</string>
+    <string name="multi_device_contact_allow">移除%s从黑名单[remote]</string>
+
+    <string name="multi_device_group_create">创建群组[remote]</string>
+    <string name="multi_device_group_destroy">销毁群组[remote]</string>
+    <string name="multi_device_group_join">加入群组[remote]</string>
+    <string name="multi_device_group_leave">离开群组[remote]</string>
+    <string name="multi_device_group_apply">申请加入群组[remote]</string>
+    <string name="multi_device_group_apply_accept">接受%s入群申请[remote]</string>
+    <string name="multi_device_group_apply_decline">拒绝%s入群申请[remote]</string>
+    <string name="multi_device_group_invite">邀请%s加入群组[remote]</string>
+    <string name="multi_device_group_invite_accept">接受%s入群邀请[remote]</string>
+    <string name="multi_device_group_invite_decline">拒绝%s入群邀请[remote]</string>
+    <string name="multi_device_group_kick">将%s从群组移除[remote]</string>
+    <string name="multi_device_group_ban">将%s加入群组的黑名单[remote]</string>
+    <string name="multi_device_group_allow">将%s从群组的黑名单移除[remote]</string>
+    <string name="multi_device_group_block">停止接受群组消息[remote]</string>
+    <string name="multi_device_group_unblock">可以接受群组的消息[remote]</string>
+    <string name="multi_device_group_assign_owner">将群组所有者权限转移给%1$s[remote]</string>
+    <string name="multi_device_group_add_admin">添加%s作为群组的管理员[remote]</string>
+    <string name="multi_device_group_remove_admin">移除%s在群组的管理员身份[remote]</string>
+    <string name="multi_device_group_add_mute">将%s在群组中禁言[remote]</string>
+    <string name="multi_device_group_remove_mute">将%s在群组中解除禁言[remote]</string>
+
+    <string name="multi_device_logged_in_device_kick_item">将设备移除</string>
+
 </resources>

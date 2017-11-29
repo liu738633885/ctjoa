@@ -22,6 +22,7 @@ import com.hyphenate.chatuidemo.adapter.NewFriendsMsgAdapter;
 import com.hyphenate.chatuidemo.db.InviteMessgeDao;
 import com.hyphenate.chatuidemo.domain.InviteMessage;
 
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -38,11 +39,12 @@ public class NewFriendsMsgActivity extends BaseActivity {
 		ListView listView = (ListView) findViewById(R.id.list);
 		InviteMessgeDao dao = new InviteMessgeDao(this);
 		List<InviteMessage> msgs = dao.getMessagesList();
+		Collections.reverse(msgs);
 
-		NewFriendsMsgAdapter adapter = new NewFriendsMsgAdapter(this, 1, msgs); 
+		NewFriendsMsgAdapter adapter = new NewFriendsMsgAdapter(this, 1, msgs);
 		listView.setAdapter(adapter);
 		dao.saveUnreadMessageCount(0);
-		
+
 	}
 
 	public void back(View view) {

@@ -1,35 +1,23 @@
 package com.hyphenate.easeui.widget.chatrow;
 
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Bitmap;
-import android.net.Uri;
 import android.os.AsyncTask;
-import android.os.Message;
-import android.util.Log;
+import android.support.v4.os.AsyncTaskCompat;
 import android.view.View;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.hyphenate.chat.EMClient;
-import com.hyphenate.chat.EMConversation;
 import com.hyphenate.chat.EMFileMessageBody;
 import com.hyphenate.chat.EMImageMessageBody;
 import com.hyphenate.chat.EMMessage;
-import com.hyphenate.chat.EMMessage.ChatType;
 import com.hyphenate.easeui.R;
-import com.hyphenate.easeui.adapter.EaseMessageAdapter;
 import com.hyphenate.easeui.model.EaseImageCache;
-import com.hyphenate.easeui.ui.EaseShowBigImageActivity;
-import com.hyphenate.easeui.ui.EaseShowBigImagesActivity;
-import com.hyphenate.easeui.utils.EaseCommonUtils;
 import com.hyphenate.easeui.utils.EaseImageUtils;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 
 public class EaseChatRowImage extends EaseChatRowFile{
 
@@ -57,102 +45,85 @@ public class EaseChatRowImage extends EaseChatRowFile{
         imgBody = (EMImageMessageBody) message.getBody();
         // received messages
         if (message.direct() == EMMessage.Direct.RECEIVE) {
-            if (imgBody.thumbnailDownloadStatus() == EMFileMessageBody.EMDownloadStatus.DOWNLOADING ||
-                    imgBody.thumbnailDownloadStatus() == EMFileMessageBody.EMDownloadStatus.PENDING) {
-                imageView.setImageResource(R.drawable.ease_default_image);
-                setMessageReceiveCallback();
-            } else {
-                progressBar.setVisibility(View.GONE);
-                percentageView.setVisibility(View.GONE);
-                imageView.setImageResource(R.drawable.ease_default_image);
-                String thumbPath = imgBody.thumbnailLocalPath();
-                if (!new File(thumbPath).exists()) {
-                	// to make it compatible with thumbnail received in previous version
-                    thumbPath = EaseImageUtils.getThumbnailImagePath(imgBody.getLocalUrl());
-                }
-                showImageView(thumbPath, imageView, imgBody.getLocalUrl(), message);
-            }
             return;
         }
-        
         String filePath = imgBody.getLocalUrl();
         String thumbPath = EaseImageUtils.getThumbnailImagePath(imgBody.getLocalUrl());
-        showImageView(thumbPath, imageView, filePath, message);
-        handleSendMessage();
+        showImageView(thumbPath, filePath, message);
     }
-    
+
     @Override
-    protected void onUpdateView() {
-        super.onUpdateView();
-    }
-    
-    @Override
-    protected void onBubbleClick() {
-        if (true) {
-           /* EMConversation conversation = EMClient.getInstance().chatManager().getConversation(((EaseMessageAdapter) adapter).getToChatUsername());
-            List<EMMessage> messages=conversation.getAllMessages();
-            Log.e(TAG,"message 个数"+messages.size());
-            Log.e(TAG,"当前位置"+position);
-            List<EMMessage> images=new ArrayList<>();
-            int imagePosition=0;
-            int i=0;
-            for (EMMessage e:messages){
-                Log.e(TAG,"类型"+ e.getType()+"id"+e.getMsgId());
-                if(e.getType()==EMMessage.Type.IMAGE){
-                    EMImageMessageBody imagebody=(EMImageMessageBody) e.getBody();
-                    Log.e(TAG,"localUrl:"+imagebody.getLocalUrl()+"---messageId:"+e.getMsgId());
-                    images.add(e);
-                    i++;
-                    if(e==message){
-                        imagePosition=i;
+    protected void onViewUpdate(EMMessage msg) {
+        if (msg.direct() == EMMessage.Direct.SEND) {
+            if (EMClient.getInstance().getOptions().getAutodownloadThumbnail()) {
+                super.onViewUpdate(msg);
+            } else {
+                if (imgBody.thumbnailDownloadStatus() == EMFileMessageBody.EMDownloadStatus.DOWNLOADING ||
+                        imgBody.thumbnailDownloadStatus() == EMFileMessageBody.EMDownloadStatus.PENDING ||
+                        imgBody.thumbnailDownloadStatus() == EMFileMessageBody.EMDownloadStatus.FAILED) {
+                    progressBar.setVisibility(View.INVISIBLE);
+                    percentageView.setVisibility(View.INVISIBLE);
+                    imageView.setImageResource(R.drawable.ease_default_image);
+                } else {
+                    progressBar.setVisibility(View.GONE);
+                    percentageView.setVisibility(View.GONE);
+                    imageView.setImageResource(R.drawable.ease_default_image);
+                    String thumbPath = imgBody.thumbnailLocalPath();
+                    if (!new File(thumbPath).exists()) {
+                        // to make it compatible with thumbnail received in previous version
+                        thumbPath = EaseImageUtils.getThumbnailImagePath(imgBody.getLocalUrl());
                     }
+                    showImageView(thumbPath, imgBody.getLocalUrl(), message);
                 }
             }
-            Collections.reverse(images);*/
-            EaseShowBigImagesActivity.startImagePagerActivity(context,((EaseMessageAdapter) adapter).getToChatUsername(),message.getMsgId());
             return;
         }
-        Intent intent = new Intent(context, EaseShowBigImageActivity.class);
-        File file = new File(imgBody.getLocalUrl());
-        if (file.exists()) {
-            Uri uri = Uri.fromFile(file);
-            intent.putExtra("uri", uri);
-        } else {
-            // The local full size pic does not exist yet.
-            // ShowBigImage needs to download it from the server
-            // first
-            String msgId = message.getMsgId();
-            intent.putExtra("messageId", msgId);
-            intent.putExtra("localUrl", imgBody.getLocalUrl());
-        }
-        if (message != null && message.direct() == EMMessage.Direct.RECEIVE && !message.isAcked()
-                && message.getChatType() == ChatType.Chat) {
-            try {
-                EMClient.getInstance().chatManager().ackMessageRead(message.getFrom(), message.getMsgId());
-            } catch (Exception e) {
-                e.printStackTrace();
+
+        // received messages
+        if (imgBody.thumbnailDownloadStatus() == EMFileMessageBody.EMDownloadStatus.DOWNLOADING ||
+                imgBody.thumbnailDownloadStatus() == EMFileMessageBody.EMDownloadStatus.PENDING) {
+            if (EMClient.getInstance().getOptions().getAutodownloadThumbnail()) {
+                imageView.setImageResource(R.drawable.ease_default_image);
+            } else {
+                progressBar.setVisibility(View.INVISIBLE);
+                percentageView.setVisibility(View.INVISIBLE);
+                imageView.setImageResource(R.drawable.ease_default_image);
             }
+        } else if (imgBody.thumbnailDownloadStatus() == EMFileMessageBody.EMDownloadStatus.FAILED) {
+            if (EMClient.getInstance().getOptions().getAutodownloadThumbnail()) {
+                progressBar.setVisibility(View.VISIBLE);
+                percentageView.setVisibility(View.VISIBLE);
+            } else {
+                progressBar.setVisibility(View.INVISIBLE);
+                percentageView.setVisibility(View.INVISIBLE);
+            }
+        } else {
+            progressBar.setVisibility(View.GONE);
+            percentageView.setVisibility(View.GONE);
+            imageView.setImageResource(R.drawable.ease_default_image);
+            String thumbPath = imgBody.thumbnailLocalPath();
+            if (!new File(thumbPath).exists()) {
+                // to make it compatible with thumbnail received in previous version
+                thumbPath = EaseImageUtils.getThumbnailImagePath(imgBody.getLocalUrl());
+            }
+            showImageView(thumbPath, imgBody.getLocalUrl(), message);
         }
-        context.startActivity(intent);
     }
-    
+
     /**
      * load image into image view
-     * 
-     * @param thumbernailPath
-     * @param iv
-     * @param position
-     * @return the image exists or not
+     *
      */
-    private boolean showImageView(final String thumbernailPath, final ImageView iv, final String localFullSizePath,final EMMessage message) {
-        // first check if the thumbnail image already loaded into cache
+    private void showImageView(final String thumbernailPath, final String localFullSizePath, final EMMessage message) {
+        // first check if the thumbnail image already loaded into cache s
         Bitmap bitmap = EaseImageCache.getInstance().get(thumbernailPath);
+
         if (bitmap != null) {
             // thumbnail image is already loaded, reuse the drawable
-            iv.setImageBitmap(bitmap);
-            return true;
+            imageView.setImageBitmap(bitmap);
         } else {
-            new AsyncTask<Object, Void, Bitmap>() {
+            imageView.setImageResource(R.drawable.ease_default_image);
+            AsyncTaskCompat.executeParallel(new AsyncTask<Object, Void, Bitmap>() {
 
                 @Override
                 protected Bitmap doInBackground(Object... args) {
@@ -177,27 +148,11 @@ public class EaseChatRowImage extends EaseChatRowFile{
 
                 protected void onPostExecute(Bitmap image) {
                     if (image != null) {
-                        iv.setImageBitmap(image);
+                        imageView.setImageBitmap(image);
                         EaseImageCache.getInstance().put(thumbernailPath, image);
-                    } else {
-                        if (message.status() == EMMessage.Status.FAIL) {
-                            if (EaseCommonUtils.isNetWorkConnected(activity)) {
-                                new Thread(new Runnable() {
-
-                                    @Override
-                                    public void run() {
-                                        EMClient.getInstance().chatManager().downloadThumbnail(message);
-                                    }
-                                }).start();
-                            }
-                        }
-
                     }
                 }
-            }.execute();
-
-            return true;
+            });
         }
     }
-
 }

@@ -42,14 +42,16 @@ import com.hyphenate.chatuidemo.Constant;
 import com.hyphenate.chatuidemo.DemoHelper;
 import com.hyphenate.chatuidemo.domain.EmojiconExampleGroupData;
 import com.hyphenate.chatuidemo.domain.RobotUser;
-import com.hyphenate.chatuidemo.widget.ChatRowLocation;
-import com.hyphenate.chatuidemo.widget.ChatRowVoiceCall;
+import com.hyphenate.chatuidemo.widget.ChatLocationPresenter;
+import com.hyphenate.chatuidemo.widget.EaseChatRecallPresenter;
+import com.hyphenate.chatuidemo.widget.EaseChatVoiceCallPresenter;
 import com.hyphenate.easeui.EaseConstant;
 import com.hyphenate.easeui.ui.EaseChatFragment;
 import com.hyphenate.easeui.ui.EaseChatFragment.EaseChatFragmentHelper;
-import com.hyphenate.easeui.widget.chatrow.EaseChatRow;
 import com.hyphenate.easeui.widget.chatrow.EaseCustomChatRowProvider;
 import com.hyphenate.easeui.widget.emojicon.EaseEmojiconMenu;
+import com.hyphenate.easeui.widget.presenter.EaseChatRowPresenter;
+import com.hyphenate.exceptions.HyphenateException;
 import com.hyphenate.util.EasyUtils;
 import com.hyphenate.util.PathUtil;
 import com.orhanobut.logger.Logger;
@@ -80,6 +82,7 @@ public class ChatFragment extends EaseChatFragment implements EaseChatFragmentHe
     private static final int MESSAGE_TYPE_RECV_VOICE_CALL = 2;
     private static final int MESSAGE_TYPE_SENT_VIDEO_CALL = 3;
     private static final int MESSAGE_TYPE_RECV_VIDEO_CALL = 4;
+    private static final int MESSAGE_TYPE_RECALL = 9;
 
 
     /**
@@ -89,7 +92,7 @@ public class ChatFragment extends EaseChatFragment implements EaseChatFragmentHe
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return super.onCreateView(inflater, container, savedInstanceState);
+        return super.onCreateView(inflater, container, savedInstanceState, DemoHelper.getInstance().getModel().isMsgRoaming() && (chatType != EaseConstant.CHATTYPE_CHATROOM));
     }
 
     @Override
@@ -125,7 +128,7 @@ public class ChatFragment extends EaseChatFragment implements EaseChatFragmentHe
 
     @Override
     protected void setUpView() {
-        setChatFragmentListener(this);
+        setChatFragmentHelper(this);
         if (chatType == Constant.CHATTYPE_SINGLE) {
             Map<String, RobotUser> robotMap = DemoHelper.getInstance().getRobotList();
             if (robotMap != null && robotMap.containsKey(toChatUsername)) {
@@ -209,12 +212,34 @@ public class ChatFragment extends EaseChatFragment implements EaseChatFragmentHe
                     startActivity(intent);
 
                     break;
-                case ContextMenuActivity.RESULT_CODE_SHARE: // forward
-                    /*Intent intent = new Intent(getActivity(), ForwardMessageActivity.class);
-                    intent.putExtra("forward_msg_id", contextMenuMessage.getMsgId());
-                    startActivity(intent);*/
+                case ContextMenuActivity.RESULT_CODE_SHARE: // share
                     //T.showShort(getActivity(),((EMImageMessageBody)contextMenuMessage.getBody()).getLocalUrl());
                     ShareUtils.ShareWXIMG(getActivity(), ((EMImageMessageBody) contextMenuMessage.getBody()).getLocalUrl());
+                    break;
+                case ContextMenuActivity.RESULT_CODE_RECALL://recall
+                    new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                            try {
+                                EMMessage msgNotification = EMMessage.createTxtSendMessage(" ",contextMenuMessage.getTo());
+                                EMTextMessageBody txtBody = new EMTextMessageBody(getResources().getString(R.string.msg_recall_by_self));
+                                msgNotification.addBody(txtBody);
+                                msgNotification.setMsgTime(contextMenuMessage.getMsgTime());
+                                msgNotification.setLocalTime(contextMenuMessage.getMsgTime());
+                                msgNotification.setAttribute(Constant.MESSAGE_TYPE_RECALL, true);
+                                EMClient.getInstance().chatManager().recallMessage(contextMenuMessage);
+                                EMClient.getInstance().chatManager().saveMessage(msgNotification);
+                                messageList.refresh();
+                            } catch (final HyphenateException e) {
+                                e.printStackTrace();
+                                getActivity().runOnUiThread(new Runnable() {
+                                    public void run() {
+                                        Toast.makeText(getActivity(), e.getMessage(), Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+                            }
+                        }
+                    }).start();
                     break;
 
                 default:
@@ -428,7 +453,7 @@ public class ChatFragment extends EaseChatFragment implements EaseChatFragmentHe
         public int getCustomChatRowTypeCount() {
             //here the number is the message type in EMMessage::Type
             //which is used to count the number of different chat row
-            return 10;
+            return 11;
         }
 
         @Override
@@ -440,6 +465,10 @@ public class ChatFragment extends EaseChatFragment implements EaseChatFragmentHe
                 } else if (message.getBooleanAttribute(Constant.MESSAGE_ATTR_IS_VIDEO_CALL, false)) {
                     //video call
                     return message.direct() == EMMessage.Direct.RECEIVE ? MESSAGE_TYPE_RECV_VIDEO_CALL : MESSAGE_TYPE_SENT_VIDEO_CALL;
+                }
+                //messagee recall
+                else if(message.getBooleanAttribute(Constant.MESSAGE_TYPE_RECALL, false)){
+                    return MESSAGE_TYPE_RECALL;
                 }
                 //red packet code : 红包消息、红包回执消息以及转账消息的chatrow type
                 // else if (RedPacketUtil.isRandomRedPacket(message)) {
@@ -458,24 +487,22 @@ public class ChatFragment extends EaseChatFragment implements EaseChatFragmentHe
         }
 
         @Override
-        public EaseChatRow getCustomChatRow(EMMessage message, int position, BaseAdapter adapter) {
+        public EaseChatRowPresenter getCustomChatRow(EMMessage message, int position, BaseAdapter adapter) {
             if (message.getType() == EMMessage.Type.TXT) {
                 // voice call or video call
                 if (message.getBooleanAttribute(Constant.MESSAGE_ATTR_IS_VOICE_CALL, false) ||
                         message.getBooleanAttribute(Constant.MESSAGE_ATTR_IS_VIDEO_CALL, false)) {
-                    return new ChatRowVoiceCall(getActivity(), message, position, adapter);
+                    EaseChatRowPresenter presenter = new EaseChatVoiceCallPresenter();
+                    return presenter;
                 }
-                //red packet code : 红包消息、红包回执消息以及转账消息的chat row
-               /* else if (RedPacketUtil.isRandomRedPacket(message)) {//小额随机红包
-                    return new ChatRowRandomPacket(getActivity(), message, position, adapter);
-                } else if (message.getBooleanAttribute(RPConstant.MESSAGE_ATTR_IS_RED_PACKET_MESSAGE, false)) {//红包消息
-                    return new ChatRowRedPacket(getActivity(), message, position, adapter);
-                } else if (message.getBooleanAttribute(RPConstant.MESSAGE_ATTR_IS_RED_PACKET_ACK_MESSAGE, false)) {//红包回执消息
-                    return new ChatRowRedPacketAck(getActivity(), message, position, adapter);
-                }*/
-                //end of red packet code
+                //recall message
+                else if(message.getBooleanAttribute(Constant.MESSAGE_TYPE_RECALL, false)){
+                    EaseChatRowPresenter presenter = new EaseChatRecallPresenter();
+                    return presenter;
+                }
             } else if (message.getType() == EMMessage.Type.LOCATION) {
-                return new ChatRowLocation(getActivity(), message, position, adapter);
+                ChatLocationPresenter presenter=new ChatLocationPresenter();
+                return presenter;
             }
             return null;
         }

@@ -192,7 +192,7 @@ public class PermissionsManager {
    * for the specified {@link PermissionsResultAction}. The purpose of this method is to enable
    * all permissions to be requested at one shot. The PermissionsResultAction is used to notify
    * you of the user allowing or denying each permission. The Activity and PermissionsResultAction
-   * parameters are both annotated Nullable, but this method will not bottombar_work if the Activity
+   * parameters are both annotated Nullable, but this method will not work if the Activity
    * is null. It is only annotated Nullable as a courtesy to prevent crashes in the case
    * that you call this from a Fragment where {@link Fragment#getActivity()} could yield
    * null. Additionally, you will not receive any notification of permissions being granted
@@ -255,7 +255,7 @@ public class PermissionsManager {
    * PermissionsResultAction to the queue to be notified of permissions being granted or
    * denied. In the case of pre-Android Marshmallow, permissions will be granted immediately.
    * The Fragment variable is used, but if {@link Fragment#getActivity()} returns null, this method
-   * will fail to bottombar_work as the activity reference is necessary to check for permissions.
+   * will fail to work as the activity reference is necessary to check for permissions.
    *
    * @param fragment    the fragment necessary to request the permissions.
    * @param permissions the list of permissions to request for the {@link PermissionsResultAction}.
@@ -320,11 +320,11 @@ public class PermissionsManager {
 
   /**
    * When request permissions on devices before Android M (Android 6.0, API Level 23)
-   * Do the granted or denied bottombar_work directly according to the permission status
+   * Do the granted or denied work directly according to the permission status
    *
    * @param activity    the activity to check permissions
    * @param permissions the permissions names
-   * @param action      the callback bottombar_work object, containing what we what to do after
+   * @param action      the callback work object, containing what we what to do after
    *                    permission check
    */
   private void doPermissionWorkBeforeAndroidM(@NonNull Activity activity,
@@ -347,11 +347,11 @@ public class PermissionsManager {
   /**
    * Filter the permissions list:
    * If a permission is not granted, add it to the result list
-   * if a permission is granted, do the granted bottombar_work, do not add it to the result list
+   * if a permission is granted, do the granted work, do not add it to the result list
    *
    * @param activity    the activity to check permissions
    * @param permissions all the permissions names
-   * @param action      the callback bottombar_work object, containing what we what to do after
+   * @param action      the callback work object, containing what we what to do after
    *                    permission check
    * @return a list of permissions names that are not granted yet
    */

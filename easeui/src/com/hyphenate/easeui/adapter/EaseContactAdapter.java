@@ -15,9 +15,12 @@ import android.widget.ImageView;
 import android.widget.SectionIndexer;
 import android.widget.TextView;
 
+import com.hyphenate.easeui.EaseUI;
 import com.hyphenate.easeui.R;
+import com.hyphenate.easeui.domain.EaseAvatarOptions;
 import com.hyphenate.easeui.domain.EaseUser;
 import com.hyphenate.easeui.utils.EaseUserUtils;
+import com.hyphenate.easeui.widget.EaseImageView;
 import com.hyphenate.util.EMLog;
 
 import java.util.ArrayList;
@@ -82,7 +85,18 @@ public class EaseContactAdapter extends ArrayAdapter<EaseUser> implements Sectio
         } else {
             holder.headerView.setVisibility(View.GONE);
         }
-
+        EaseAvatarOptions avatarOptions = EaseUI.getInstance().getAvatarOptions();
+        if(avatarOptions != null && holder.avatar instanceof EaseImageView) {
+            EaseImageView avatarView = ((EaseImageView) holder.avatar);
+            if (avatarOptions.getAvatarShape() != 0)
+                avatarView.setShapeType(avatarOptions.getAvatarShape());
+            if (avatarOptions.getAvatarBorderWidth() != 0)
+                avatarView.setBorderWidth(avatarOptions.getAvatarBorderWidth());
+            if (avatarOptions.getAvatarBorderColor() != 0)
+                avatarView.setBorderColor(avatarOptions.getAvatarBorderColor());
+            if (avatarOptions.getAvatarRadius() != 0)
+                avatarView.setRadius(avatarOptions.getAvatarRadius());
+        }
         if (!TextUtils.isEmpty(user.getAvatar()) && user.getAvatar().equals("group")) {
             holder.nameView.setText(user.getNickname());
             holder.avatar.setImageResource(R.drawable.em_group_icon);
@@ -175,6 +189,10 @@ public class EaseContactAdapter extends ArrayAdapter<EaseUser> implements Sectio
                 results.values = copyUserList;
                 results.count = copyUserList.size();
             }else{
+
+                if (copyUserList.size() > mOriginalList.size()) {
+                    mOriginalList = copyUserList;
+                }
                 String prefixString = prefix.toString();
                 final int count = mOriginalList.size();
                 final ArrayList<EaseUser> newValues = new ArrayList<EaseUser>();

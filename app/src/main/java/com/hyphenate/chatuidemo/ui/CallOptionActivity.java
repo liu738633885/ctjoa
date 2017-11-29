@@ -133,7 +133,7 @@ public class CallOptionActivity extends BaseActivity implements View.OnClickList
             strSizes.add("Not Set");
 
             for (Camera.Size size : sizes) {
-                String str = "" + size.width + "ic_new" + size.height;
+                String str = "" + size.width + "x" + size.height;
                 strSizes.add(str);
             }
 
@@ -170,7 +170,7 @@ public class CallOptionActivity extends BaseActivity implements View.OnClickList
              * 1. select one spinner, clear another
              * 2. set common text
              * 3. if another spinner is already at position 0, ignore it
-             * 4. Use disableOnce AtomicBoolean to record whether is spinner.setSelected(ic_new) triggered action, which should be ignored
+             * 4. Use disableOnce AtomicBoolean to record whether is spinner.setSelected(x) triggered action, which should be ignored
              */
             AtomicBoolean disableOnce = new AtomicBoolean(false);
             spinnerVideoResolution.setTag(disableOnce);
@@ -195,10 +195,10 @@ public class CallOptionActivity extends BaseActivity implements View.OnClickList
                     if (size != null) {
                         EMClient.getInstance().callManager().getCallOptions().setVideoResolution(size.width, size.height);
                         TextView textVideoResolution = (TextView)findViewById(R.id.text_video_resolution);
-                        textVideoResolution.setText("Set video resolution:" + size.width + "ic_new" + size.height);
+                        textVideoResolution.setText("Set video resolution:" + size.width + "x" + size.height);
 
                         if (cameraId == Camera.CameraInfo.CAMERA_FACING_BACK) {
-                            PreferenceManager.getInstance().setCallBackCameraResolution(size.width + "ic_new" + size.height);
+                            PreferenceManager.getInstance().setCallBackCameraResolution(size.width + "x" + size.height);
                             PreferenceManager.getInstance().setCallFrontCameraResolution("");
                             Spinner frontSpinner = (Spinner) findViewById(R.id.spinner_video_resolution_front);
                             if (frontSpinner.getSelectedItemPosition() != 0) {
@@ -208,7 +208,7 @@ public class CallOptionActivity extends BaseActivity implements View.OnClickList
                             }
 
                         } else {
-                            PreferenceManager.getInstance().setCallFrontCameraResolution(size.width + "ic_new" + size.height);
+                            PreferenceManager.getInstance().setCallFrontCameraResolution(size.width + "x" + size.height);
                             PreferenceManager.getInstance().setCallBackCameraResolution("");
                             Spinner backSpinner = (Spinner) findViewById(R.id.spinner_video_resolution_back);
                             if (backSpinner.getSelectedItemPosition() != 0) {
@@ -235,7 +235,8 @@ public class CallOptionActivity extends BaseActivity implements View.OnClickList
 
     void initAudioSampleRateSpinner(int spinnerId) {
         final List<String> sampleRateList = new ArrayList<String>();
-        sampleRateList.add("Not set");
+        // Notice: some of devices may not support 48KHz, but 16KHz is widely accepted
+        sampleRateList.add("Not set(prefer 16KHz)");
         sampleRateList.add("8000Hz");
         sampleRateList.add("11025Hz");
         sampleRateList.add("22050Hz");

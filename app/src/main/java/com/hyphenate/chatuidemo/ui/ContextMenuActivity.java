@@ -24,8 +24,9 @@ import com.hyphenate.chatuidemo.Constant;
 public class ContextMenuActivity extends BaseActivity {
     public static final int RESULT_CODE_COPY = 1;
     public static final int RESULT_CODE_DELETE = 2;
-    public static final int RESULT_CODE_FORWARD = 3;
-	public static final int RESULT_CODE_SHARE = 4;
+	public static final int RESULT_CODE_FORWARD = 3;
+	public static final int RESULT_CODE_RECALL = 4;
+	public static final int RESULT_CODE_SHARE = 5;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -68,6 +69,11 @@ public class ContextMenuActivity extends BaseActivity {
 	            v.setVisibility(View.GONE);
 	        }
 		}
+		if(message.direct() == EMMessage.Direct.RECEIVE )
+		{
+			View recall = (View) findViewById(R.id.recall);
+			recall.setVisibility(View.GONE);
+		}
 	}
 
 	@Override
@@ -93,5 +99,8 @@ public class ContextMenuActivity extends BaseActivity {
 		setResult(RESULT_CODE_SHARE);
 		finish();
 	}
-
+	public void recall(View view){
+		setResult(RESULT_CODE_RECALL);
+		finish();
+	}
 }

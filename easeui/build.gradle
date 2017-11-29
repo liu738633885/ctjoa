@@ -3,7 +3,8 @@ apply plugin: 'com.android.library'
 android {
     compileSdkVersion 26
     buildToolsVersion "26.0.2"
-
+    //use legacy for android 6.0
+    useLibrary 'org.apache.http.legacy'
     defaultConfig {
         minSdkVersion 15
         targetSdkVersion 26
@@ -47,4 +48,8 @@ dependencies {
     //compile project(':hyphenatechatsdk')
     compile fileTree(include: '*.jar', dir: 'libs')
     compile project(':lewislibrary')
+    //compile 'com.hyphenate:hyphenate-sdk:3.3.5'
+    // Google firebase cloud messaging
+    compile 'com.google.firebase:firebase-messaging:11.6.2'
+    compile 'com.google.android.gms:play-services-base:11.6.2'
 }
