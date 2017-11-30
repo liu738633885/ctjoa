@@ -58,7 +58,9 @@
         android:name="com.ctj.oa.permission.MIPUSH_RECEIVE"
         android:protectionLevel="signatureOrSystem"/>
     <uses-permission android:name="com.ctj.oa.permission.MIPUSH_RECEIVE"/>
-
+    <!--华为角标权限-->
+    <uses-permission
+        android:name="com.huawei.android.launcher.permission.CHANGE_BADGE "/>
 
     <application
         android:name=".MainApplication"

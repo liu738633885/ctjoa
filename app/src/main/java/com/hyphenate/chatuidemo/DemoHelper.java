@@ -17,7 +17,6 @@ import com.ctj.oa.R;
 import com.ctj.oa.activity.MainActivity;
 import com.ctj.oa.model.UserInfo;
 import com.ctj.oa.model.event.EventRefresh;
-import com.ctj.oa.utils.BadgeUtil;
 import com.ctj.oa.utils.GoToUtils;
 import com.ctj.oa.utils.SPUtils;
 import com.hyphenate.EMCallBack;
@@ -82,6 +81,8 @@ import java.util.UUID;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+
+import me.leolin.shortcutbadger.ShortcutBadger;
 
 public class DemoHelper {
     /**
@@ -1482,7 +1483,8 @@ public class DemoHelper {
 
     public void setAppBadge() {
         try {
-            BadgeUtil.setBadgeCount(appContext, getAllCount(), R.mipmap.ic_launcher);
+            //BadgeUtil.setBadgeCount(appContext, getAllCount(), R.mipmap.ic_launcher);
+            ShortcutBadger.applyCount(appContext, getAllCount());
         } catch (Exception e) {
             e.printStackTrace();
         }

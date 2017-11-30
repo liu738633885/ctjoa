@@ -6,8 +6,11 @@ import android.content.ComponentName;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
 import android.net.Uri;
 import android.os.Build;
+import android.os.Bundle;
 import android.support.v7.app.NotificationCompat;
 import android.util.Log;
 
@@ -51,6 +54,20 @@ public final class BadgeUtil {
             setBadgeOfHTC(context, count);
         } else if (Build.MANUFACTURER.toLowerCase().contains("nova")) {
             setBadgeOfNova(context, count);
+        } else if (Build.MANUFACTURER.toLowerCase().contains("OPPO")) {//oppo
+            setBadgeOfOPPO(context, count);
+        } else if (Build.MANUFACTURER.toLowerCase().contains("LeMobile")) {//乐视
+
+        } else if (Build.MANUFACTURER.toLowerCase().contains("vivo")) {
+            setBadgeOfVIVO(context, count);
+        } else if (Build.MANUFACTURER.toLowerCase().contains("HUAWEI") || Build.BRAND.equals("Huawei") || Build.BRAND.equals("HONOR")) {//华为
+            setHuaweiBadge(context, count);
+        } else if (Build.MANUFACTURER.toLowerCase().contains("")) {//魅族
+
+        } else if (Build.MANUFACTURER.toLowerCase().contains("")) {//金立
+
+        } else if (Build.MANUFACTURER.toLowerCase().contains("")) {//锤子
+
         } else {
             //Toast.makeText(context, "Not Found Support Launcher", Toast.LENGTH_LONG).show();
         }
@@ -159,7 +176,48 @@ public final class BadgeUtil {
         context.getContentResolver().insert(Uri.parse("content://com.teslacoilsw.notifier/unread_count"),
                 contentValues);
     }
-
+    /**
+     * 设置vivo的Badge :vivoXplay5 vivo x7无效果
+     */
+    private static void setBadgeOfVIVO(Context context,int count){
+        try {
+            Intent intent = new Intent("launcher.action.CHANGE_APPLICATION_NOTIFICATION_NUM");
+            intent.putExtra("packageName", context.getPackageName());
+            String launchClassName = context.getPackageManager().getLaunchIntentForPackage(context.getPackageName()).getComponent().getClassName();
+            intent.putExtra("className", launchClassName); intent.putExtra("notificationNum", count);
+            context.sendBroadcast(intent);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+    /**
+     *设置oppo的Badge :oppo角标提醒目前只针对内部软件还有微信、QQ开放，其他的暂时无法提供
+     */
+    private static void setBadgeOfOPPO(Context context,int count){
+        try {
+            Bundle extras = new Bundle();
+            extras.putInt("app_badge_count", count);
+            context.getContentResolver().call(Uri.parse("content://com.android.badge/badge"), "setAppBadgeCount", String.valueOf(count), extras);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    /**
+     * 设置华为的Badge :mate8 和华为 p7,honor畅玩系列可以,honor6plus 无效果
+     */
+    public static void setHuaweiBadge(Context context, int count)
+    {
+        try {
+            Bundle bundle = new Bundle();
+            bundle.putString("package", context.getPackageName());
+            String launchClassName = context.getPackageManager().getLaunchIntentForPackage(context.getPackageName()).getComponent().getClassName();
+            bundle.putString("class", launchClassName);
+            bundle.putInt("badgenumber", count);
+            context.getContentResolver().call(Uri.parse("content://com.huawei.android.launcher.settings/badge/"), "change_badge", null, bundle);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
     public static void setBadgeOfMadMode(Context context, int count, String packageName, String className) {
         Intent intent = new Intent("android.intent.action.BADGE_COUNT_UPDATE");
         intent.putExtra("badge_count", count);
@@ -175,5 +233,16 @@ public final class BadgeUtil {
      */
     public static void resetBadgeCount(Context context, int iconResId) {
         setBadgeCount(context, 0, iconResId);
+    }
+    public static String getLauncherClassName(Context context) {
+        PackageManager packageManager = context.getPackageManager();
+        Intent intent = new Intent(Intent.ACTION_MAIN);
+        intent.setPackage(context.getPackageName());
+        intent.addCategory(Intent.CATEGORY_LAUNCHER);
+        ResolveInfo info = packageManager.resolveActivity(intent, PackageManager.MATCH_DEFAULT_ONLY);
+        if (info == null) {
+            info = packageManager.resolveActivity(intent, 0);
+        }
+        return info.activityInfo.name;
     }
 }

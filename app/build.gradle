@@ -87,5 +87,6 @@ dependencies {
     compile 'com.nineoldandroids:library:2.4.0'
     compile 'com.soundcloud.android:android-crop:1.0.1@aar'
     compile 'com.amap.api:3dmap:5.5.0'
+    compile "me.leolin:ShortcutBadger:1.1.19@aar"
     testCompile 'junit:junit:4.12'
 }
