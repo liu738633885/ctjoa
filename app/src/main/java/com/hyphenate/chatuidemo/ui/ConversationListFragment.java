@@ -1,6 +1,7 @@
 package com.hyphenate.chatuidemo.ui;
 
 import android.content.Intent;
+import android.text.TextUtils;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.MenuItem;
@@ -14,6 +15,7 @@ import android.widget.Toast;
 
 import com.ctj.oa.Constants;
 import com.ctj.oa.R;
+import com.ctj.oa.activity.LoginActivity;
 import com.ctj.oa.activity.MainActivity;
 import com.ctj.oa.utils.manager.UserManager;
 import com.hyphenate.EMCallBack;
@@ -22,13 +24,11 @@ import com.hyphenate.chat.EMConversation;
 import com.hyphenate.chat.EMConversation.EMConversationType;
 import com.hyphenate.chat.EMMessage;
 import com.hyphenate.chatuidemo.Constant;
-import com.hyphenate.chatuidemo.DemoHelper;
 import com.hyphenate.chatuidemo.db.InviteMessgeDao;
 import com.hyphenate.easeui.model.EaseAtMessageHelper;
 import com.hyphenate.easeui.ui.EaseConversationListFragment;
 import com.hyphenate.easeui.widget.EaseConversationList.EaseConversationListHelper;
 import com.hyphenate.util.NetUtils;
-import com.orhanobut.logger.Logger;
 
 public class ConversationListFragment extends EaseConversationListFragment{
 
@@ -118,22 +118,28 @@ public class ConversationListFragment extends EaseConversationListFragment{
         super.onConnectionDisconnected();
         if (NetUtils.hasNetwork(getActivity())){
          errorText.setText(R.string.can_not_connect_chat_server_connection);
-            EMClient.getInstance().login(UserManager.getId() + "", "123456", new EMCallBack() {
-                @Override
-                public void onSuccess() {
+            if (!TextUtils.isEmpty(UserManager.getId())) {
 
-                }
+                EMClient.getInstance().login(UserManager.getId() + "", "123456", new EMCallBack() {
+                    @Override
+                    public void onSuccess() {
+                        errorText.setText("重新登陆成功");
+                    }
 
-                @Override
-                public void onError(int i, String s) {
+                    @Override
+                    public void onError(int i, String s) {
+                        errorText.setText("重新登陆失败");
+                        onConnectionDisconnected();
+                    }
 
-                }
-
-                @Override
-                public void onProgress(int i, String s) {
-
-                }
-            });
+                    @Override
+                    public void onProgress(int i, String s) {
+                        errorText.setText("正在重新登录...");
+                    }
+                });
+            } else {
+                startActivity(new Intent(getActivity(), LoginActivity.class));
+            }
         } else {
           errorText.setText(R.string.the_current_network);
         }

@@ -268,6 +268,8 @@ public class DemoHelper {
         options.setRequireAck(true);
         // set if you need delivery ack
         options.setRequireDeliveryAck(false);
+        //自动登录
+        options.setAutoLogin(true);
 
         /**
          * NOTE:你需要设置自己申请的Sender ID来使用Google推送功能，详见集成文档
@@ -294,9 +296,9 @@ public class DemoHelper {
         options.allowChatroomOwnerLeave(getModel().isChatroomOwnerLeaveAllowed());
         options.setDeleteMessagesAsExitGroup(getModel().isDeleteMessagesAsExitGroup());
         options.setAutoAcceptGroupInvitation(getModel().isAutoAcceptGroupInvitation());
-        // Whether the message attachment is automatically uploaded to the Hyphenate server,
+        // 是否自动将消息附件上传到环信服务器，默认为True是使用环信服务器上传下载，如果设为 false，需要开发者自己处理附件消息的上传和下载
         options.setAutoTransferMessageAttachments(getModel().isSetTransferFileByUser());
-        // Set Whether auto download thumbnail, default value is true.
+        // 是否自动下载附件类消息的缩略图等，默认为 true 这里和上边这个参数相关联
         options.setAutoDownloadThumbnail(getModel().isSetAutodownloadThumbnail());
         return options;
     }
