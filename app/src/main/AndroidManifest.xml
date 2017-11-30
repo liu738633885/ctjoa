@@ -53,6 +53,12 @@
     <uses-permission android:name="android.permission.CALL_PHONE"/>
     <!-- 反馈 -->
     <uses-permission android:name="android.permission.READ_LOGS"/>
+    <!--小米权限-->
+    <permission
+        android:name="com.ctj.oa.permission.MIPUSH_RECEIVE"
+        android:protectionLevel="signatureOrSystem"/>
+    <uses-permission android:name="com.ctj.oa.permission.MIPUSH_RECEIVE"/>
+
 
     <application
         android:name=".MainApplication"
