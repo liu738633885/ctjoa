@@ -391,6 +391,7 @@
         <!-- 启动界面 -->
         <activity
             android:name=".activity.SplashActivity"
+            android:exported="true"
             android:theme="@style/AppSplash">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
