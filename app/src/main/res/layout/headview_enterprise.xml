@@ -87,6 +87,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="13dp"
         android:text="企业圈"
+        android:visibility="gone"
         android:textColor="@color/white"
         android:textSize="@dimen/top_bar_title_size"
         />

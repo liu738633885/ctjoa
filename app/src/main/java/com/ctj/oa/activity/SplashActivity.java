@@ -1,8 +1,11 @@
 package com.ctj.oa.activity;
 
 import android.content.Intent;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.provider.Settings;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -14,14 +17,15 @@ import com.ctj.oa.net.CallServer;
 import com.ctj.oa.net.HttpListenerCallback;
 import com.ctj.oa.net.NetBaseRequest;
 import com.ctj.oa.net.RequsetFactory;
-import com.ctj.oa.utils.manager.UserManager;
 import com.ctj.oa.utils.imageloader.ImageLoader;
+import com.ctj.oa.utils.manager.UserManager;
 import com.hyphenate.chat.EMClient;
 import com.hyphenate.chatuidemo.DemoHelper;
 import com.hyphenate.chatuidemo.ui.VideoCallActivity;
 import com.hyphenate.chatuidemo.ui.VoiceCallActivity;
 import com.hyphenate.util.EasyUtils;
 import com.lewis.utils.SystemUtils;
+import com.lewis.utils.T;
 
 
 public class SplashActivity extends BaseActivity {
@@ -38,6 +42,7 @@ public class SplashActivity extends BaseActivity {
 
     @Override
     protected void initView(Bundle savedInstanceState) {
+        CheckPermission();
         DemoHelper.getInstance().initHandler(this.getMainLooper());
         tv_info = (TextView) findViewById(R.id.tv_info);
         imv_splash = (ImageView) findViewById(R.id.imv_splash);
@@ -80,6 +85,19 @@ public class SplashActivity extends BaseActivity {
         }).start();
 
 
+    }
+
+    private void CheckPermission() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && android.os.Build.VERSION.RELEASE.equals("6.0.0")) {
+            if (!Settings.System.canWrite(this)) {
+                T.showLong(this, "请在该设置页面勾选");
+                Uri selfPackageUri = Uri.parse("package:"
+                        + getPackageName());
+                Intent intent = new Intent(Settings.ACTION_MANAGE_WRITE_SETTINGS,
+                        selfPackageUri);
+                startActivity(intent);
+            }
+        }
     }
 
     private void openMainActivity() {

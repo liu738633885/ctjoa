@@ -113,18 +113,25 @@ public class EaseConversationListFragment extends EaseBaseFragment{
 
     private void updateAdminUi() {
         EaseUserUtils.setUserNick("admin", name);
-        if (admin != null) {
-            if (admin.getUnreadMsgCount() > 0) {
-                unread_msg_number.setText(String.valueOf(admin.getUnreadMsgCount()));
-                unread_msg_number.setVisibility(View.VISIBLE);
-            } else {
-                unread_msg_number.setVisibility(View.INVISIBLE);
+        try {
+            if (admin != null) {
+                if (admin.getUnreadMsgCount() > 0) {
+                    unread_msg_number.setText(String.valueOf(admin.getUnreadMsgCount()));
+                    unread_msg_number.setVisibility(View.VISIBLE);
+                } else {
+                    unread_msg_number.setVisibility(View.INVISIBLE);
+                }
+                EMMessage lastMessage = admin.getLastMessage();
+                if (lastMessage != null) {
+                    time.setText(DateUtils.translateDate3(lastMessage.getMsgTime()));
+                    message.setText(EaseSmileUtils.getSmiledText(getContext(), EaseCommonUtils.getMessageDigest(lastMessage, (this.getContext()))),
+                            TextView.BufferType.SPANNABLE);
+                }
             }
-            EMMessage lastMessage = admin.getLastMessage();
-            time.setText(DateUtils.translateDate3(lastMessage.getMsgTime()));
-            message.setText(EaseSmileUtils.getSmiledText(getContext(), EaseCommonUtils.getMessageDigest(lastMessage, (this.getContext()))),
-                    TextView.BufferType.SPANNABLE);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
+
     }
 
     @Override
