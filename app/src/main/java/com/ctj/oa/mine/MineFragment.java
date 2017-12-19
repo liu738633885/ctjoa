@@ -20,8 +20,8 @@ import com.ctj.oa.net.CallServer;
 import com.ctj.oa.net.HttpListenerCallback;
 import com.ctj.oa.net.NetBaseRequest;
 import com.ctj.oa.net.RequsetFactory;
-import com.ctj.oa.utils.manager.UserManager;
 import com.ctj.oa.utils.imageloader.ImageLoader;
+import com.ctj.oa.utils.manager.UserManager;
 import com.ctj.oa.widgets.WaveHelper;
 import com.lewis.widgets.LewisSwipeRefreshLayout;
 import com.lewis.widgets.WaveView;
@@ -43,7 +43,7 @@ public class MineFragment extends BaseFragment implements View.OnClickListener, 
     private View parentView;
     private ImageView imv_avatar;
     private TextView name;
-    private LinearLayout ll_admin, ll_create_company, ll_feedback, ll_help,ll_share;
+    private LinearLayout ll_admin, ll_create_company, ll_feedback, ll_help, ll_share, ll_qiuzhi;
     private int backmode;
 
     @Override
@@ -67,6 +67,8 @@ public class MineFragment extends BaseFragment implements View.OnClickListener, 
         ll_admin.setOnClickListener(this);
         ll_create_company.setOnClickListener(this);
         ll_feedback.setOnClickListener(this);
+        ll_qiuzhi = view.findViewById(R.id.ll_qiuzhi);
+        ll_qiuzhi.setOnClickListener(this);
         updateUI();
     }
 
@@ -158,6 +160,9 @@ public class MineFragment extends BaseFragment implements View.OnClickListener, 
                 break;
             case R.id.ll_admin:
                 startActivity(new Intent(getActivity(), OrganizationActivity.class));
+                break;
+            case R.id.ll_qiuzhi:
+                WebViewActivity.goTo(getActivity(), Constants.WEB_JOBS_WANTED_INDEX + "?user_id=" + UserManager.getId() + "&token=" + UserManager.getToken(), WebViewActivity.HIDE_TITLE);
                 break;
             case R.id.ll_help:
                 WebViewActivity.goTo(getActivity(), Constants.WEB_HELP, "帮助中心");

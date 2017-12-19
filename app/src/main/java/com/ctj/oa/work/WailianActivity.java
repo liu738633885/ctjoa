@@ -44,9 +44,9 @@ public class WailianActivity extends BaseActivity implements LewisSwipeRefreshLa
 
     @Override
     protected void initView(Bundle savedInstanceState) {
-        swl = (LewisSwipeRefreshLayout) findViewById(R.id.swl);
+        swl = findViewById(R.id.swl);
         swl.setOnRefreshListener(this);
-        rv = (RecyclerView) findViewById(R.id.rv);
+        rv = findViewById(R.id.rv);
         rv.setLayoutManager(new StaggeredGridLayoutManager(4, StaggeredGridLayoutManager.VERTICAL));
         rv.setAdapter(adapter);
         onRefresh();
@@ -82,6 +82,7 @@ public class WailianActivity extends BaseActivity implements LewisSwipeRefreshLa
             if (UserManager.isAdmin()) {
                 dates.add(new MineView(R.mipmap.work_icon_shenqingjiaru, "申请加入", JoinEntranceActivity.class));
             }
+            //dates.add(new MineView(R.mipmap.work_icon_qiandao, "招聘"));
             int b = (dates.size()) % 4;
 
             if (b != 0) {
@@ -112,6 +113,8 @@ public class WailianActivity extends BaseActivity implements LewisSwipeRefreshLa
                                 mContext.startActivity(new Intent(mContext, mineView.getActivity()));
                             } else if (!TextUtils.isEmpty(mineView.getInfo()) && mineView.getInfo().startsWith("http")) {
                                 WebViewActivity.goTo(bContext, mineView.getInfo(), "文件列表");
+                            } else if (mineView.getTittle().equals("人才招聘")) {
+                                WebViewActivity.goTo(bContext, Constants.WEB_JOBS_RECRUIT_INDEX+"?user_id=" + UserManager.getId() + "&token=" + UserManager.getToken(), WebViewActivity.HIDE_TITLE);
                             } else {
                                 T.showShort(bContext, "功能暂未开放");
                             }
@@ -126,7 +129,11 @@ public class WailianActivity extends BaseActivity implements LewisSwipeRefreshLa
                     helper.getConvertView().setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            BusinessRegisterActivity.goTo(bContext, aClass.getClass_id(), aClass.getClass_name());
+                            if(aClass.getClass_name().equals("人才招聘")){
+                                WebViewActivity.goTo(bContext, Constants.WEB_JOBS_RECRUIT_INDEX+"?user_id=" + UserManager.getId() + "&token=" + UserManager.getToken(), WebViewActivity.HIDE_TITLE);
+                            }else{
+                                BusinessRegisterActivity.goTo(bContext, aClass.getClass_id(), aClass.getClass_name());
+                            }
                         }
                     });
                     break;

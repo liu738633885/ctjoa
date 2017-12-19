@@ -19,10 +19,18 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
 import com.ctj.oa.R;
+import com.ctj.oa.utils.BitmapUtils;
 import com.ctj.oa.utils.ShareUtils;
+import com.ctj.oa.utils.UpLoadManager;
 import com.ctj.oa.widgets.TitleBar;
 import com.lewis.widgets.LewisSwipeRefreshLayout;
 import com.orhanobut.logger.Logger;
+import com.soundcloud.android.crop.Crop;
+
+import java.io.File;
+import java.util.ArrayList;
+
+import me.iwf.photopicker.PhotoPicker;
 
 public class WebViewActivity extends BaseActivity implements View.OnClickListener {
     private TitleBar titleBar;
@@ -32,6 +40,11 @@ public class WebViewActivity extends BaseActivity implements View.OnClickListene
     private String title, url;
     private boolean share;
     private Handler mHandler = new Handler();
+    public static final String HIDE_TITLE = "hidetitle";
+
+    //招聘
+    private boolean showLoading = true;
+
 
 
     @Override
@@ -72,7 +85,12 @@ public class WebViewActivity extends BaseActivity implements View.OnClickListene
             }
         });
         if (!TextUtils.isEmpty(title)) {
-            titleBar.setCenterText(title);
+            if (title.equals(HIDE_TITLE)) {
+                titleBar.setVisibility(View.GONE);
+            } else {
+                titleBar.setCenterText(title);
+            }
+
         }
         if (share) {
             titleBar.setRight_text("分享");
@@ -85,13 +103,17 @@ public class WebViewActivity extends BaseActivity implements View.OnClickListene
         }
         webView = findViewById(R.id.webView);
         swl = findViewById(R.id.swl);
+        swl.setEnabled(false);
         swl.setOnRefreshListener(new LewisSwipeRefreshLayout.OnRefreshListener() {
             public void onRefresh() {
                 webView.reload();
             }
         });
         setWebView();
-        url = "http://tapi.wiseexpo.com/jobs.Recruit/index.html?token=123123131&user_id=77";
+        //url = "http://tapi.wiseexpo.com/jobs.Recruit/index.html?token=123123131&user_id=77";
+        if (url.contains("hidetitle")) {
+            titleBar.setVisibility(View.GONE);
+        }
         webView.loadUrl(url);
         Logger.d(url);
     }
@@ -100,12 +122,12 @@ public class WebViewActivity extends BaseActivity implements View.OnClickListene
      * 左上角返回键的点击事件
      */
     public void back() {
-        finish();
-        /*if (webView.canGoBack()) {
+        //finish();
+        if (webView.canGoBack()) {
             webView.goBack();
         } else {
             finish();
-        }*/
+        }
     }
 
 
@@ -176,13 +198,21 @@ public class WebViewActivity extends BaseActivity implements View.OnClickListene
     private final WebChromeClient defaultWebChromeClient = new WebChromeClient() {
         public final static String W_TAG = "WebChromeClient";
 
+        @Override
+        public void onReceivedTitle(WebView view, String title) {
+            super.onReceivedTitle(view, title);
+            Log.i(W_TAG, "title = " + title);
+            titleBar.setCenterText(title);
+        }
+
         public void onProgressChanged(WebView view, int newProgress) {
-            if (newProgress == 0) {
+            if (newProgress == 0 && showLoading) {
                 swl.setRefreshing(true);
                 Log.i(W_TAG, "onProgressChanged mypDialog.show() newProgress = " + newProgress);
             }
             if (newProgress == 100) {
                 swl.setRefreshing(false);
+                showLoading = true;
             }
             Log.i(W_TAG, "onProgressChanged newProgress = " + newProgress);
         }
@@ -205,8 +235,13 @@ public class WebViewActivity extends BaseActivity implements View.OnClickListene
                 return true;
             } else {
                 view.loadUrl(url); // 在当前的webview中跳转到新的url
+                if (url.contains("hidetitle")) {
+                    titleBar.setVisibility(View.GONE);
+                } else {
+                    titleBar.setVisibility(View.VISIBLE);
+                }
                 Log.i(TAG, "loadUrl = " + url);
-                swl.setEnabled(!url.startsWith("http://api.idocv.com"));
+                //swl.setEnabled(!url.startsWith("http://api.idocv.com"));
                 return true;
             }
         }
@@ -241,22 +276,147 @@ public class WebViewActivity extends BaseActivity implements View.OnClickListene
             mHandler.post(new Runnable() {
                 public void run() {
                     //mWebView.loadUrl("javascript:wave()");
-                    Toast("order_no:");
-                    String url = "http://api.rockbrain.net/uploads/img/593761400d33020170607101320.jpg";
-                    webView.loadUrl("javascript:callUpload('" + url + "')");
+                    //Toast("order_no:");
+                    //String url = "http://api.rockbrain.net/uploads/img/593761400d33020170607101320.jpg";
+                    //webView.loadUrl("javascript:callUpload('" + url + "')");
                     //webView.loadUrl("javascript:alert(123)");
+                    PhotoPicker.builder()
+                            .setPhotoCount(1)
+                            .setShowCamera(true)
+                            .setShowGif(false)
+                            .setPreviewEnabled(true)
+                            .start(WebViewActivity.this, PhotoPicker.REQUEST_CODE);
                 }
             });
         }
         @JavascriptInterface
-        public void load(String url) {
+        public void load(final String url) {
+            mHandler.post(new Runnable() {
+                @Override
+                public void run() {
+                    webView.loadUrl(url);
+                }
+            });
+        }
+
+        @JavascriptInterface
+        public void back() {
+            mHandler.post(new Runnable() {
+                @Override
+                public void run() {
+                    webView.goBack();
+                }
+            });
+        }
+
+        @JavascriptInterface
+        public void loadNewTab(final String url) {
+            mHandler.post(new Runnable() {
+                @Override
+                public void run() {
+                    WebViewActivity.goTo(WebViewActivity.this, url, "");
+                }
+            });
+        }
+
+        @JavascriptInterface
+        public void close() {
+            mHandler.post(new Runnable() {
+                @Override
+                public void run() {
+                    finish();
+                }
+            });
+        }
+
+        @JavascriptInterface
+        public void reload() {
+            mHandler.post(new Runnable() {
+                @Override
+                public void run() {
+                    webView.reload();
+                }
+            });
 
         }
+
+        @JavascriptInterface
+        public void reload(int mode) {
+            if (mode == 1) {
+                showLoading = false;
+            }
+            mHandler.post(new Runnable() {
+                @Override
+                public void run() {
+                    webView.reload();
+                }
+            });
+
+        }
+
+        @JavascriptInterface
+        public void hideTitle(boolean hide) {
+            if (hide) {
+                titleBar.setVisibility(View.INVISIBLE);
+            } else {
+                titleBar.setVisibility(View.VISIBLE);
+            }
+        }
+
+
+       /* @JavascriptInterface
+        public void loadNewTab(String url, boolean finish) {
+            WebViewActivity.goTo(WebViewActivity.this, url, "");
+            if (finish) {
+                finish();
+            }
+        }*/
+
+        @JavascriptInterface
+        public void showRecruitTitle(boolean show) {
+            if (show) {
+
+            } else {
+
+            }
+        }
+
     }
     @Override
     public void onClick(View view) {
 
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode != RESULT_OK) {
+            return;
+        }
+        if (requestCode == PhotoPicker.REQUEST_CODE) {
+            if (data != null) {
+                ArrayList<String> photos =
+                        data.getStringArrayListExtra(PhotoPicker.KEY_SELECTED_PHOTOS);
+                Uri sourceUri = Uri.fromFile(new File(photos.get(0)));
+                beginCrop(sourceUri);
 
+            }
+        }
+        if (requestCode == Crop.REQUEST_CROP) {
+            UpLoadManager.uploadImg(this, Crop.getOutput(data).getPath(), new UpLoadManager.SingleUpLoadListener() {
+                @Override
+                public void onComplete(boolean isSuccess, String path_message) {
+                    if (isSuccess) {
+                        //String url = "http://api.rockbrain.net/uploads/img/5a26aa6fb44fe20171205221719.jpg";
+                        webView.loadUrl("javascript:callUpload('" + path_message + "')");
+                    }
+                }
+            }, 500, 500);
+        }
+    }
+
+    private void beginCrop(Uri source) {
+        Uri destination = Uri.fromFile(new File(BitmapUtils.getSaveRealPath(), System.currentTimeMillis() + "cropped.jpg"));
+        Crop.of(source, destination).asSquare().start(this);
+    }
 }

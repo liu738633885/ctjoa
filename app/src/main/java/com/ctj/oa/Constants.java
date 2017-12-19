@@ -22,11 +22,10 @@ public class Constants {
             return API_URL_RELEASE;
         }
     }
-
-    //public static final String API_URL_RELEASE = "http://oaapi.weihainan.com";
     public static final String API_URL_RELEASE = "http://api.rockbrain.net";
-    public static final String API_URL_DEBUG = "http://oaapi.weihainan.com";
-    public static final String IMG_HEAD = API_URL_RELEASE;
+    public static final String API_URL_DEBUG = "http://tapi.wiseexpo.com";
+    //public static final String IMG_HEAD = API_URL_RELEASE;
+    public static final String IMG_HEAD = getConfig();
     public static final String ADMIN_ID = "admin";
 
     /**
@@ -142,6 +141,16 @@ public class Constants {
     public static final String TASK_CONFIRM = _Task + "task_confirm";
     public static final String TASK_CANCEL = _Task + "task_cancel";
     public static final String TASK_RECOVER = _Task + "task_recover";
+    /**
+     * ====Jobs=========
+     */
+    public static final String _JOBS = getApiConfig() + "Jobs/";
+    public static final String GET_JOB_EXPECT_POSTITION = _JOBS + "get_job_expect_postition";
+    public static final String GET_JOB_POSTITION = _JOBS + "get_job_position";
+    //WEB
+    public static final String WEB_JOBS_RECRUIT_INDEX = getConfig() + "/jobs.recruit/index";
+    public static final String WEB_JOBS_WANTED_INDEX = getConfig() + "/jobs.wanted/index";
+
 
     /**
      * ====Upload=========
