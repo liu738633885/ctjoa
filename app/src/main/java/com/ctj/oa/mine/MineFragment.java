@@ -115,6 +115,7 @@ public class MineFragment extends BaseFragment implements View.OnClickListener, 
         if (mWaveHelper != null) {
             mWaveHelper.start();
         }
+        getIsAdmin();
         switch (backmode) {
             case 1:
                 getUserInfo();
@@ -134,6 +135,24 @@ public class MineFragment extends BaseFragment implements View.OnClickListener, 
                 if (netBaseBean.isSuccess()) {
                     UserInfo userInfo = netBaseBean.parseObject(UserInfo.class);
                     UserManager.saveUserInfo(userInfo);
+                    updateUI();
+                }
+            }
+
+            @Override
+            public void onFailed(int what, String url, Object tag, Exception exception, int responseCode, long networkMillis) {
+            }
+        }, swl);
+    }
+
+    private void getIsAdmin() {
+        NetBaseRequest request = RequsetFactory.creatBaseRequest(Constants.IS_ADMIN);
+        CallServer.getRequestInstance().add(getActivity(), 0x02, request, new HttpListenerCallback() {
+            @Override
+            public void onSucceed(int what, NetBaseBean netBaseBean) {
+                if (netBaseBean.isSuccess()) {
+                    UserInfo userInfo = netBaseBean.parseObject(UserInfo.class);
+                    UserManager.saveIsAdmin(userInfo.getIs_admin());
                     updateUI();
                 }
             }
@@ -181,6 +200,7 @@ public class MineFragment extends BaseFragment implements View.OnClickListener, 
 
     @Override
     public void onRefresh() {
-        updateUI();
+        getUserInfo();
+        getIsAdmin();
     }
 }

@@ -86,6 +86,7 @@ public class Constants {
     public static final String MY_CREATE_COMPANY_EXISTS = _USER + "my_create_company_exists";
     public static final String SELECTED_COMPANY = _USER + "selected_company";
     public static final String GET_MY_COMPANY_LIST = _USER + "get_my_company_list";
+    public static final String IS_ADMIN = _USER + "is_admin";
     /**
      * ====Attend========
      */

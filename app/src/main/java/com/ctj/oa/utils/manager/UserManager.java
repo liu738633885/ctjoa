@@ -119,7 +119,9 @@ public class UserManager {
         int isadmin = (int) SPUtils.getUserInstance().get(KEY_IS_ADMIN, 0);
         return isadmin == 1;
     }
-
+    public static void saveIsAdmin(int id) {
+        SPUtils.getUserInstance().put(KEY_IS_ADMIN, id);
+    }
 
     public static void logout() {
         logoutOA();
