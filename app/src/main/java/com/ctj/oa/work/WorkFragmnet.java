@@ -106,6 +106,12 @@ public class WorkFragmnet extends BaseFragment implements LewisSwipeRefreshLayou
         }, swl, "");
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        updateHeadView();
+    }
+
    /* private void getCircleClassList() {
         NetBaseRequest request = RequsetFactory.creatBaseRequest(Constants.GET_CIRCLE_CLASS_LIST);
         CallServer.getRequestInstance().add(getActivity(), 0x01, request, new HttpListenerCallback() {
@@ -330,7 +336,6 @@ public class WorkFragmnet extends BaseFragment implements LewisSwipeRefreshLayou
     public void onRefresh() {
         //getCircleClassList();
         company_banner();
-        updateHeadView();
         getUserInfo();
     }
 }

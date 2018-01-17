@@ -9,7 +9,7 @@ import java.io.File;
  */
 public class Constants {
     public static String getApiConfig() {
-        return getConfig() + "/v1_0.";
+        return getConfig() + "/v1_1.";
     }
 
     public static String getConfig() {
@@ -22,8 +22,20 @@ public class Constants {
             return API_URL_RELEASE;
         }
     }
+    public static String getWEBConfig() {
+        int httpConfig = MainApplication.getInstance().getResources().getInteger(R.integer.HTTP_CONFIG);
+        if (httpConfig == 1) {
+            return WEB_URL_RELEASE+"/";
+        } else if (httpConfig == 2) {
+            return WEB_URL_DEBUG+"/";
+        } else {
+            return API_URL_RELEASE+"/";
+        }
+    }
     public static final String API_URL_RELEASE = "http://api.rockbrain.net";
     public static final String API_URL_DEBUG = "http://tapi.wiseexpo.com";
+    public static final String WEB_URL_RELEASE = "http://web.rockbrain.net";
+    public static final String WEB_URL_DEBUG = "http://web.wiseexpo.com";
     //public static final String IMG_HEAD = API_URL_RELEASE;
     public static final String IMG_HEAD = getConfig();
     public static final String ADMIN_ID = "admin";
@@ -70,6 +82,10 @@ public class Constants {
     public static final String USER_FEEDBACK = _USER + "user_feedback";
     public static final String GET_FIELD_INFO = _USER + "getFieldInfo";
     public static final String GET_GROUP_USER = _USER + "get_group_user";
+    public static final String IS_SELECTED = _USER + "is_selected";
+    public static final String MY_CREATE_COMPANY_EXISTS = _USER + "my_create_company_exists";
+    public static final String SELECTED_COMPANY = _USER + "selected_company";
+    public static final String GET_MY_COMPANY_LIST = _USER + "get_my_company_list";
     /**
      * ====Attend========
      */
@@ -161,16 +177,16 @@ public class Constants {
      * ====WEB==========
      */
     //public static final String _WEB = "http://oaweb.weihainan.com/";
-    public static final String _WEB = "http://web.rockbrain.net/";
-    public static final String WEB_NOTICE_DETAIL = _WEB + "mycenter/notice_detail.html";
-    public static final String WEB_ARTICLE_DETAIL = _WEB + "mycenter/article_detail.html";
-    public static final String WEB_CREATE_COMPANY = _WEB + "open/create_company.html";
-    public static final String WEB_HELP = _WEB + "open/content_page/alias/user_help.html";
-    public static final String WEB_SHARE = _WEB + "mycenter/share.html";
-    public static final String WEB_TASK_DISCUSS = _WEB + "open/task_discuss_info.html";
-    public static final String WEB_ABOUT = _WEB + "open/content_page/alias/about.html";
-    public static final String WEB_AGREEMENT = _WEB + "open/content_page/alias/user_agreement.html";
-    public static final String WEB_FILE_LIST = _WEB + "mycenter/myFileList.html";
+    //public static final String _WEB = "http://web.rockbrain.net/";
+    public static final String WEB_NOTICE_DETAIL = getWEBConfig() + "mycenter/notice_detail.html";
+    public static final String WEB_ARTICLE_DETAIL =  getWEBConfig() + "mycenter/article_detail.html";
+    public static final String WEB_CREATE_COMPANY =  getWEBConfig() + "open/create_company.html";
+    public static final String WEB_HELP =  getWEBConfig() + "open/content_page/alias/user_help.html";
+    public static final String WEB_SHARE =  getWEBConfig() + "mycenter/share.html";
+    public static final String WEB_TASK_DISCUSS =  getWEBConfig() + "open/task_discuss_info.html";
+    public static final String WEB_ABOUT =  getWEBConfig() + "open/content_page/alias/about.html";
+    public static final String WEB_AGREEMENT =  getWEBConfig() + "open/content_page/alias/user_agreement.html";
+    public static final String WEB_FILE_LIST =  getWEBConfig() + "mycenter/myFileList.html";
 
 
     /**

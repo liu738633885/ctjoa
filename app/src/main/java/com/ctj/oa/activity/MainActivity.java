@@ -33,6 +33,7 @@ import com.ctj.oa.net.HttpListenerCallback;
 import com.ctj.oa.net.NetBaseRequest;
 import com.ctj.oa.net.RequsetFactory;
 import com.ctj.oa.utils.manager.SettingsManager;
+import com.ctj.oa.utils.manager.UserManager;
 import com.ctj.oa.utils.upadata.UpdataAppManager;
 import com.ctj.oa.work.WorkFragmnet;
 import com.hyphenate.EMCallBack;
@@ -421,7 +422,26 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        Logger.d("在 MainActivity 中onResume");
+        if(UserManager.isLogin()&&!DemoHelper.getInstance().isLoggedIn()){
+            Logger.d("在 MainActivity 中重新登录");
+            EMClient.getInstance().login(UserManager.getId() + "", "123456", new EMCallBack() {
+                @Override
+                public void onSuccess() {
 
+                }
+
+                @Override
+                public void onError(int i, String s) {
+
+                }
+
+                @Override
+                public void onProgress(int i, String s) {
+
+                }
+            });
+        }
         if (!isConflict && !isCurrentAccountRemoved) {
             updateUnreadLabel();
             updateUnreadAddressLable();

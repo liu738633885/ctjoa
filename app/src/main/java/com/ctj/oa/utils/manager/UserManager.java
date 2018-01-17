@@ -45,11 +45,12 @@ public class UserManager {
         } else {
             SPUtils.getUserInstance().put(KEY_TOKEN, login.getToken());
             SPUtils.getUserInstance().put(KEY_ISLOGIN, true);
-            return saveUserInfo(login.getUser_info());
+            return saveUserInfo(login.getUser_info(), false);
         }
     }
 
-    public static boolean saveUserInfo(UserInfo userInfo) {
+    public static boolean saveUserInfo(UserInfo userInfo, boolean all) {
+        //login true 为保存全部  false 为从登录进来，保存公司 id 为-1
         if (userInfo == null) {
             return false;
         } else {
@@ -57,12 +58,20 @@ public class UserManager {
             SPUtils.getUserInstance().put(KEY_NICKNAME, userInfo.getNickname());
             SPUtils.getUserInstance().put(KEY_SEX, userInfo.getSex());
             SPUtils.getUserInstance().put(KEY_PORTRAIT, userInfo.getPortrait());
-            SPUtils.getUserInstance().put(KEY_COMPANY_ID, userInfo.getCompany_id());
-            SPUtils.getUserInstance().put(KEY_COMPANY_NAME, userInfo.getCompany_name());
-            SPUtils.getUserInstance().put(KEY_POST_NAME, userInfo.getPost_name());
+            if (all) {
+                SPUtils.getUserInstance().put(KEY_COMPANY_ID, userInfo.getCompany_id());
+                SPUtils.getUserInstance().put(KEY_COMPANY_NAME, userInfo.getCompany_name());
+                SPUtils.getUserInstance().put(KEY_POST_NAME, userInfo.getPost_name());
+            } else {
+                SPUtils.getUserInstance().put(KEY_COMPANY_ID, -1);
+            }
             SPUtils.getUserInstance().put(KEY_IS_ADMIN, userInfo.getIs_admin());
             return true;
         }
+    }
+
+    public static boolean saveUserInfo(UserInfo userInfo) {
+        return saveUserInfo(userInfo, true);
     }
 
 
@@ -101,6 +110,9 @@ public class UserManager {
 
     public static int getCompanyId() {
         return (int) SPUtils.getUserInstance().get(KEY_COMPANY_ID, 0);
+    }
+    public static void saveCompanyId(int id) {
+        SPUtils.getUserInstance().put(KEY_COMPANY_ID, id);
     }
 
     public static boolean isAdmin() {

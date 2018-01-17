@@ -8,6 +8,7 @@ import java.util.List;
 
 public class CompanyList {
     private List<Company> list;
+    public List<Company> company_list;
     private int pageno;
 
     public List<Company> getList() {

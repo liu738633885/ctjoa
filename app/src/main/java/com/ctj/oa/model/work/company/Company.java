@@ -22,6 +22,8 @@ public class Company {
     private String company_contact_phone;
     private String prov_name;
     private String city_name;
+    //public boolean check;
+    public int selected; // 是否已选择 0否 1是
 
     public int getCompany_id() {
         return company_id;

@@ -44,8 +44,8 @@ public class SplashActivity extends BaseActivity {
     protected void initView(Bundle savedInstanceState) {
         CheckPermission();
         DemoHelper.getInstance().initHandler(this.getMainLooper());
-        tv_info = (TextView) findViewById(R.id.tv_info);
-        imv_splash = (ImageView) findViewById(R.id.imv_splash);
+        tv_info = findViewById(R.id.tv_info);
+        imv_splash = findViewById(R.id.imv_splash);
         ImageLoader.loadSplashImage(this, Constants.APP_PATH_ROOT + "/splash.jpg", imv_splash);
         tv_info.setText("版本:" + SystemUtils.getAppVersionName(this) + (MainApplication.getInstance().getResources().getInteger(R.integer.HTTP_CONFIG) == 2 ? "测试服务器" : ""));
         new Thread(new Runnable() {
@@ -70,13 +70,18 @@ public class SplashActivity extends BaseActivity {
                         // avoid main screen overlap Calling Activity
                     } else {
                         //enter main screen
-                        startActivity(new Intent(SplashActivity.this, MainActivity.class));
+                        if (UserManager.getCompanyId() != -1) {
+                            startActivity(new Intent(SplashActivity.this, MainActivity.class));
+                        } else {
+                            startActivity(new Intent(SplashActivity.this, LoginActivity.class));
+                        }
                     }
                     finish();
                 } else {
                     try {
                         Thread.sleep(sleepTime);
                     } catch (InterruptedException e) {
+
                     }
                     startActivity(new Intent(SplashActivity.this, LoginActivity.class));
                     finish();
@@ -99,7 +104,6 @@ public class SplashActivity extends BaseActivity {
             }
         }
     }
-
     private void openMainActivity() {
         if (UserManager.isLogin()) {
             NetBaseRequest getUserRequest = RequsetFactory.creatNoUidRequest(Constants.GET_USER_INFO);

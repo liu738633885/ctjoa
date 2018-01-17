@@ -363,24 +363,6 @@ public class WebViewActivity extends BaseActivity implements View.OnClickListene
             }
         }
 
-
-       /* @JavascriptInterface
-        public void loadNewTab(String url, boolean finish) {
-            WebViewActivity.goTo(WebViewActivity.this, url, "");
-            if (finish) {
-                finish();
-            }
-        }*/
-
-        @JavascriptInterface
-        public void showRecruitTitle(boolean show) {
-            if (show) {
-
-            } else {
-
-            }
-        }
-
     }
     @Override
     public void onClick(View view) {

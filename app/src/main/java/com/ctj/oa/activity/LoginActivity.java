@@ -2,6 +2,7 @@ package com.ctj.oa.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -19,12 +20,14 @@ import com.ctj.oa.Constants;
 import com.ctj.oa.R;
 import com.ctj.oa.mine.ForgetPasswordActivity;
 import com.ctj.oa.model.Login;
+import com.ctj.oa.model.UserCompany;
+import com.ctj.oa.model.UserInfo;
 import com.ctj.oa.model.event.EventRefresh;
 import com.ctj.oa.model.netmodel.NetBaseBean;
 import com.ctj.oa.net.CallServer;
 import com.ctj.oa.net.HttpListenerCallback;
 import com.ctj.oa.net.NetBaseRequest;
-import com.lewis.utils.MD5Util;
+import com.ctj.oa.net.RequsetFactory;
 import com.ctj.oa.utils.manager.UserManager;
 import com.ctj.oa.widgets.dialog.LoadingDialog;
 import com.hyphenate.EMCallBack;
@@ -32,6 +35,7 @@ import com.hyphenate.chat.EMClient;
 import com.hyphenate.chatuidemo.DemoHelper;
 import com.hyphenate.chatuidemo.db.DemoDBManager;
 import com.lewis.utils.EditTextUitls;
+import com.lewis.utils.MD5Util;
 import com.lewis.utils.T;
 
 import org.greenrobot.eventbus.Subscribe;
@@ -51,10 +55,13 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
     private LoadingDialog waitDialog;
     private ImageButton btn_delete;
     private static final String TAG = "LoginActivity";
+    private Handler mHandler;
+    private UserInfo loginUserInfo;
 
     @Override
     protected void initView(Bundle savedInstanceState) {
         DemoHelper.getInstance().logout(true, null);
+        mHandler = new Handler();
         waitDialog = new LoadingDialog(this);
         waitDialog.setCancelable(false);
         waitDialog.setCanceledOnTouchOutside(false);
@@ -133,6 +140,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
     public void onSucceed(int what, NetBaseBean netBaseBean) {
         if (netBaseBean.isSuccess()) {
             final Login login = netBaseBean.parseObject(Login.class);
+            loginUserInfo = login.getUser_info();
             if (UserManager.saveLoginInfo(login)) {
                 loginHuanXin();
             }
@@ -208,11 +216,20 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
                 // get user's info (this should be get from App's server or 3rd party service)
                 DemoHelper.getInstance().getUserProfileManager().asyncGetCurrentUserInfo();
 
-                Intent intent = new Intent(LoginActivity.this,
+               /* Intent intent = new Intent(LoginActivity.this,
                         MainActivity.class);
-                startActivity(intent);
+                startActivity(intent);*/
 
-                finish();
+
+                mHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        getIsSelected();
+                    }
+                });
+               /*
+                startActivity(new Intent(bContext, LoginChooseActivity.class));
+                finish();*/
             }
 
             @Override
@@ -239,6 +256,32 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
                 });
             }
         });
+    }
+
+    private void getIsSelected() {
+        NetBaseRequest request = RequsetFactory.creatBaseRequest(Constants.IS_SELECTED);
+        CallServer.getRequestInstance().add(this, 0x01, request, new HttpListenerCallback() {
+            @Override
+            public void onSucceed(int what, NetBaseBean netBaseBean) {
+                if (netBaseBean.isSuccess()) {
+                    UserCompany selected = netBaseBean.parseObject(UserCompany.class);
+                    if (selected.is_selected == 0) {
+                        if (loginUserInfo != null) {
+                            UserManager.saveUserInfo(loginUserInfo);
+                        }
+                        finish();
+                    } else {
+                        startActivity(new Intent(bContext, LoginChooseActivity.class));
+                        finish();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailed(int what, String url, Object tag, Exception exception, int responseCode, long networkMillis) {
+            }
+        }, false, true, "");
+
     }
 
     @Subscribe

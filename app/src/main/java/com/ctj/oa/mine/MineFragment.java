@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.ctj.oa.Constants;
 import com.ctj.oa.R;
+import com.ctj.oa.activity.ChooseJoinActivity;
 import com.ctj.oa.activity.WebViewActivity;
 import com.ctj.oa.chat.organization.OrganizationActivity;
 import com.ctj.oa.fragment.BaseFragment;
@@ -43,32 +44,34 @@ public class MineFragment extends BaseFragment implements View.OnClickListener, 
     private View parentView;
     private ImageView imv_avatar;
     private TextView name;
-    private LinearLayout ll_admin, ll_create_company, ll_feedback, ll_help, ll_share, ll_qiuzhi;
+    private LinearLayout ll_admin, ll_create_company, ll_feedback, ll_help, ll_share, ll_qiuzhi, ll_qiehuan;
     private int backmode;
 
     @Override
     protected void initView(View view, Bundle savedInstanceState) {
         parentView = view;
-        ll_setting = (LinearLayout) view.findViewById(R.id.ll_setting);
+        ll_setting = view.findViewById(R.id.ll_setting);
         ll_setting.setOnClickListener(this);
-        ll_help = (LinearLayout) view.findViewById(R.id.ll_help);
-        ll_share = (LinearLayout) view.findViewById(R.id.ll_share);
+        ll_help = view.findViewById(R.id.ll_help);
+        ll_share = view.findViewById(R.id.ll_share);
         ll_help.setOnClickListener(this);
         ll_share.setOnClickListener(this);
         initWaveView();
-        imv_avatar = (ImageView) view.findViewById(R.id.imv_avatar);
+        imv_avatar = view.findViewById(R.id.imv_avatar);
         imv_avatar.setOnClickListener(this);
-        name = (TextView) view.findViewById(R.id.name);
-        swl = (LewisSwipeRefreshLayout) view.findViewById(R.id.swl);
+        name = view.findViewById(R.id.name);
+        swl = view.findViewById(R.id.swl);
         swl.setOnRefreshListener(this);
-        ll_admin = (LinearLayout) view.findViewById(R.id.ll_admin);
-        ll_create_company = (LinearLayout) view.findViewById(R.id.ll_create_company);
-        ll_feedback = (LinearLayout) view.findViewById(R.id.ll_feedback);
+        ll_admin = view.findViewById(R.id.ll_admin);
+        ll_create_company = view.findViewById(R.id.ll_create_company);
+        ll_feedback = view.findViewById(R.id.ll_feedback);
         ll_admin.setOnClickListener(this);
         ll_create_company.setOnClickListener(this);
         ll_feedback.setOnClickListener(this);
         ll_qiuzhi = view.findViewById(R.id.ll_qiuzhi);
         ll_qiuzhi.setOnClickListener(this);
+        ll_qiehuan = view.findViewById(R.id.ll_qiehuan);
+        ll_qiehuan.setOnClickListener(this);
         updateUI();
     }
 
@@ -169,6 +172,9 @@ public class MineFragment extends BaseFragment implements View.OnClickListener, 
                 break;
             case R.id.ll_share:
                 WebViewActivity.goToShare(getActivity(), Constants.WEB_SHARE, "推荐朋友");
+                break;
+            case R.id.ll_qiehuan:
+                startActivity(new Intent(getActivity(), ChooseJoinActivity.class));
                 break;
         }
     }
