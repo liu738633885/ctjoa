@@ -24,6 +24,9 @@ public class Company {
     private String city_name;
     //public boolean check;
     public int selected; // 是否已选择 0否 1是
+    //二期
+    public int join_status;// 1待审核 2审核通过  3审核未通过 4失效 5未加入
+    public int may_join;// 是否可加入  0否 1是
 
     public int getCompany_id() {
         return company_id;

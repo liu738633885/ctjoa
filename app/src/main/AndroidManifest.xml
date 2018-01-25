@@ -516,6 +516,8 @@
         </activity>
         <activity android:name=".activity.ChooseJoinActivity">
         </activity>
+        <activity android:name=".activity.SearchCompanyActivity">
+        </activity>
     </application>
 
 </manifest>

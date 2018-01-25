@@ -72,6 +72,8 @@ public class Constants {
     public static final String COMPANY_FOLLOW = _COMPANY + "company_follow";
     public static final String GET_ARTICLE_LIST = _COMPANY + "get_article_list";
     public static final String GET_COMPANY_DETAIL = _COMPANY + "get_company_detail";
+    public static final String SELECT_JOIN_COMPANY_LIST = _COMPANY + "select_join_company_list";
+    public static final String JOIN_COMPANY = _COMPANY + "join_company";
     /**
      * ====User========
      */

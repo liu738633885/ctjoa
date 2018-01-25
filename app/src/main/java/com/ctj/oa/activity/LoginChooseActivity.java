@@ -20,7 +20,7 @@ import com.ctj.oa.utils.manager.UserManager;
 import org.greenrobot.eventbus.Subscribe;
 
 public class LoginChooseActivity extends BaseActivity {
-    private TextView tv_create, tv_join;
+    private TextView tv_create, tv_choose,tv_search;
 
     @Override
     protected int getContentViewId() {
@@ -30,17 +30,24 @@ public class LoginChooseActivity extends BaseActivity {
     @Override
     protected void initView(Bundle savedInstanceState) {
         tv_create = findViewById(R.id.tv_create);
-        tv_join = findViewById(R.id.tv_join);
+        tv_search = findViewById(R.id.tv_search);
+        tv_choose = findViewById(R.id.tv_choose);
         tv_create.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 WebViewActivity.goTo(bContext, Constants.WEB_CREATE_COMPANY + "?user_id=" + UserManager.getId() + "&token=" + UserManager.getToken(), "创建公司");
             }
         });
-        tv_join.setOnClickListener(new View.OnClickListener() {
+        tv_choose.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(bContext, ChooseJoinActivity.class));
+            }
+        });
+        tv_search.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(bContext, SearchCompanyActivity.class));
             }
         });
         my_create_company_exists();
