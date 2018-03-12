@@ -1,6 +1,7 @@
 package com.hyphenate.chatuidemo.ui;
 
 import android.content.Intent;
+import android.os.Handler;
 import android.text.TextUtils;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
@@ -34,6 +35,7 @@ public class ConversationListFragment extends EaseConversationListFragment{
 
     private TextView errorText;
     private View adminView;
+    private Handler mHandler=new Handler();
 
     @Override
     protected void initView() {
@@ -112,36 +114,51 @@ public class ConversationListFragment extends EaseConversationListFragment{
         super.setUpView();
         //end of red packet code
     }
-
+    private void setErrorText(final String text){
+        if(mHandler==null){
+            mHandler=new Handler();
+        }
+        mHandler.post(new Runnable() {
+            @Override
+            public void run() {
+                errorText.setText(text);
+            }
+        });
+    }
     @Override
     protected void onConnectionDisconnected() {
         super.onConnectionDisconnected();
         if (NetUtils.hasNetwork(getActivity())){
-         errorText.setText(R.string.can_not_connect_chat_server_connection);
+         //errorText.setText(R.string.can_not_connect_chat_server_connection);
+            setErrorText("连接不到聊天服务器");
             if (!TextUtils.isEmpty(UserManager.getId())) {
 
                 EMClient.getInstance().login(UserManager.getId() + "", "123456", new EMCallBack() {
                     @Override
                     public void onSuccess() {
-                        errorText.setText("重新登陆成功");
+                        //errorText.setText("重新登陆成功");
+                        setErrorText("重新登陆成功");
                     }
 
                     @Override
                     public void onError(int i, String s) {
-                        errorText.setText("重新登陆失败");
+                        //errorText.setText("重新登陆失败");
+                        setErrorText("重新登陆失败");
                         onConnectionDisconnected();
                     }
 
                     @Override
                     public void onProgress(int i, String s) {
-                        errorText.setText("正在重新登录...");
+                        //errorText.setText("正在重新登录...");
+                        setErrorText("正在重新登录...");
                     }
                 });
             } else {
                 startActivity(new Intent(getActivity(), LoginActivity.class));
             }
         } else {
-          errorText.setText(R.string.the_current_network);
+          //errorText.setText(R.string.the_current_network);
+            setErrorText("当前网络不可用，请检查网络设置");
         }
 
     }

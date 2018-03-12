@@ -7,8 +7,8 @@ android {
         applicationId "com.ctj.oa"
         minSdkVersion 15
         targetSdkVersion 26
-        versionCode 18011701
-        versionName "2.0.2"
+        versionCode 18020801
+        versionName "2.0.4"
         multiDexEnabled true
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }

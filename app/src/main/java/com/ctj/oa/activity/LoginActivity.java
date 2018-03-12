@@ -266,13 +266,14 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
                 if (netBaseBean.isSuccess()) {
                     UserCompany selected = netBaseBean.parseObject(UserCompany.class);
                     if (selected.is_selected == 0) {
+                        startActivity(new Intent(bContext, LoginChooseActivity.class));
+                        finish();
+                    } else {
                         if (loginUserInfo != null) {
                             UserManager.saveUserInfo(loginUserInfo);
                         }
-                        finish();
-                    } else {
-                        startActivity(new Intent(bContext, LoginChooseActivity.class));
-                        finish();
+                        startActivity(new Intent(LoginActivity.this,
+                                MainActivity.class));
                     }
                 }
             }
